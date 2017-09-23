@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'progress-bar',
@@ -10,6 +10,8 @@ export class ProgressBarComponent {
   @Input('color') color;
   @Input('maximum') maximum;
 
+  @Output() barClicked: EventEmitter<any> = new EventEmitter();
+
   constructor() {
     this.progress = 0;
     this.color = 'blue';
@@ -18,5 +20,9 @@ export class ProgressBarComponent {
 
   get currentProgress() {
     return Math.round((this.progress / this.maximum) * 100);
+  }
+
+  fireOnClick() {
+    this.barClicked.emit({data: "barClicked!"});
   }
 }

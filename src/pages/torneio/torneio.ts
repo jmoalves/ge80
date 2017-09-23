@@ -343,4 +343,8 @@ export class TorneioPage {
       });
     })
   }
+
+  barClicked(evt, idItem, idPatrulha) {
+    console.log("Agora vai! + " + JSON.stringify(evt) + " " + idItem + " " +idPatrulha);
+  }
 }
