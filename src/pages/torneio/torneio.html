@@ -1,0 +1,36 @@
+<ion-header>
+
+    <ion-navbar primary>
+        <ion-title>{{ 'TORNEIO_TITLE' | translate }}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-slides pager="true">
+        <ion-slide *ngFor="let item of torneioItems">
+            <ion-card>
+                <ion-item class="barra-mes">
+                    <h2 text-center>{{item.id}}</h2>
+                </ion-item>
+
+                <ion-card-content>
+                    <ion-row *ngFor="let patrulha of item.patrulha">
+                        <ion-item>
+                            <ion-avatar item-start>
+                                <img [src]="patrulha.avatar">
+                                <p>{{patrulha.nome}}</p>
+                            </ion-avatar>
+                            <p>
+                                <progress-bar progress="{{patrulha.pontos}}" color="{{patrulha.cor}}"></progress-bar>
+                            </p>
+                        </ion-item>
+                    </ion-row>
+                    <!--
+            <canvas #barCanvas></canvas>
+            -->
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</ion-content>
