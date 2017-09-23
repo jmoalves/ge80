@@ -10,35 +10,37 @@ import { Chart } from 'chart.js';
 })
 
 export class TorneioPage {
+  maxPontos: number;
+
   @ViewChildren('barCanvas') barCanvas;
   barChart: any[];
 
   torneioItems: any[];
 
-  loadProgress: 40;
-
   constructor(public navCtrl: NavController) {
+    this.maxPontos = 250;
+
     this.torneioItems = [{
       id: "Setembro 2017",
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -46,22 +48,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -69,22 +71,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -92,22 +94,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -115,22 +117,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -138,22 +140,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -161,22 +163,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -184,22 +186,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -207,22 +209,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -230,22 +232,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -253,22 +255,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }, {
@@ -276,22 +278,22 @@ export class TorneioPage {
       patrulha: [{
         nome: "Tirano",
         avatar: 'assets/img/patrulhas/tiranossauro.png',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#CC9900"
       }, {
         nome: "Titano",
         avatar: 'assets/img/patrulhas/titanossauro.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006666"
       }, {
         nome: "Tri",
         avatar: 'assets/img/patrulhas/triceratops.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#841F27"
       }, {
         nome: "TDS",
         avatar: 'assets/img/patrulhas/tds.jpg',
-        pontos: Math.round(Math.random() * 100),
+        pontos: Math.round(Math.random() * this.maxPontos),
         cor: "#006699"
       }]
     }]
