@@ -61,7 +61,9 @@ export class CicloDetalhePage {
 
 
     // console.log(JSON.stringify(navParams.data.patrulha));
-    this.patrulha = patrulhaProvider.patrulha(navParams.data.patrulha.idPatrulha);
+    patrulhaProvider.patrulha(navParams.data.patrulha.idPatrulha).then(patrulha => {
+      this.patrulha = patrulha;
+    });
 
     this.pontuacao = navParams.data.patrulha;
     this.totalPontos = cicloProvider.totalPontos(this.pontuacao);

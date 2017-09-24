@@ -8,7 +8,7 @@ import { Http, RequestOptions, URLSearchParams } from '@angular/http';
  */
 @Injectable()
 export class Api {
-  url: string = 'http://localhost:5000/api';
+  url: string = 'https://raw.githubusercontent.com/jmoalves/ge80-t3-torneioEficiencia/master';
 
   constructor(public http: Http) {
   }

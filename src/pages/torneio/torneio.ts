@@ -22,32 +22,34 @@ export class TorneioPage {
 
     this.torneioItems = [];
     for (let ciclo of this.cicloProvider.ciclos()) {
-      let pontuacao = this.cicloProvider.pontuacaoCiclo(ciclo.id);
-      // console.log("Pontuacao: " + JSON.stringify(pontuacao));
+      this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
+        // console.log("Pontuacao: " + JSON.stringify(pontuacao));
 
-      let item = {
-        id: ciclo.nome,
-        maxPontos: pontuacao.maxPontos,
-        patrulha: [],
+        let item = {
+          id: ciclo.nome,
+          maxPontos: pontuacao.maxPontos,
+          patrulha: [],
 
-        origin: pontuacao
-      }
+          origin: pontuacao
+        }
 
-      for (let pontuacaoPatrulha of pontuacao.patrulha) {
-        let patrulha = patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha);
-        item.patrulha.push({
-          id: patrulha.id,
-          nome: patrulha.id,
-          avatar: patrulha.avatar,
-          pontos: cicloProvider.totalPontos(pontuacaoPatrulha),
-          cor: patrulha.cor,
+        for (let pontuacaoPatrulha of pontuacao.patrulha) {
+          patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(patrulha => {
+            item.patrulha.push({
+              id: patrulha.id,
+              nome: patrulha.nome,
+              avatar: patrulha.avatar,
+              pontos: cicloProvider.totalPontos(pontuacaoPatrulha),
+              cor: patrulha.cor,
 
-          origin: pontuacaoPatrulha
-        })
-      }
+              origin: pontuacaoPatrulha
+            })
+          })
+        }
 
-      // console.log("Item: " + JSON.stringify(item));
-      this.torneioItems.push(item);
+        // console.log("Item: " + JSON.stringify(item));
+        this.torneioItems.push(item);
+      })
     }
   }
 
@@ -56,6 +58,6 @@ export class TorneioPage {
 
   barClicked(evt, cicloPontuacao, patrulhaPontuacao) {
     // console.log("Agora vai! + " + JSON.stringify(evt));
-    this.navCtrl.push('CicloDetalhePage', {ciclo: cicloPontuacao, patrulha: patrulhaPontuacao});
+    this.navCtrl.push('CicloDetalhePage', { ciclo: cicloPontuacao, patrulha: patrulhaPontuacao });
   }
 }
