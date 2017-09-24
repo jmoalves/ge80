@@ -26,7 +26,7 @@ export class PatrulhaProvider {
   loadPatrulha() {
     this.dataPromise = this.api.get('patrulhas/patrulhas.json').toPromise();
     this.dataPromise.then(res => {
-      // console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
+      console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
 
       this.data = [];
       for (let patrulha of res.json()) {
