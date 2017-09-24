@@ -34,29 +34,12 @@ export class TorneioPage {
       }
 
       for (let pontuacaoPatrulha of pontuacao.patrulha) {
-        let pontosPatrulha = 0;
-        for (let dia of pontuacaoPatrulha.pontos.porDia) {
-          pontosPatrulha += dia.pontualidade;
-          pontosPatrulha += dia.presenca;
-          pontosPatrulha += dia.vestuario;
-          pontosPatrulha += dia.participacao;
-          pontosPatrulha += dia.espiritoEscoteiro;
-          pontosPatrulha += dia.jogoTecnico;
-          pontosPatrulha += dia.conquistas;
-          pontosPatrulha += dia.extras;
-          pontosPatrulha += dia.penalidade;
-          pontosPatrulha += dia.atividadeExterna;
-        }
-        pontosPatrulha += pontuacaoPatrulha.pontos.cantoPatrulhaVirtual;
-        pontosPatrulha += pontuacaoPatrulha.pontos.livrosPatrulha;
-        pontosPatrulha += pontuacaoPatrulha.pontos.materialPatrulha;
-
         let patrulha = patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha);
         item.patrulha.push({
           id: patrulha.id,
           nome: patrulha.id,
           avatar: patrulha.avatar,
-          pontos: pontosPatrulha,
+          pontos: cicloProvider.totalPontos(pontuacaoPatrulha),
           cor: patrulha.cor,
 
           origin: pontuacaoPatrulha
@@ -72,7 +55,7 @@ export class TorneioPage {
   }
 
   barClicked(evt, cicloPontuacao, patrulhaPontuacao) {
-    console.log("Agora vai! + " + JSON.stringify(evt));
+    // console.log("Agora vai! + " + JSON.stringify(evt));
     this.navCtrl.push('CicloDetalhePage', {ciclo: cicloPontuacao, patrulha: patrulhaPontuacao});
   }
 }

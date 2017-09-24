@@ -28,6 +28,7 @@ export class PontuacaoPatrulha {
     }]
   }
 }
+
 export class CicloTorneioPontuacao {
   idCiclo: string;
 

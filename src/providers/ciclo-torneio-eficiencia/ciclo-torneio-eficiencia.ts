@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { CicloTorneio } from '../../models/cicloTorneio';
-import { CicloTorneioPontuacao } from '../../models/cicloTorneioPontuacao';
+import { CicloTorneioPontuacao, PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
 
 import { PatrulhaProvider } from '../patrulha/patrulha';
 
@@ -138,6 +138,28 @@ export class CicloTorneioEficienciaProvider {
     }
 
     return pontuacao;
+  }
+
+
+  totalPontos(pontuacao: PontuacaoPatrulha): number {
+    let pontosPatrulha = 0;
+    for (let dia of pontuacao.pontos.porDia) {
+      pontosPatrulha += dia.pontualidade;
+      pontosPatrulha += dia.presenca;
+      pontosPatrulha += dia.vestuario;
+      pontosPatrulha += dia.participacao;
+      pontosPatrulha += dia.espiritoEscoteiro;
+      pontosPatrulha += dia.jogoTecnico;
+      pontosPatrulha += dia.conquistas;
+      pontosPatrulha += dia.extras;
+      pontosPatrulha += dia.penalidade;
+      pontosPatrulha += dia.atividadeExterna;
+    }
+    pontosPatrulha += pontuacao.pontos.cantoPatrulhaVirtual;
+    pontosPatrulha += pontuacao.pontos.livrosPatrulha;
+    pontosPatrulha += pontuacao.pontos.materialPatrulha;
+
+    return pontosPatrulha;
   }
 
   maxPontos(): CicloTorneioPontuacao {

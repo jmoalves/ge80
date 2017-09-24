@@ -20,6 +20,7 @@ import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
 export class CicloDetalhePage {
   ciclo: string;
   patrulha: string;
+  totalPontos: number;
 
   pontuacao: PontuacaoPatrulha;
 
@@ -32,9 +33,10 @@ export class CicloDetalhePage {
     let ciclo = cicloProvider.ciclo(navParams.data.ciclo.idCiclo);
     this.ciclo = ciclo.nome;
 
-    console.log(JSON.stringify(navParams.data.patrulha));
+    // console.log(JSON.stringify(navParams.data.patrulha));
     this.patrulha = navParams.data.patrulha.idPatrulha;
     this.pontuacao = navParams.data.patrulha;
+    this.totalPontos = cicloProvider.totalPontos(this.pontuacao);
   }
 
   ionViewDidLoad() {
