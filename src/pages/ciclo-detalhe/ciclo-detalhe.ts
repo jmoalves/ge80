@@ -4,7 +4,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { CicloTorneioEficienciaProvider } from '../../providers/ciclo-torneio-eficiencia/ciclo-torneio-eficiencia';
 
+import { Patrulha } from '../../models/patrulha';
 import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
+
 /**
  * Generated class for the CicloDetalhePage page.
  *
@@ -19,8 +21,10 @@ import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
 })
 export class CicloDetalhePage {
   ciclo: string;
-  patrulha: string;
+  patrulha: Patrulha;
   totalPontos: number;
+  maxPontos: number;
+  corPatrulha: string;
 
   pontuacao: PontuacaoPatrulha;
 
@@ -53,9 +57,12 @@ export class CicloDetalhePage {
 
     let ciclo = cicloProvider.ciclo(navParams.data.ciclo.idCiclo);
     this.ciclo = ciclo.nome;
+    this.maxPontos = navParams.data.ciclo.maxPontos;
+
 
     // console.log(JSON.stringify(navParams.data.patrulha));
-    this.patrulha = navParams.data.patrulha.idPatrulha;
+    this.patrulha = patrulhaProvider.patrulha(navParams.data.patrulha.idPatrulha);
+
     this.pontuacao = navParams.data.patrulha;
     this.totalPontos = cicloProvider.totalPontos(this.pontuacao);
 

@@ -11,13 +11,17 @@
     <ion-card>
         <ion-card-header>
             <ion-item class="barra-mes">
+                <ion-avatar item-start>
+                    <img [src]="patrulha.avatar">
+                    <p>{{patrulha.nome}}</p>
+                </ion-avatar>
                 <h2>{{ciclo}}</h2>
-                <h2>{{patrulha}}</h2>
-                <h2>Total: {{totalPontos}}</h2>
             </ion-item>
         </ion-card-header>
 
         <ion-card-content>
+            <progress-bar progress="{{ totalPontos }}" maximum="{{ maxPontos }}" color="{{ patrulha.cor }}"></progress-bar>
+
             <div padding>
                 <ion-segment [(ngModel)]="subGrupo">
                     <ion-segment-button value="reuniao">
