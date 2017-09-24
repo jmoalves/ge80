@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="true" effect="coverflow">
+    <ion-slides pager="true">
         <ion-slide *ngFor="let item of torneioItems">
             <ion-card>
                 <ion-item class="barra-mes">
@@ -22,7 +22,7 @@
                                 <p>{{patrulha.nome}}</p>
                             </ion-avatar>
                             <p>
-                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.id, patrulha.nome)"></progress-bar>
+                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.id, patrulha.nome)"></progress-bar>
                             </p>
                         </ion-item>
                     </ion-row>
