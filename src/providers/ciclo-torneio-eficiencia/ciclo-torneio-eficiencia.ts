@@ -68,8 +68,6 @@ export class CicloTorneioEficienciaProvider {
   pontuacaoCiclo(idCiclo: string): Promise<CicloTorneioPontuacao> {
     return new Promise<CicloTorneioPontuacao>((resolve, reject) => {
       this.patrulhaProvider.patrulhas().then(patrulhas => {
-        console.log("GOT Patrulhas: " + JSON.stringify(patrulhas));
-
         let max = this.maxPontos();
 
         let pontuacao = {

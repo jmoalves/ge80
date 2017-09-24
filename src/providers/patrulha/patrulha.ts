@@ -26,7 +26,7 @@ export class PatrulhaProvider {
   loadPatrulha() {
     this.dataPromise = this.api.get('patrulhas/patrulhas.json').toPromise();
     this.dataPromise.then(res => {
-      console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
+      // console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
 
       this.data = [];
       for (let patrulha of res.json()) {
@@ -41,28 +41,6 @@ export class PatrulhaProvider {
       this.dataPromise = undefined;
     });
   }
-
-  // data: Patrulha[] = [{
-  //   id: "Tirano",
-  //   nome: "Tirano",
-  //   avatar: 'assets/img/patrulhas/tiranossauro.png',
-  //   cor: "#CC9900"
-  // }, {
-  //   id: "Titano",
-  //   nome: "Titano",
-  //   avatar: 'assets/img/patrulhas/titanossauro.jpg',
-  //   cor: "#006666"
-  // }, {
-  //   id: "Tri",
-  //   nome: "Tri",
-  //   avatar: 'assets/img/patrulhas/triceratops.jpg',
-  //   cor: "#841F27"
-  // }, {
-  //   id: "TDS",
-  //   nome: "TDS",
-  //   avatar: 'assets/img/patrulhas/tds.jpg',
-  //   cor: "#006699"
-  // }];
 
   patrulhas(): Promise<Patrulha[]> {
     if (!this.dataPromise && this.data) {
