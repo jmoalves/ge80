@@ -1,7 +1,7 @@
-import { Component, ViewChildren } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-import { Chart } from 'chart.js';
+import { CicloDetalhePage } from '../ciclo-detalhe/ciclo-detalhe';
 
 @IonicPage()
 @Component({
@@ -11,9 +11,6 @@ import { Chart } from 'chart.js';
 
 export class TorneioPage {
   maxPontos: number;
-
-  @ViewChildren('barCanvas') barCanvas;
-  barChart: any[];
 
   torneioItems: any[];
 
@@ -300,51 +297,10 @@ export class TorneioPage {
   }
 
   ionViewDidLoad() {
-    this.barCanvas.forEach((canvas) => {
-      this.barChart = new Chart(canvas.nativeElement, {
-        type: 'horizontalBar',
-        data: {
-          labels: ["Tirano", "TDS", "Titano", "Tri"],
-          datasets: [{
-            label: '',
-            data: [
-              Math.round(Math.random() * 200),
-              Math.round(Math.random() * 200),
-              Math.round(Math.random() * 200),
-              Math.round(Math.random() * 200)],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          }
-        }
-
-      });
-    })
   }
 
   barClicked(evt, idItem, idPatrulha) {
     console.log("Agora vai! + " + JSON.stringify(evt) + " " + idItem + " " +idPatrulha);
+    this.navCtrl.push('CicloDetalhePage', {});
   }
 }

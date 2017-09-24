@@ -3,9 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
 import { TorneioPage } from './torneio';
-
 import { ProgressBarComponent } from '../../components/progress-bar/progress-bar';
-
 
 @NgModule({
   declarations: [
