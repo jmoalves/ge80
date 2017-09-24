@@ -19,7 +19,14 @@ page-ciclo-detalhe {
     .header {
         background-color: lightgrey;
     }
+    .penalidade {
+        color: red;
+    }
     .total {
+        background-color: lightgrey;
+    }
+    .total-geral {
+        font-size: 1.3em;
         font-weight: bold;
     }
     .row:not(.total) {

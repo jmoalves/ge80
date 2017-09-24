@@ -70,7 +70,7 @@ export class CicloTorneioEficienciaProvider {
 
     let pontuacao = {
       "idCiclo": idCiclo,
-      maxPontos: 650,
+      maxPontos: 600,
       patrulha: []
     };
 
@@ -163,7 +163,7 @@ export class CicloTorneioEficienciaProvider {
       pontosPatrulha += dia.jogoTecnico;
       pontosPatrulha += dia.conquistas;
       pontosPatrulha += dia.extras;
-      pontosPatrulha += dia.penalidade;
+      pontosPatrulha -= dia.penalidade;
       pontosPatrulha += dia.atividadeExterna;
     }
     pontosPatrulha += pontuacao.pontos.cantoPatrulhaVirtual;

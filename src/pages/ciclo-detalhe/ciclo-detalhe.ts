@@ -89,7 +89,7 @@ export class CicloDetalhePage {
 
       this.totalDiaExtras[dia.id] =
         dia.conquistas +
-        dia.extras +
+        dia.extras -
         dia.penalidade +
         dia.atividadeExterna;
       this.totalGeralExtras += this.totalDiaExtras[dia.id];
