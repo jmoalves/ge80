@@ -10,12 +10,7 @@ import { PatrulhaProvider } from '../patrulha/patrulha';
 @Injectable()
 export class CicloTorneioEficienciaProvider {
 
-  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider) {
-    console.log('Hello CicloTorneioEficienciaProvider Provider');
-  }
-
-  ciclos(): CicloTorneio[] {
-    return [{
+  cicloData: CicloTorneio[] = [{
       id: "2017-09",
       nome: "Setembro 2017"
     }, {
@@ -51,7 +46,24 @@ export class CicloTorneioEficienciaProvider {
     }, {
       id: "2016-10",
       nome: "Outubro 2016"
-    }]
+    }];
+
+  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider) {
+    console.log('Hello CicloTorneioEficienciaProvider Provider');
+  }
+
+  ciclos(): CicloTorneio[] {
+    return this.cicloData;
+  }
+
+  ciclo(id: string): CicloTorneio {
+    for (let ciclo of this.cicloData) {
+      if (ciclo.id == id) {
+        return ciclo;
+      }
+    }
+
+    return null;
   }
 
   pontuacaoCiclo(idCiclo: string): CicloTorneioPontuacao {

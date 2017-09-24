@@ -22,7 +22,7 @@
                                 <p>{{patrulha.nome}}</p>
                             </ion-avatar>
                             <p>
-                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.id, patrulha.nome)"></progress-bar>
+                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.origin, patrulha.origin)"></progress-bar>
                             </p>
                         </ion-item>
                     </ion-row>

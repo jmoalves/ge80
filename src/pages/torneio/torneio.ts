@@ -28,7 +28,9 @@ export class TorneioPage {
       let item = {
         id: ciclo.nome,
         maxPontos: pontuacao.maxPontos,
-        patrulha: []
+        patrulha: [],
+
+        origin: pontuacao
       }
 
       for (let pontuacaoPatrulha of pontuacao.patrulha) {
@@ -51,10 +53,13 @@ export class TorneioPage {
 
         let patrulha = patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha);
         item.patrulha.push({
+          id: patrulha.id,
           nome: patrulha.id,
           avatar: patrulha.avatar,
           pontos: pontosPatrulha,
-          cor: patrulha.cor
+          cor: patrulha.cor,
+
+          origin: pontuacaoPatrulha
         })
       }
 
@@ -66,8 +71,8 @@ export class TorneioPage {
   ionViewDidLoad() {
   }
 
-  barClicked(evt, idItem, idPatrulha) {
-    console.log("Agora vai! + " + JSON.stringify(evt) + " " + idItem + " " + idPatrulha);
-    this.navCtrl.push('CicloDetalhePage', {});
+  barClicked(evt, cicloPontuacao, patrulhaPontuacao) {
+    console.log("Agora vai! + " + JSON.stringify(evt));
+    this.navCtrl.push('CicloDetalhePage', {ciclo: cicloPontuacao, patrulha: patrulhaPontuacao});
   }
 }

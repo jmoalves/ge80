@@ -11,11 +11,29 @@
     <ion-card>
         <ion-card-header>
             <ion-item class="barra-mes">
-                <h2 text-center>XXXXX</h2>
+                <h2 text-center>{{ciclo}}</h2>
+                <h2 text-center>{{patrulha}}</h2>
             </ion-item>
         </ion-card-header>
 
         <ion-card-content>
+            <ion-item>materialPatrulha: {{pontuacao.pontos.materialPatrulha}}</ion-item>
+            <ion-item>cantoPatrulhaVirtual: {{pontuacao.pontos.cantoPatrulhaVirtual}}</ion-item>
+            <ion-item>livrosPatrulha: {{pontuacao.pontos.livrosPatrulha}}</ion-item>
+
+            <div *ngFor="let dia of pontuacao.pontos.porDia">
+                <ion-item>Dia: {{dia.id}}</ion-item>
+                <ion-item>pontualidade: {{dia.pontualidade}}</ion-item>
+                <ion-item>presenca: {{dia.presenca}}</ion-item>
+                <ion-item>vestuario: {{dia.vestuario}}</ion-item>
+                <ion-item>participacao: {{dia.participacao}}</ion-item>
+                <ion-item>espiritoEscoteiro: {{dia.espiritoEscoteiro}}</ion-item>
+                <ion-item>jogoTecnico: {{dia.jogoTecnico}}</ion-item>
+                <ion-item>conquistas: {{dia.conquistas}}</ion-item>
+                <ion-item>extras: {{dia.extras}}</ion-item>
+                <ion-item>penalidade: {{dia.penalidade}}</ion-item>
+                <ion-item>atividadeExterna: {{dia.atividadeExterna}}</ion-item>
+            </div>
         </ion-card-content>
     </ion-card>
 </ion-content>
