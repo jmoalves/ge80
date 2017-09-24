@@ -46,49 +46,51 @@
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.pontualidade}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalPontualidade }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Presença</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.presenca}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalPresenca }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Vestuário</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.vestuario}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalVestuario }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Participação</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.participacao}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalParticipacao }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Espírito Escoteiro</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.espiritoEscoteiro}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalEspiritoEscoteiro }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Jogo Técnico</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.jogoTecnico}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalJogoTecnico }}</ion-col>
                     </ion-row>
                     <ion-row class="total">
                         <ion-col col-4></ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
-                            60
+                            {{ totalDiaReuniao[dia.id] }}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">240</ion-col>
+                        <ion-col text-right col-2 class="total">
+                            {{ totalGeralReuniao}}
+                        </ion-col>
                     </ion-row>
                 </ion-grid>
 
@@ -105,35 +107,37 @@
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.conquistas}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalConquistas }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Extras</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.extras}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalExtras }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Penalidade</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.penalidade}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalPenalidade }}</ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col col-4>Atividade Externa</ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
                             {{dia.atividadeExterna}}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">140</ion-col>
+                        <ion-col text-right col-2 class="total">{{ totalAtividadeExterna }}</ion-col>
                     </ion-row>
                     <ion-row class="total">
                         <ion-col col-4></ion-col>
                         <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
-                            60
+                            {{ totalDiaExtras[dia.id] }}
                         </ion-col>
-                        <ion-col text-right col-2 class="total">240</ion-col>
+                        <ion-col text-right col-2 class="total">
+                            {{ totalGeralExtras}}
+                        </ion-col>
                     </ion-row>
                 </ion-grid>
 
@@ -156,7 +160,9 @@
                     <ion-row class="total">
                         <ion-col col-8></ion-col>
                         <ion-col col-2></ion-col>
-                        <ion-col text-right col-2 class="total">150</ion-col>
+                        <ion-col text-right col-2 class="total">
+                            {{ totalGeralMensal }}
+                        </ion-col>
                     </ion-row>
                 </ion-grid>
             </div>
