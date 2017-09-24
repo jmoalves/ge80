@@ -20,6 +20,8 @@ import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
   templateUrl: 'ciclo-detalhe.html',
 })
 export class CicloDetalhePage {
+  torneioItems: any[];
+
   ciclo: string;
   patrulha: Patrulha;
   totalPontos: number;
@@ -55,18 +57,30 @@ export class CicloDetalhePage {
     public patrulhaProvider: PatrulhaProvider,
     public cicloProvider: CicloTorneioEficienciaProvider) {
 
-    cicloProvider.ciclo(navParams.data.ciclo.idCiclo).then(ciclo => {
+    cicloProvider.ciclo(navParams.data.idCiclo).then(ciclo => {
       this.ciclo = ciclo.nome;
     });
-    this.maxPontos = navParams.data.ciclo.maxPontos;
 
-
-    // console.log(JSON.stringify(navParams.data.patrulha));
-    patrulhaProvider.patrulha(navParams.data.patrulha.idPatrulha).then(patrulha => {
+    patrulhaProvider.patrulha(navParams.data.idPatrulha).then(patrulha => {
       this.patrulha = patrulha;
     });
 
-    this.pontuacao = navParams.data.patrulha;
+    this.torneioItems = navParams.data.items;
+
+    for (let item of this.torneioItems) {
+      if (item.id == navParams.data.idCiclo) {
+        this.maxPontos = item.maxPontos;
+
+        for (let patrulha of item.patrulha) {
+          if (patrulha.id == navParams.data.idPatrulha) {
+            this.pontuacao = patrulha.origin;
+          }
+        }
+      }
+    }
+
+    console.log("Ciclo: " + navParams.data.idCiclo + " Patrulha: " + navParams.data.idPatrulha + " => " + JSON.stringify(this.pontuacao));
+
     this.totalPontos = cicloProvider.totalPontos(this.pontuacao);
 
     for (let dia of this.pontuacao.pontos.porDia) {

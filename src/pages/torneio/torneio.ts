@@ -26,7 +26,8 @@ export class TorneioPage {
           // console.log("Pontuacao: " + JSON.stringify(pontuacao));
 
           let item = {
-            id: ciclo.nome,
+            id: ciclo.id,
+            nome: ciclo.nome,
             maxPontos: pontuacao.maxPontos,
             patrulha: [],
 
@@ -65,8 +66,8 @@ export class TorneioPage {
     return this.torneioItems.length;
   }
 
-  barClicked(evt, cicloPontuacao, patrulhaPontuacao) {
+  barClicked(evt, idCiclo, idPatrulha) {
     // console.log("Agora vai! + " + JSON.stringify(evt));
-    this.navCtrl.push('CicloDetalhePage', { ciclo: cicloPontuacao, patrulha: patrulhaPontuacao });
+    this.navCtrl.push('CicloDetalhePage', { items: this.torneioItems, idCiclo: idCiclo, idPatrulha: idPatrulha });
   }
 }

@@ -11,7 +11,7 @@
         <ion-slide *ngFor="let item of torneioItems">
             <ion-card>
                 <ion-item class="barra-mes">
-                    <h2 text-center>{{item.id}}</h2>
+                    <h2 text-center>{{item.nome}}</h2>
                 </ion-item>
 
                 <ion-card-content>
@@ -22,7 +22,7 @@
                                 <p>{{patrulha.nome}}</p>
                             </ion-avatar>
                             <p>
-                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.origin, patrulha.origin)"></progress-bar>
+                                <progress-bar progress="{{patrulha.pontos}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.id, patrulha.id)"></progress-bar>
                             </p>
                         </ion-item>
                     </ion-row>
