@@ -2,67 +2,73 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import { Api } from '../api/api';
+
 import { CicloTorneio } from '../../models/cicloTorneio';
 import { CicloTorneioPontuacao, PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
 
 import { PatrulhaProvider } from '../patrulha/patrulha';
 
+const maxCiclos: number = 12;
+
 @Injectable()
 export class CicloTorneioEficienciaProvider {
 
-  cicloData: CicloTorneio[] = [{
-    id: "2017-09",
-    nome: "Setembro 2017"
-  }, {
-    id: "2017-08",
-    nome: "Agosto 2017"
-  }, {
-    id: "2017-07",
-    nome: "Julho 2017"
-  }, {
-    id: "2017-06",
-    nome: "Junho 2017"
-  }, {
-    id: "2017-05",
-    nome: "Maio 2017"
-  }, {
-    id: "2017-04",
-    nome: "Abril 2017"
-  }, {
-    id: "2017-03",
-    nome: "Março 2017"
-  }, {
-    id: "2017-02",
-    nome: "Fevereiro 2017"
-  }, {
-    id: "2017-01",
-    nome: "Janeiro 2017"
-  }, {
-    id: "2016-12",
-    nome: "Dezembro 2016"
-  }, {
-    id: "2016-11",
-    nome: "Novembro 2016"
-  }, {
-    id: "2016-10",
-    nome: "Outubro 2016"
-  }];
+  promise: Promise<any>;
 
-  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider) {
+  data: CicloTorneio[];
+
+  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider, public api: Api) {
+    this.loadCiclos();
   }
 
-  ciclos(): CicloTorneio[] {
-    return this.cicloData;
-  }
+  loadCiclos() {
+    this.promise = this.api.get('ciclos/ciclos.json').toPromise();
+    this.promise.then(res => {
+      // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
 
-  ciclo(id: string): CicloTorneio {
-    for (let ciclo of this.cicloData) {
-      if (ciclo.id == id) {
-        return ciclo;
+      this.data = [];
+      for (let ciclo of res.json()) {
+        this.data.push({
+          id: ciclo.id,
+          nome: ciclo.nome
+        })
+
+        if (this.data.length >= maxCiclos) {
+          break;
+        }
       }
+
+      // console.log("API Usando Ciclos: " + JSON.stringify(this.data));
+      this.promise = undefined;
+    });
+  }
+
+  ciclos(): Promise<CicloTorneio[]> {
+    if (!this.promise && this.data) {
+      return Promise.resolve(this.data);
     }
 
-    return null;
+    return new Promise<CicloTorneio[]>((resolve, reject) => {
+      this.promise.then(res => {
+        resolve(this.data);
+      });
+    })
+
+  }
+
+  ciclo(id: string): Promise<CicloTorneio> {
+    return new Promise<CicloTorneio>((resolve, reject) => {
+      this.ciclos().then(ciclos => {
+        for (let ciclo of ciclos) {
+          if (ciclo.id == id) {
+            return resolve(ciclo);
+          }
+        }
+
+        return resolve(null);
+      })
+    })
   }
 
   pontuacaoCiclo(idCiclo: string): Promise<CicloTorneioPontuacao> {

@@ -57,7 +57,7 @@ export class PatrulhaProvider {
   patrulha(id: string): Promise<Patrulha> {
     return new Promise<Patrulha>((resolve, reject) => {
       this.patrulhas().then(patrulhas => {
-        for (let patrulha of this.data) {
+        for (let patrulha of patrulhas) {
           if (patrulha.id == id) {
             return resolve(patrulha);
           }

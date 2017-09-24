@@ -16,41 +16,42 @@ export class TorneioPage {
   torneioItems: any[];
 
   constructor(
-    public navCtrl: NavController,
-    public patrulhaProvider: PatrulhaProvider,
-    public cicloProvider: CicloTorneioEficienciaProvider) {
+          public navCtrl: NavController,
+          public patrulhaProvider: PatrulhaProvider,
+          public cicloProvider: CicloTorneioEficienciaProvider) {
+    this.cicloProvider.ciclos().then(ciclos => {
+      this.torneioItems = [];
+      for (let ciclo of ciclos) {
+        this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
+          // console.log("Pontuacao: " + JSON.stringify(pontuacao));
 
-    this.torneioItems = [];
-    for (let ciclo of this.cicloProvider.ciclos()) {
-      this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
-        // console.log("Pontuacao: " + JSON.stringify(pontuacao));
+          let item = {
+            id: ciclo.nome,
+            maxPontos: pontuacao.maxPontos,
+            patrulha: [],
 
-        let item = {
-          id: ciclo.nome,
-          maxPontos: pontuacao.maxPontos,
-          patrulha: [],
+            origin: pontuacao
+          }
 
-          origin: pontuacao
-        }
+          for (let pontuacaoPatrulha of pontuacao.patrulha) {
+            patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(patrulha => {
+              item.patrulha.push({
+                id: patrulha.id,
+                nome: patrulha.nome,
+                avatar: patrulha.avatar,
+                pontos: cicloProvider.totalPontos(pontuacaoPatrulha),
+                cor: patrulha.cor,
 
-        for (let pontuacaoPatrulha of pontuacao.patrulha) {
-          patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(patrulha => {
-            item.patrulha.push({
-              id: patrulha.id,
-              nome: patrulha.nome,
-              avatar: patrulha.avatar,
-              pontos: cicloProvider.totalPontos(pontuacaoPatrulha),
-              cor: patrulha.cor,
-
-              origin: pontuacaoPatrulha
+                origin: pontuacaoPatrulha
+              })
             })
-          })
-        }
+          }
 
-        // console.log("Item: " + JSON.stringify(item));
-        this.torneioItems.push(item);
-      })
-    }
+          // console.log("Item: " + JSON.stringify(item));
+          this.torneioItems.push(item);
+        })
+      }
+    })
   }
 
   ionViewDidLoad() {

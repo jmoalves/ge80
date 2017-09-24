@@ -55,8 +55,9 @@ export class CicloDetalhePage {
     public patrulhaProvider: PatrulhaProvider,
     public cicloProvider: CicloTorneioEficienciaProvider) {
 
-    let ciclo = cicloProvider.ciclo(navParams.data.ciclo.idCiclo);
-    this.ciclo = ciclo.nome;
+    cicloProvider.ciclo(navParams.data.ciclo.idCiclo).then(ciclo => {
+      this.ciclo = ciclo.nome;
+    });
     this.maxPontos = navParams.data.ciclo.maxPontos;
 
 
