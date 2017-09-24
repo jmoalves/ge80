@@ -49,7 +49,6 @@ export class CicloTorneioEficienciaProvider {
     }];
 
   constructor(public http: Http, public patrulhaProvider: PatrulhaProvider) {
-    console.log('Hello CicloTorneioEficienciaProvider Provider');
   }
 
   ciclos(): CicloTorneio[] {

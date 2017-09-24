@@ -13,7 +13,6 @@ import { Patrulha } from '../../models/patrulha';
 @Injectable()
 export class PatrulhaProvider {
   constructor(public http: Http) {
-    console.log('Hello PatrulhaProvider Provider');
   }
 
   data: Patrulha[] = [{
