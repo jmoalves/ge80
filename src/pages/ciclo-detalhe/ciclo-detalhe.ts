@@ -24,6 +24,8 @@ export class CicloDetalhePage {
 
   pontuacao: PontuacaoPatrulha;
 
+  subGrupo: string = "reuniao";
+
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,

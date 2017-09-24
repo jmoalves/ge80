@@ -1,4 +1,7 @@
 page-ciclo-detalhe {
+    * {
+        font-size: .95em;
+    }
     .toolbar-background {
         background-color: #000066;
     }
@@ -12,5 +15,14 @@ page-ciclo-detalhe {
         background-image: url('../assets/img/floresta-da-tijuca.jpg');
         background-repeat: no-repeat;
         background-size: cover;
+    }
+    .header {
+        background-color: lightgrey;
+    }
+    .total {
+        font-weight: bold;
+    }
+    .row:not(.total) {
+        border-bottom: solid 1px lightgrey;
     }
 }

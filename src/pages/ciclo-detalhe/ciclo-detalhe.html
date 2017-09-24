@@ -11,29 +11,154 @@
     <ion-card>
         <ion-card-header>
             <ion-item class="barra-mes">
-                <h2 text-center>{{ciclo}}</h2>
-                <h2 text-center>{{patrulha}}</h2>
-                <h2 text-center>Total: {{totalPontos}}</h2>
+                <h2>{{ciclo}}</h2>
+                <h2>{{patrulha}}</h2>
+                <h2>Total: {{totalPontos}}</h2>
             </ion-item>
         </ion-card-header>
 
         <ion-card-content>
-            <ion-item>materialPatrulha: {{pontuacao.pontos.materialPatrulha}}</ion-item>
-            <ion-item>cantoPatrulhaVirtual: {{pontuacao.pontos.cantoPatrulhaVirtual}}</ion-item>
-            <ion-item>livrosPatrulha: {{pontuacao.pontos.livrosPatrulha}}</ion-item>
+            <div padding>
+                <ion-segment [(ngModel)]="subGrupo">
+                    <ion-segment-button value="reuniao">
+                        Reunião
+                    </ion-segment-button>
+                    <ion-segment-button value="extras">
+                        Extras
+                    </ion-segment-button>
+                    <ion-segment-button value="mensal">
+                        Mensal
+                    </ion-segment-button>
+                </ion-segment>
+            </div>
 
-            <div *ngFor="let dia of pontuacao.pontos.porDia">
-                <ion-item>Dia: {{dia.id}}</ion-item>
-                <ion-item>pontualidade: {{dia.pontualidade}}</ion-item>
-                <ion-item>presenca: {{dia.presenca}}</ion-item>
-                <ion-item>vestuario: {{dia.vestuario}}</ion-item>
-                <ion-item>participacao: {{dia.participacao}}</ion-item>
-                <ion-item>espiritoEscoteiro: {{dia.espiritoEscoteiro}}</ion-item>
-                <ion-item>jogoTecnico: {{dia.jogoTecnico}}</ion-item>
-                <ion-item>conquistas: {{dia.conquistas}}</ion-item>
-                <ion-item>extras: {{dia.extras}}</ion-item>
-                <ion-item>penalidade: {{dia.penalidade}}</ion-item>
-                <ion-item>atividadeExterna: {{dia.atividadeExterna}}</ion-item>
+            <div [ngSwitch]="subGrupo">
+                <ion-grid *ngSwitchCase="'reuniao'">
+                    <ion-row class="header">
+                        <ion-col col-4> </ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.id}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total"></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Pontualidade</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.pontualidade}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Presença</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.presenca}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Vestuário</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.vestuario}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Participação</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.participacao}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Espírito Escoteiro</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.espiritoEscoteiro}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Jogo Técnico</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.jogoTecnico}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row class="total">
+                        <ion-col col-4></ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            60
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">240</ion-col>
+                    </ion-row>
+                </ion-grid>
+
+                <ion-grid *ngSwitchCase="'extras'">
+                    <ion-row class="header">
+                        <ion-col col-4> </ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.id}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total"></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Conquistas</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.conquistas}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Extras</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.extras}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Penalidade</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.penalidade}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4>Atividade Externa</ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            {{dia.atividadeExterna}}
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">140</ion-col>
+                    </ion-row>
+                    <ion-row class="total">
+                        <ion-col col-4></ion-col>
+                        <ion-col text-right *ngFor="let dia of pontuacao.pontos.porDia">
+                            60
+                        </ion-col>
+                        <ion-col text-right col-2 class="total">240</ion-col>
+                    </ion-row>
+                </ion-grid>
+
+                <ion-grid *ngSwitchCase="'mensal'">
+                    <ion-row>
+                        <ion-col col-8>Material Patrulha</ion-col>
+                        <ion-col col-2></ion-col>
+                        <ion-col text-right col-2>{{pontuacao.pontos.materialPatrulha}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-8>Canto Patrulha Virtual</ion-col>
+                        <ion-col col-2></ion-col>
+                        <ion-col text-right col-2>{{pontuacao.pontos.cantoPatrulhaVirtual}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-8>Livros Patrulha</ion-col>
+                        <ion-col col-2></ion-col>
+                        <ion-col text-right col-2>{{pontuacao.pontos.livrosPatrulha}}</ion-col>
+                    </ion-row>
+                    <ion-row class="total">
+                        <ion-col col-8></ion-col>
+                        <ion-col col-2></ion-col>
+                        <ion-col text-right col-2 class="total">150</ion-col>
+                    </ion-row>
+                </ion-grid>
             </div>
         </ion-card-content>
     </ion-card>

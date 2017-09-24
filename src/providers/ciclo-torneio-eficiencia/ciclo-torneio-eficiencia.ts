@@ -70,7 +70,7 @@ export class CicloTorneioEficienciaProvider {
 
     let pontuacao = {
       "idCiclo": idCiclo,
-      maxPontos: 550,
+      maxPontos: 650,
       patrulha: []
     };
 
@@ -121,6 +121,18 @@ export class CicloTorneioEficienciaProvider {
             atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
           }, {
             id: "D4",
+            pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
+            presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
+            vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
+            participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
+            espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
+            jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
+            conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
+            extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
+            penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
+            atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
+          }, {
+            id: "D5",
             pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
             presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
             vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
