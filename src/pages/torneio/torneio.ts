@@ -21,7 +21,7 @@ export class TorneioPage {
           public cicloProvider: CicloTorneioEficienciaProvider) {
     this.cicloProvider.ciclos().then(ciclos => {
       this.torneioItems = [];
-      for (let ciclo of ciclos) {
+      for (let ciclo of ciclos.reverse()) {
         this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
           // console.log("Pontuacao: " + JSON.stringify(pontuacao));
 
@@ -55,6 +55,14 @@ export class TorneioPage {
   }
 
   ionViewDidLoad() {
+  }
+
+  get initialSlide() {
+    if (!this.torneioItems) {
+      return 0;
+    }
+
+    return this.torneioItems.length;
   }
 
   barClicked(evt, cicloPontuacao, patrulhaPontuacao) {
