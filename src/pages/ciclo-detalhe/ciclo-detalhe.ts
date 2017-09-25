@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Patrulha } from '../../models/patrulha';
-import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
-
 /**
  * Generated class for the CicloDetalhePage page.
  *
