@@ -16,6 +16,7 @@ import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 import { CicloTorneioEficienciaProvider } from '../providers/ciclo-torneio-eficiencia/ciclo-torneio-eficiencia';
 import { PatrulhaProvider } from '../providers/patrulha/patrulha';
+import { TorneioProvider } from '../providers/torneio/torneio';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -70,7 +71,8 @@ export function provideSettings(storage: Storage) {
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CicloTorneioEficienciaProvider,
-    PatrulhaProvider
+    PatrulhaProvider,
+    TorneioProvider
   ]
 })
 export class AppModule { }
