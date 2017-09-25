@@ -18,7 +18,6 @@ import { PontuacaoPatrulha } from '../../models/cicloTorneioPontuacao';
 })
 export class CicloDetalhePage {
   torneioItems: any[];
-  item: any;
 
   idCiclo: string;
   idPatrulha: string;
@@ -34,17 +33,20 @@ export class CicloDetalhePage {
 
     this.torneioItems = navParams.data.items;
 
-    for (let item of this.torneioItems) {
-      if (item.id == this.idCiclo) {
-        this.item = item;
-        break;
-      }
-    }
-
     this.subGrupo = 'reuniao';
   }
 
   ionViewDidLoad() {
+  }
+
+  get item() {
+    for (let item of this.torneioItems) {
+      if (item.id == this.idCiclo) {
+        return item;
+      }
+    }
+
+    return null;
   }
 
   get initialSlide() {
