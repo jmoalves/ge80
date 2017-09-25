@@ -25,9 +25,14 @@ page-ciclo-detalhe {
     .total {
         background-color: lightgrey;
     }
-    .total-geral {
-        font-size: 1.3em;
+    .total-linha {
+        border-left: solid 1px lightgrey;
         font-weight: bold;
+    }
+    .total-geral {
+        font-weight: bold;
+        color: white;
+        background-color: map-get($colors, primary);
     }
     .row:not(.total) {
         border-bottom: solid 1px lightgrey;
