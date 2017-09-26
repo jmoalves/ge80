@@ -15,8 +15,10 @@ export class TorneioPage {
   torneioItems: any[];
 
   constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
-    this.torneioProvider.torneioItems().then(items => {
-      this.torneioItems = items;
+    var page = this;
+
+    this.torneioProvider.torneioItems().then(function (items) {
+      page.torneioItems = items;
     })
   }
 

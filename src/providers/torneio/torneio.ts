@@ -24,8 +24,6 @@ export class TorneioProvider {
         let torneioItems = [];
         for (let ciclo of ciclos.reverse()) {
           this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
-            // console.log("Pontuacao: " + JSON.stringify(pontuacao));
-
             let item = {
               id: ciclo.id,
               nome: ciclo.nome,
