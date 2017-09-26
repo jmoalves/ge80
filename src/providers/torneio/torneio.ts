@@ -12,6 +12,8 @@ export class TorneioProvider {
     public cicloProvider: CicloTorneioEficienciaProvider) {
   }
 
+  init() {}
+
   torneioItems(): Promise<any[]> {
     var provider = this;
     return new Promise(function(resolve, reject) {

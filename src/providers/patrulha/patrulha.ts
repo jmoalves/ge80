@@ -20,10 +20,9 @@ export class PatrulhaProvider {
   dataPromise: Promise<any>;
 
   constructor(public http: Http, public api: Api) {
-    this.loadPatrulha();
   }
 
-  loadPatrulha() {
+  init() {
     this.dataPromise = this.api.get('patrulhas/patrulhas.json').toPromise();
     this.dataPromise.then(res => {
       console.log("API GET Patrulhas: " + JSON.stringify(res.json()));

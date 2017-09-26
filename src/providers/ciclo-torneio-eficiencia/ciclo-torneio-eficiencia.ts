@@ -19,10 +19,9 @@ export class CicloTorneioEficienciaProvider {
   data: CicloTorneio[];
 
   constructor(public http: Http, public patrulhaProvider: PatrulhaProvider, public api: Api) {
-    this.loadCiclos();
   }
 
-  loadCiclos() {
+  init() {
     this.promise = this.api.get('ciclos/ciclos.json').toPromise();
     this.promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
