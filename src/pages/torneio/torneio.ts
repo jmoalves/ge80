@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Slides } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
 
@@ -10,7 +10,7 @@ import { TorneioProvider } from '../../providers/torneio/torneio';
 })
 
 export class TorneioPage {
-  maxPontos: number;
+  @ViewChild('slideManager') slideManager: Slides;
 
   torneioItems: any[];
 
@@ -19,18 +19,12 @@ export class TorneioPage {
 
     this.torneioProvider.torneioItems().then(function (items) {
       page.torneioItems = items;
+      page.slideManager.update();
+      console.log("Torneio UPDATE");
     })
   }
 
   ionViewDidLoad() {
-  }
-
-  get initialSlide() {
-    if (!this.torneioItems) {
-      return 0;
-    }
-
-    return this.torneioItems.length;
   }
 
   barClicked(evt, idCiclo, idPatrulha) {
