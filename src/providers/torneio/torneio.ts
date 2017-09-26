@@ -5,12 +5,6 @@ import 'rxjs/add/operator/map';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { CicloTorneioEficienciaProvider } from '../../providers/ciclo-torneio-eficiencia/ciclo-torneio-eficiencia';
 
-/*
-  Generated class for the TorneioProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class TorneioProvider {
   constructor(public http: Http,

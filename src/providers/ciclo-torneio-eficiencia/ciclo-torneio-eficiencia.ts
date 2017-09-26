@@ -71,96 +71,26 @@ export class CicloTorneioEficienciaProvider {
     })
   }
 
-  pontuacaoCiclo(idCiclo: string): Promise<CicloTorneioPontuacao> {
+  pontuacaoCiclo(id: string): Promise<CicloTorneioPontuacao> {
     return new Promise<CicloTorneioPontuacao>((resolve, reject) => {
-      this.patrulhaProvider.patrulhas().then(patrulhas => {
-        let max = this.maxPontos();
+      this.promise = this.api.get('ciclos/' + id + '.json').toPromise().then(res => {
+        var json = res.json();
 
-        let pontuacao = {
-          "idCiclo": idCiclo,
-          maxPontos: 600,
-          patrulha: []
-        };
+        // console.log("API GET " + id + " => " + JSON.stringify(json));
 
-        for (let patrulha of patrulhas) {
-          pontuacao.patrulha.push({
-            idPatrulha: patrulha.id,
+        json.maxPontos = undefined; // Importante! Adiciona o atributo.
+        json.maxPontos = this.maxPontos(json);
 
-            pontos: {
-              cantoPatrulhaVirtual: Math.round(Math.random() * max.patrulha[0].pontos.cantoPatrulhaVirtual),
-              livrosPatrulha: Math.round(Math.random() * max.patrulha[0].pontos.livrosPatrulha),
-              materialPatrulha: Math.round(Math.random() * max.patrulha[0].pontos.materialPatrulha),
-
-              porDia: [{
-                id: "02",
-                pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
-                presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
-                vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
-                participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
-                espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
-                jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
-                conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
-                extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
-                penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
-                atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
-              }, {
-                id: "09",
-                pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
-                presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
-                vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
-                participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
-                espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
-                jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
-                conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
-                extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
-                penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
-                atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
-              }, {
-                id: "16",
-                pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
-                presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
-                vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
-                participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
-                espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
-                jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
-                conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
-                extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
-                penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
-                atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
-              }, {
-                id: "23",
-                pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
-                presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
-                vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
-                participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
-                espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
-                jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
-                conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
-                extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
-                penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
-                atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
-              }, {
-                id: "30",
-                pontualidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].pontualidade),
-                presenca: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].presenca),
-                vestuario: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].vestuario),
-                participacao: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].participacao),
-                espiritoEscoteiro: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].espiritoEscoteiro),
-                jogoTecnico: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].jogoTecnico),
-                conquistas: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].conquistas),
-                extras: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].extras),
-                penalidade: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].penalidade),
-                atividadeExterna: Math.round(Math.random() * max.patrulha[0].pontos.porDia[0].atividadeExterna)
-              }]
-            }
-          })
+        for (let x in json.patrulha) {
+          json.patrulha[x].totalPontos = undefined; // Importante! Adiciona o atributo.
+          json.patrulha[x].totalPontos = this.totalPontos(json.patrulha[x]);
         }
 
-        resolve(pontuacao);
-      })
+        // console.log("Ciclo " + id + " => " + JSON.stringify(json));
+        resolve(json);
+      });
     });
   }
-
 
   totalPontos(pontuacao: PontuacaoPatrulha): number {
     let pontosPatrulha = 0;
@@ -183,34 +113,28 @@ export class CicloTorneioEficienciaProvider {
     return pontosPatrulha;
   }
 
-  maxPontos(): CicloTorneioPontuacao {
-    return {
-      "idCiclo": "Max",
+  maxPontos(pontuacao: CicloTorneioPontuacao): number {
+    let maxPontos = 0;
 
-      maxPontos: 250,
+    maxPontos += 50; //cantoPatrulhaVirtual
+    maxPontos += 50; //livrosPatrulha
+    maxPontos += 50; //materialPatrulha
 
-      patrulha: [{
-        idPatrulha: "Max",
-        pontos: {
-          cantoPatrulhaVirtual: 50,
-          livrosPatrulha: 50,
-          materialPatrulha: 50,
+    // Assume a consistência, ou seja, todas as patrulhas
+    // tem o mesmo número de dias
+    let dias = pontuacao.patrulha[0].pontos.porDia.length;
 
-          porDia: [{
-            id: "DIA",
-            pontualidade: 10,
-            presenca: 10,
-            vestuario: 10,
-            participacao: 10,
-            espiritoEscoteiro: 10,
-            jogoTecnico: 10,
-            conquistas: 10,
-            extras: 10,
-            penalidade: 10,
-            atividadeExterna: 10
-          }]
-        }
-      }]
-    }
+    maxPontos += (dias * 10); //pontualidade
+    maxPontos += (dias * 10); //presenca
+    maxPontos += (dias * 10); //vestuario
+    maxPontos += (dias * 10); //participacao
+    maxPontos += (dias * 10); //espiritoEscoteiro
+    maxPontos += (dias * 10); //jogoTecnico
+    maxPontos += (dias * 10); //conquistas
+    maxPontos += (dias * 10); //extras
+    maxPontos += (dias * 10); //penalidade
+    maxPontos += (dias * 10); //atividadeExterna
+
+    return maxPontos;
   }
 }

@@ -7,6 +7,8 @@
 export class PontuacaoPatrulha {
   idPatrulha: string;
 
+  totalPontos: number;
+
   pontos: {
     materialPatrulha: number;
     cantoPatrulhaVirtual: number;
