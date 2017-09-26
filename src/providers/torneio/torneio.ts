@@ -13,11 +13,12 @@ export class TorneioProvider {
   }
 
   torneioItems(): Promise<any[]> {
-    return new Promise((resolve, reject) => {
-      this.cicloProvider.ciclos().then(ciclos => {
+    var provider = this;
+    return new Promise(function(resolve, reject) {
+      provider.cicloProvider.ciclos().then(function(ciclos) {
         let torneioItems = [];
-        for (let ciclo of ciclos.reverse()) {
-          this.cicloProvider.pontuacaoCiclo(ciclo.id).then(pontuacao => {
+        for (let ciclo of ciclos) {
+          provider.cicloProvider.pontuacaoCiclo(ciclo.id).then(function(pontuacao) {
             let item = {
               id: ciclo.id,
               nome: ciclo.nome,
@@ -28,12 +29,12 @@ export class TorneioProvider {
             }
 
             for (let pontuacaoPatrulha of pontuacao.patrulha) {
-              this.patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(patrulha => {
+              provider.patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(function(patrulha) {
                 let pontos = {
                   id: patrulha.id,
                   nome: patrulha.nome,
                   avatar: patrulha.avatar,
-                  pontos: this.cicloProvider.totalPontos(pontuacaoPatrulha),
+                  pontos: pontuacaoPatrulha.totalPontos,
                   cor: patrulha.cor,
 
                   origin: pontuacaoPatrulha,
