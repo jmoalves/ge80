@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Slides } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
 
@@ -10,21 +10,41 @@ import { TorneioProvider } from '../../providers/torneio/torneio';
 })
 
 export class TorneioPage {
-  @ViewChild('slideManager') slideManager: Slides;
-
   torneioItems: any[];
 
   constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
-    var page = this;
+    this.torneioProvider.ciclos().then(ciclos => {
+      let items: any[] = [];
+      for (let ciclo in ciclos) {
+        // console.log("Ciclo: " + JSON.stringify(ciclos[ciclo]));
+        let item: any = ciclos[ciclo];
+        let patrulhas = ciclos[ciclo].patrulha;
+        item.patrulha = [];
+        for (let patrulha in patrulhas) {
+          // console.log("Patrulha: " + JSON.stringify(patrulhas[patrulha]));
+          item.patrulha.push(patrulhas[patrulha]);
+        }
+        // console.log("Item: " + JSON.stringify(item));
+        items.push(item);
+      }
 
-    this.torneioProvider.torneioItems().then(function (items) {
-      page.torneioItems = items;
-      page.slideManager.update();
+      this.torneioItems = items;
       console.log("Torneio UPDATE");
     })
   }
 
   ionViewDidLoad() {
+  }
+
+  get initialSlide() {
+    console.log("initial");
+    if (this.torneioItems) {
+      console.log("Torneio " + this.torneioItems.length);
+      return this.torneioItems.length;
+    }
+
+    console.log("ZERO Torneio " + this.torneioItems.length);
+    return  0;
   }
 
   barClicked(evt, idCiclo, idPatrulha) {

@@ -2,109 +2,167 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import { Api } from '../../providers/api/api';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
-import { CicloTorneioEficienciaProvider } from '../../providers/ciclo-torneio-eficiencia/ciclo-torneio-eficiencia';
+import { Ciclo, PontuacaoPatrulha } from '../../models/torneio/ciclo';
 
 @Injectable()
 export class TorneioProvider {
-  constructor(public http: Http,
-    public patrulhaProvider: PatrulhaProvider,
-    public cicloProvider: CicloTorneioEficienciaProvider) {
+  data: { [key: string]: Ciclo };
+  promise: Promise<any>;
+
+  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider, public api: Api) {
   }
 
-  init() {}
+  ciclos(): Promise<{ [key: string]: Ciclo }> {
+    if (!this.promise && this.data) {
+      return Promise.resolve(this.data);
+    }
 
-  torneioItems(): Promise<any[]> {
-    var provider = this;
-    return new Promise(function(resolve, reject) {
-      provider.cicloProvider.ciclos().then(function(ciclos) {
-        let torneioItems = [];
-        for (let ciclo of ciclos) {
-          provider.cicloProvider.pontuacaoCiclo(ciclo.id).then(function(pontuacao) {
-            let item = {
-              id: ciclo.id,
-              nome: ciclo.nome,
-              maxPontos: pontuacao.maxPontos,
-              patrulha: [],
+    return new Promise<{ [key: string]: Ciclo }>((resolve, reject) => {
+      this.promise.then(res => {
+        resolve(this.data);
+      });
+    })
+  }
 
-              origin: pontuacao
-            }
 
-            for (let pontuacaoPatrulha of pontuacao.patrulha) {
-              provider.patrulhaProvider.patrulha(pontuacaoPatrulha.idPatrulha).then(function(patrulha) {
-                let pontos = {
-                  id: patrulha.id,
-                  nome: patrulha.nome,
-                  avatar: patrulha.avatar,
-                  pontos: pontuacaoPatrulha.totalPontos,
-                  cor: patrulha.cor,
+  ciclo(id: string): Promise<Ciclo> {
+    if (!this.promise && this.data) {
+      return Promise.resolve(this.data[id]);
+    }
 
-                  origin: pontuacaoPatrulha,
-
-                  totalPontualidade: 0,
-                  totalPresenca: 0,
-                  totalVestuario: 0,
-                  totalParticipacao: 0,
-                  totalEspiritoEscoteiro: 0,
-                  totalJogoTecnico: 0,
-                  totalDiaReuniao: [],
-                  totalGeralReuniao: 0,
-
-                  totalConquistas: 0,
-                  totalExtras: 0,
-                  totalPenalidade: 0,
-                  totalAtividadeExterna: 0,
-                  totalDiaExtras: [],
-                  totalGeralExtras: 0,
-
-                  totalGeralMensal: 0
-                }
-
-                for (let dia of pontuacaoPatrulha.pontos.porDia) {
-                  pontos.totalPontualidade += dia.pontualidade;
-                  pontos.totalPresenca += dia.presenca;
-                  pontos.totalVestuario += dia.vestuario;
-                  pontos.totalParticipacao += dia.participacao;
-                  pontos.totalEspiritoEscoteiro += dia.espiritoEscoteiro;
-                  pontos.totalJogoTecnico += dia.jogoTecnico;
-                  pontos.totalConquistas += dia.conquistas;
-                  pontos.totalExtras += dia.extras;
-                  pontos.totalPenalidade += dia.penalidade;
-                  pontos.totalAtividadeExterna += dia.atividadeExterna;
-
-                  pontos.totalDiaReuniao[dia.id] =
-                    dia.pontualidade +
-                    dia.presenca +
-                    dia.vestuario +
-                    dia.participacao +
-                    dia.espiritoEscoteiro +
-                    dia.jogoTecnico;
-                  pontos.totalGeralReuniao += pontos.totalDiaReuniao[dia.id];
-
-                  pontos.totalDiaExtras[dia.id] =
-                    dia.conquistas +
-                    dia.extras -
-                    dia.penalidade +
-                    dia.atividadeExterna;
-                  pontos.totalGeralExtras += pontos.totalDiaExtras[dia.id];
-                }
-
-                pontos.totalGeralMensal =
-                  pontuacaoPatrulha.pontos.materialPatrulha +
-                  pontuacaoPatrulha.pontos.cantoPatrulhaVirtual +
-                  pontuacaoPatrulha.pontos.livrosPatrulha;
-
-                item.patrulha.push(pontos);
-              })
-            }
-
-            // console.log("Item: " + JSON.stringify(item));
-            torneioItems.push(item);
-          })
-        }
-
-        resolve(torneioItems);
+    return new Promise<Ciclo>((resolve, reject) => {
+      this.promise.then(res => {
+        resolve(this.data[id]);
       })
+    })
+  }
+
+  init() {
+    this.promise = this.api.get('api/ciclos.json').toPromise();
+    this.promise.then(res => {
+      // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
+
+      this.data = res.json();
+      for (let ciclo in this.data) {
+        this.computaTotais(this.data[ciclo]);
+      }
+
+      this.promise = undefined;
+      // console.log("API Usando Ciclos: " + JSON.stringify(this.data));
+    });
+  }
+
+  private computaTotais(ciclo: Ciclo) {
+    this.maxPontos(ciclo);
+
+    for (let patrulha in ciclo.patrulha) {
+      this.computaPontosPatrulha(ciclo.patrulha[patrulha]);
+      this.complementaPatrulha(patrulha, ciclo.patrulha[patrulha]);
+    }
+  }
+
+  private maxPontos(ciclo: Ciclo) {
+    ciclo.maxPontos = 0;
+
+    ciclo.maxPontos += 50; //cantoPatrulhaVirtual
+    ciclo.maxPontos += 50; //livrosPatrulha
+    ciclo.maxPontos += 50; //materialPatrulha
+
+    // Assume a consistência, ou seja, todas as patrulhas
+    // tem o mesmo número de dias
+    for (let x in ciclo.patrulha) {
+      for (let y in ciclo.patrulha[x].pontos.dia) {
+        ciclo.maxPontos += 10; //pontualidade
+        ciclo.maxPontos += 10; //presenca
+        ciclo.maxPontos += 10; //vestuario
+        ciclo.maxPontos += 10; //participacao
+        ciclo.maxPontos += 10; //espiritoEscoteiro
+        ciclo.maxPontos += 10; //jogoTecnico
+        ciclo.maxPontos += 10; //conquistas
+        ciclo.maxPontos += 10; //extras
+        ciclo.maxPontos += 10; //penalidade
+        ciclo.maxPontos += 10; //atividadeExterna
+      }
+      // Feio! Mas é para uma iteração mesmo
+      return;
+    }
+  }
+
+  private computaPontosPatrulha(patrulha: PontuacaoPatrulha) {
+    patrulha.totais = {
+      geral: 0,
+
+      totalPontualidade: 0,
+      totalPresenca: 0,
+      totalVestuario: 0,
+      totalParticipacao: 0,
+      totalEspiritoEscoteiro: 0,
+      totalJogoTecnico: 0,
+      totalGeralReuniao: 0,
+      totalDiaReuniao: {},
+
+      totalConquistas: 0,
+      totalExtras: 0,
+      totalPenalidade: 0,
+      totalAtividadeExterna: 0,
+      totalGeralExtras: 0,
+      totalDiaExtras: {},
+
+      totalGeralMensal: 0
+    }
+
+    for (let dia in patrulha.pontos.dia) {
+      // Pontos normais de reunião
+      patrulha.totais.totalPontualidade += patrulha.pontos.dia[dia].pontualidade;
+      patrulha.totais.totalPresenca += patrulha.pontos.dia[dia].presenca;
+      patrulha.totais.totalVestuario += patrulha.pontos.dia[dia].vestuario;
+      patrulha.totais.totalParticipacao += patrulha.pontos.dia[dia].participacao;
+      patrulha.totais.totalEspiritoEscoteiro += patrulha.pontos.dia[dia].espiritoEscoteiro;
+      patrulha.totais.totalJogoTecnico += patrulha.pontos.dia[dia].jogoTecnico;
+
+      patrulha.totais.totalDiaReuniao[dia] =
+        patrulha.pontos.dia[dia].pontualidade +
+        patrulha.pontos.dia[dia].presenca +
+        patrulha.pontos.dia[dia].vestuario +
+        patrulha.pontos.dia[dia].participacao +
+        patrulha.pontos.dia[dia].espiritoEscoteiro +
+        patrulha.pontos.dia[dia].jogoTecnico;
+      patrulha.totais.totalGeralReuniao += patrulha.totais.totalDiaReuniao[dia];
+
+      // Categorias extras
+      patrulha.totais.totalConquistas += patrulha.pontos.dia[dia].conquistas;
+      patrulha.totais.totalExtras += patrulha.pontos.dia[dia].extras;
+      patrulha.totais.totalPenalidade -= patrulha.pontos.dia[dia].penalidade;
+      patrulha.totais.totalAtividadeExterna += patrulha.pontos.dia[dia].atividadeExterna;
+
+      patrulha.totais.totalDiaExtras[dia] =
+        patrulha.pontos.dia[dia].conquistas +
+        patrulha.pontos.dia[dia].extras -
+        patrulha.pontos.dia[dia].penalidade +
+        patrulha.pontos.dia[dia].atividadeExterna;
+      patrulha.totais.totalGeralExtras += patrulha.totais.totalDiaExtras[dia];
+    }
+
+    // Pontos mensais
+    patrulha.totais.totalGeralMensal =
+      patrulha.pontos.materialPatrulha +
+      patrulha.pontos.cantoPatrulhaVirtual +
+      patrulha.pontos.livrosPatrulha;
+
+    // Total Geral
+    patrulha.totais.geral =
+      patrulha.totais.totalGeralReuniao +
+      patrulha.totais.totalGeralExtras +
+      patrulha.totais.totalGeralMensal;
+  }
+
+  private complementaPatrulha(id: string, pontuacao: PontuacaoPatrulha) {
+    this.patrulhaProvider.patrulha(id).then(patrulha => {
+      pontuacao.nome = patrulha.nome;
+      pontuacao.avatar = patrulha.avatar;
+      pontuacao.cor = patrulha.cor;
     });
   }
 }

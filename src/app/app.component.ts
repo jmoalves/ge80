@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Config, Nav, Platform } from 'ionic-angular';
+import { Nav, Platform } from 'ionic-angular';
 
 import { FirstRunPage } from '../pages/pages';
-import { CicloTorneioEficienciaProvider, PatrulhaProvider, TorneioProvider, Settings } from '../providers/providers';
+import { PatrulhaProvider, TorneioProvider, Settings } from '../providers/providers';
 
 @Component({
   template: `<ion-menu [content]="content">
@@ -47,17 +47,14 @@ export class MyApp {
   ]
 
   constructor(
-        private platform: Platform,
-        settings: Settings,
-        private config: Config,
-        private statusBar: StatusBar,
-        private splashScreen: SplashScreen,
-        private cicloProvider: CicloTorneioEficienciaProvider,
-        private patrulhaProvider: PatrulhaProvider,
-        private torneioProvider: TorneioProvider) {
-    cicloProvider.init();
-    patrulhaProvider.init();
-    torneioProvider.init();
+    private platform: Platform,
+    settings: Settings,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private patrulhaProvider: PatrulhaProvider,
+    private torneioProvider: TorneioProvider) {
+      this.patrulhaProvider.init();
+      this.torneioProvider.init();
   }
 
   ionViewDidLoad() {

@@ -5,8 +5,7 @@
  */
 
 export class Patrulha {
-  id: string;
   nome: string;
-  avatar: string;
+  avatar?: string;
   cor: string;
 }

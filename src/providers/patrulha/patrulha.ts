@@ -5,8 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Api } from '../api/api';
 
-import { Patrulha } from '../../models/patrulha';
-
+import { Patrulha } from '../../models/patrulha'
 /*
   Generated class for the PatrulhaProvider provider.
 
@@ -15,8 +14,7 @@ import { Patrulha } from '../../models/patrulha';
 */
 @Injectable()
 export class PatrulhaProvider {
-  data: Patrulha[];
-
+  data: { [key: string]: Patrulha };
   dataPromise: Promise<any>;
 
   constructor(public http: Http, public api: Api) {
@@ -27,26 +25,21 @@ export class PatrulhaProvider {
     this.dataPromise.then(res => {
       console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
 
-      this.data = [];
-      for (let patrulha of res.json()) {
-        this.data.push({
-          id: patrulha.id,
-          nome: patrulha.nome,
-          avatar: this.api.url + '/patrulhas/' + patrulha.id + '/avatar.jpg',
-          cor: patrulha.cor
-        })
+      this.data = res.json();
+      for (let key in this.data) {
+        this.data[key].avatar = this.api.url + '/patrulhas/' + key + '/avatar.jpg';
       }
 
       this.dataPromise = undefined;
     });
   }
 
-  patrulhas(): Promise<Patrulha[]> {
+  patrulhas(): Promise<{ [key: string]: Patrulha }> {
     if (!this.dataPromise && this.data) {
       return Promise.resolve(this.data);
     }
 
-    return new Promise<Patrulha[]>((resolve, reject) => {
+    return new Promise<{ [key: string]: Patrulha }>((resolve, reject) => {
       this.dataPromise.then(res => {
         resolve(this.data);
       });
@@ -54,15 +47,13 @@ export class PatrulhaProvider {
   }
 
   patrulha(id: string): Promise<Patrulha> {
-    return new Promise<Patrulha>((resolve, reject) => {
-      this.patrulhas().then(patrulhas => {
-        for (let patrulha of patrulhas) {
-          if (patrulha.id == id) {
-            return resolve(patrulha);
-          }
-        }
+    if (!this.dataPromise && this.data) {
+      return Promise.resolve(this.data[id]);
+    }
 
-        return resolve(null);
+    return new Promise<Patrulha>((resolve, reject) => {
+      this.dataPromise.then(() => {
+        return resolve(this.data[id]);
       })
     })
   }

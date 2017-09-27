@@ -14,7 +14,6 @@ import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
-import { CicloTorneioEficienciaProvider } from '../providers/ciclo-torneio-eficiencia/ciclo-torneio-eficiencia';
 import { PatrulhaProvider } from '../providers/patrulha/patrulha';
 import { TorneioProvider } from '../providers/torneio/torneio';
 
@@ -70,7 +69,6 @@ export function provideSettings(storage: Storage) {
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    CicloTorneioEficienciaProvider,
     PatrulhaProvider,
     TorneioProvider
   ]
