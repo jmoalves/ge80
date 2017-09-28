@@ -46,7 +46,7 @@
                             <ion-row class="header">
                                 <ion-col col-4> </ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
-                                    {{dia.id}}
+                                    {{dia.key}}
                                 </ion-col>
                                 <ion-col text-right class="total">&nbsp;&nbsp;</ion-col>
                             </ion-row>
@@ -95,7 +95,7 @@
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
-                                    {{ patrulha.val.totais.totalDiaReuniao[dia.id] }}
+                                    {{ patrulha.val.totais.totalDiaReuniao[dia.key] }}
                                 </ion-col>
                                 <ion-col text-right class="total total-geral">
                                     {{ patrulha.val.totais.totalGeralReuniao}}
@@ -112,7 +112,7 @@
                             <ion-row class="header">
                                 <ion-col col-4 text-left></ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
-                                    {{dia.val.id}}
+                                    {{dia.key}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha"></ion-col>
                             </ion-row>
@@ -147,7 +147,7 @@
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
-                                    {{ patrulha.val.totais.totalDiaExtras[dia.val.id] }}
+                                    {{ patrulha.val.totais.totalDiaExtras[dia.key] }}
                                 </ion-col>
                                 <ion-col text-right class="total total-geral">
                                     {{ patrulha.val.totais.totalGeralExtras}}
