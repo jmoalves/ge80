@@ -7,22 +7,22 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="true" initialSlide="initialSlide()">
-        <ion-slide *ngFor="let item of torneioItems">
+    <ion-slides #slideMgr pager="true" initialSlide="{{ initialSlide }}">
+        <ion-slide *ngFor="let item of torneioItems | mapToIterable">
             <ion-card>
                 <ion-item class="barra-mes">
-                    <h2 text-center>{{item.nome}}</h2>
+                    <h2 text-center>{{item.val.nome}}</h2>
                 </ion-item>
 
                 <ion-card-content>
-                    <ion-row *ngFor="let patrulha of item.patrulha">
+                    <ion-row *ngFor="let patrulha of item.val.patrulha | mapToIterable">
                         <ion-item>
                             <ion-avatar item-start>
-                                <img [src]="patrulha.avatar">
-                                <p>{{patrulha.nome}}</p>
+                                <img [src]="patrulha.val.avatar">
+                                <p>{{patrulha.val.nome}}</p>
                             </ion-avatar>
                             <p>
-                                <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item.id, patrulha.id)"></progress-bar>
+                                <progress-bar progress="{{patrulha.val.totais.geral}}" maximum="{{item.val.maxPontos}}" color="{{patrulha.val.cor}}" (barClicked)="barClicked($event, item.key, patrulha.key)"></progress-bar>
                             </p>
                         </ion-item>
                     </ion-row>

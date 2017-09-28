@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { TorneioPage } from './torneio';
 import { ComponentsModule } from '../../components/components.module';
+import { PipesModule } from '../../pipes/pipes.module';
+
+import { TorneioPage } from './torneio';
 
 @NgModule({
   declarations: [
@@ -11,6 +13,7 @@ import { ComponentsModule } from '../../components/components.module';
   ],
   imports: [
     ComponentsModule,
+    PipesModule,
     IonicPageModule.forChild(TorneioPage),
     TranslateModule.forChild()
   ],

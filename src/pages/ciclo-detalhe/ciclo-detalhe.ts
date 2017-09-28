@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the CicloDetalhePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Ciclo } from '../../models/torneio/ciclo';
 
 @IonicPage()
 @Component({
@@ -14,7 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'ciclo-detalhe.html',
 })
 export class CicloDetalhePage {
-  torneioItems: any[];
+  torneioItems: { [key: string]: Ciclo };
 
   idCiclo: string;
   idPatrulha: string;
@@ -27,7 +22,6 @@ export class CicloDetalhePage {
 
     this.idCiclo = navParams.data.idCiclo;
     this.idPatrulha = navParams.data.idPatrulha;
-
     this.torneioItems = navParams.data.items;
 
     this.subGrupo = 'reuniao';
@@ -37,20 +31,20 @@ export class CicloDetalhePage {
   }
 
   get item() {
-    for (let item of this.torneioItems) {
-      if (item.id == this.idCiclo) {
-        return item;
-      }
-    }
-
-    return null;
+    let item = this.torneioItems[this.idCiclo];
+    // console.log("Geral: " + JSON.stringify(this.torneioItems));
+    // console.log("ID...: " + JSON.stringify(this.idCiclo));
+    // console.log("ITEM.: " + JSON.stringify(item));
+    return item;
   }
 
   get initialSlide() {
-    for (let x in this.item.patrulha) {
-      if (this.item.patrulha[x].id == this.idPatrulha) {
-        return x;
+    let slide = 0;
+    for (let id in this.item.patrulha) {
+      if (id == this.idPatrulha) {
+        return slide;
       }
+      slide++;
     }
 
     return 0;
