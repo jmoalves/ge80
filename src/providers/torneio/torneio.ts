@@ -46,7 +46,7 @@ export class TorneioProvider {
 
       this.data = res.json();
       for (let ciclo in this.data) {
-        console.log("Ciclo[" + ciclo + "] => " + JSON.stringify(this.data[ciclo]));
+        // console.log("Ciclo[" + ciclo + "] => " + JSON.stringify(this.data[ciclo]));
         this.computaTotais(this.data[ciclo]);
       }
 
