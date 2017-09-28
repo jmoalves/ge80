@@ -13,10 +13,12 @@ export class TorneioPage {
   @ViewChild('slideMgr') slides: Slides;
 
   torneioItems: { [key: string]: Ciclo };
+  qtdItems: number;
 
   constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
     this.torneioProvider.ciclos().then(ciclos => {
       this.torneioItems = ciclos;
+      this.qtdItems = Object.keys(ciclos).length;
     })
   }
 
@@ -25,12 +27,8 @@ export class TorneioPage {
   }
 
   get initialSlide() {
-    if (this.torneioItems) {
-      let qtd = 0;
-      for (let x in this.torneioItems) {
-        qtd++;
-      }
-      return qtd;
+    if (this.qtdItems) {
+      return this.qtdItems;
     }
   }
 
