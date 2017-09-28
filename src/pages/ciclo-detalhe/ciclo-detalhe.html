@@ -45,56 +45,56 @@
                             </ion-row>
                             <ion-row class="header">
                                 <ion-col col-4> </ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.key}}
                                 </ion-col>
                                 <ion-col text-right class="total">&nbsp;&nbsp;</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Pontualidade</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.pontualidade}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalPontualidade }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Presença</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.presenca}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalPresenca }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Inspeção</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.vestuario}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalVestuario }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Participação</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.participacao}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalParticipacao }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Espírito Escoteiro</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.espiritoEscoteiro}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalEspiritoEscoteiro }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Jogo Técnico</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.jogoTecnico}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalJogoTecnico }}</ion-col>
                             </ion-row>
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{ patrulha.val.totais.totalDiaReuniao[dia.key] }}
                                 </ion-col>
                                 <ion-col text-right class="total total-geral">
@@ -111,42 +111,42 @@
                             </ion-row>
                             <ion-row class="header">
                                 <ion-col col-4 text-left></ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.key}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha"></ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Conquistas</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.conquistas}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalConquistas }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Extras</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.extras}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalExtras }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Penalidade</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable" [ngClass]="{'penalidade': dia.val.penalidade < 0}">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': dia.val.penalidade < 0}">
                                     {{dia.val.penalidade}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha" [ngClass]="{'penalidade': patrulha.val.totais.totalPenalidade < 0}">{{ patrulha.val.totais.totalPenalidade }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Atividade Externa</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
                                     {{dia.val.atividadeExterna}}
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalAtividadeExterna }}</ion-col>
                             </ion-row>
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
                                     {{ patrulha.val.totais.totalDiaExtras[dia.key] }}
                                 </ion-col>
                                 <ion-col text-right class="total total-geral">
