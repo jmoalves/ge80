@@ -132,10 +132,10 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Penalidade</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable" class="penalidade">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable" [ngClass]="{'penalidade': dia.val.penalidade < 0}">
                                     {{dia.val.penalidade}}
                                 </ion-col>
-                                <ion-col text-right class="total-linha penalidade">{{ patrulha.val.totais.totalPenalidade }}</ion-col>
+                                <ion-col text-right class="total-linha" [ngClass]="{'penalidade': patrulha.val.totais.totalPenalidade < 0}">{{ patrulha.val.totais.totalPenalidade }}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col col-4 text-left>Atividade Externa</ion-col>
@@ -146,7 +146,7 @@
                             </ion-row>
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable">
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterable" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
                                     {{ patrulha.val.totais.totalDiaExtras[dia.key] }}
                                 </ion-col>
                                 <ion-col text-right class="total total-geral">

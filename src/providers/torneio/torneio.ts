@@ -82,10 +82,10 @@ export class TorneioProvider {
         ciclo.maxPontos += 10; //jogoTecnico
         ciclo.maxPontos += 10; //conquistas
         ciclo.maxPontos += 10; //extras
-        ciclo.maxPontos += 10; //penalidade
+        ciclo.maxPontos += 0; //penalidade
         ciclo.maxPontos += 10; //atividadeExterna
       }
-      // Feio! Mas é para uma iteração mesmo
+      // Feio! Mas é para uma iteração só mesmo
       return;
     }
   }
@@ -114,7 +114,7 @@ export class TorneioProvider {
     }
 
     for (let dia in patrulha.pontos.dia) {
-      // Pontos normais de reunião
+      // Totais de pontos normais de reunião
       patrulha.totais.totalPontualidade += patrulha.pontos.dia[dia].pontualidade;
       patrulha.totais.totalPresenca += patrulha.pontos.dia[dia].presenca;
       patrulha.totais.totalVestuario += patrulha.pontos.dia[dia].vestuario;
@@ -131,15 +131,20 @@ export class TorneioProvider {
         patrulha.pontos.dia[dia].jogoTecnico;
       patrulha.totais.totalGeralReuniao += patrulha.totais.totalDiaReuniao[dia];
 
-      // Categorias extras
+      // Ajusta penalidade (ela é negativa!)
+      if (patrulha.pontos.dia[dia].penalidade > 0) {
+        patrulha.pontos.dia[dia].penalidade *= -1;
+      }
+
+      // Totais de categorias extras
       patrulha.totais.totalConquistas += patrulha.pontos.dia[dia].conquistas;
       patrulha.totais.totalExtras += patrulha.pontos.dia[dia].extras;
-      patrulha.totais.totalPenalidade -= patrulha.pontos.dia[dia].penalidade;
+      patrulha.totais.totalPenalidade += patrulha.pontos.dia[dia].penalidade;
       patrulha.totais.totalAtividadeExterna += patrulha.pontos.dia[dia].atividadeExterna;
 
       patrulha.totais.totalDiaExtras[dia] =
         patrulha.pontos.dia[dia].conquistas +
-        patrulha.pontos.dia[dia].extras -
+        patrulha.pontos.dia[dia].extras +
         patrulha.pontos.dia[dia].penalidade +
         patrulha.pontos.dia[dia].atividadeExterna;
       patrulha.totais.totalGeralExtras += patrulha.totais.totalDiaExtras[dia];
