@@ -33,8 +33,7 @@ export class CicloDetalhePage {
   get item() {
     let item = this.torneioItems[this.idCiclo];
     // console.log("Geral: " + JSON.stringify(this.torneioItems));
-    // console.log("ID...: " + JSON.stringify(this.idCiclo));
-    // console.log("ITEM.: " + JSON.stringify(item));
+    // console.log("ITEM[" + this.idCiclo + "]: " + JSON.stringify(item));
     return item;
   }
 

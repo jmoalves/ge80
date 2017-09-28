@@ -22,7 +22,7 @@ export class ProgressBarComponent {
     return Math.round((this.progress / this.maximum) * 100);
   }
 
-  fireOnClick() {
-    this.barClicked.emit({data: "barClicked!"});
+  fireOnClick(evt) {
+    this.barClicked.emit(evt);
   }
 }
