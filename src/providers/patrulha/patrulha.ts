@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+
+import { Storage } from '@ionic/storage';
 
 import { Api } from '../api/api';
 
 import { Patrulha } from '../../models/patrulha'
-/*
-  Generated class for the PatrulhaProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+const PATRULHAS_KEY = 'patrulhas';
+
 @Injectable()
 export class PatrulhaProvider {
   data: { [key: string]: Patrulha };
   dataPromise: Promise<any>;
 
-  constructor(public http: Http, public api: Api) {
+  constructor(private storage: Storage, private api: Api) {
   }
 
   init() {
@@ -30,8 +28,11 @@ export class PatrulhaProvider {
         this.data[key].avatar = this.api.url + '/patrulhas/' + key + '/avatar.jpg';
       }
 
+      this.storage.set(PATRULHAS_KEY, this.data);
       this.dataPromise = undefined;
-    });
+    }).catch((err) => {
+      console.log("ERROR: " + JSON.stringify(err));
+    })
   }
 
   patrulhas(): Promise<{ [key: string]: Patrulha }> {
@@ -42,7 +43,14 @@ export class PatrulhaProvider {
     return new Promise<{ [key: string]: Patrulha }>((resolve, reject) => {
       this.dataPromise.then(res => {
         resolve(this.data);
-      });
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+        this.storage.get(PATRULHAS_KEY).then((val) => {
+          this.data = val;
+          console.log("LOADED: " + JSON.stringify(this.data));
+          resolve(this.data);
+        });
+      })
     })
   }
 
@@ -54,6 +62,13 @@ export class PatrulhaProvider {
     return new Promise<Patrulha>((resolve, reject) => {
       this.dataPromise.then(() => {
         return resolve(this.data[id]);
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+        this.storage.get(PATRULHAS_KEY).then((val) => {
+          this.data = val;
+          console.log("LOADED: " + JSON.stringify(this.data));
+          resolve(this.data[id]);
+        });
       })
     })
   }

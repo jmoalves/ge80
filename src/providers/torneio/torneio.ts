@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+
+import { Storage } from '@ionic/storage';
 
 import { Api } from '../../providers/api/api';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo, PontuacaoPatrulha } from '../../models/torneio/ciclo';
+
+const CICLOS_KEY = 'ciclos';
 
 @Injectable()
 export class TorneioProvider {
   data: { [key: string]: Ciclo };
   promise: Promise<any>;
 
-  constructor(public http: Http, public patrulhaProvider: PatrulhaProvider, public api: Api) {
+  constructor(private storage: Storage, private patrulhaProvider: PatrulhaProvider, private api: Api) {
   }
 
   ciclos(): Promise<{ [key: string]: Ciclo }> {
@@ -21,8 +24,15 @@ export class TorneioProvider {
 
     return new Promise<{ [key: string]: Ciclo }>((resolve, reject) => {
       this.promise.then(res => {
-        resolve(this.data);
-      });
+        resolve(this.data)
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+        this.storage.get(CICLOS_KEY).then((val) => {
+          this.data = val;
+          console.log("LOADED: " + JSON.stringify(this.data));
+          resolve(this.data);
+        });
+      })
     })
   }
 
@@ -35,6 +45,13 @@ export class TorneioProvider {
     return new Promise<Ciclo>((resolve, reject) => {
       this.promise.then(res => {
         resolve(this.data[id]);
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+        this.storage.get(CICLOS_KEY).then((val) => {
+          this.data = val;
+          console.log("LOADED: " + JSON.stringify(this.data));
+          resolve(this.data[id]);
+        });
       })
     })
   }
@@ -50,8 +67,11 @@ export class TorneioProvider {
         this.computaTotais(this.data[ciclo]);
       }
 
+      this.storage.set(CICLOS_KEY, this.data);
       this.promise = undefined;
       // console.log("API Usando Ciclos: " + JSON.stringify(this.data));
+    }).catch((err) => {
+      console.log("ERROR: " + JSON.stringify(err));
     });
   }
 
