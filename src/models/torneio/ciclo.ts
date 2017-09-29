@@ -7,6 +7,7 @@
 export class Ciclo {
   nome: string;
   maxPontos?: number;
+  atualizadoEm?: number;
 
   patrulha: {
     [key: string]: PontuacaoPatrulha
