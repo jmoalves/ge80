@@ -11,7 +11,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { Settings } from '../providers/providers';
-import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 import { PatrulhaProvider } from '../providers/patrulha/patrulha';
@@ -61,7 +60,6 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     Api,
-    User,
     Camera,
     GoogleMaps,
     SplashScreen,

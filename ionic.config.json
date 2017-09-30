@@ -1,8 +1,8 @@
 {
-  "name": "escoteiros",
-  "app_id": "",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
+    "name": "ge80",
+    "app_id": "eac27e90",
+    "type": "ionic-angular",
+    "integrations": {
+        "cordova": {}
+    }
 }
