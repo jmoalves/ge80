@@ -80,7 +80,6 @@ export class TorneioProvider {
     // this.maxPontos(ciclo);
 
     let maxPontos:number = 0;
-    let patrulhaTopo:string = '';
 
     for (let patrulha in ciclo.patrulha) {
       this.computaPontosPatrulha(ciclo.patrulha[patrulha]);
@@ -89,12 +88,18 @@ export class TorneioProvider {
 
       if (ciclo.patrulha[patrulha].totais.geral > maxPontos) {
         maxPontos = ciclo.patrulha[patrulha].totais.geral;
-        patrulhaTopo = patrulha;
       }
     }
 
+    // Para tratar os empates
+    for (let patrulha in ciclo.patrulha) {
+      if (ciclo.patrulha[patrulha].totais.geral == maxPontos) {
+        ciclo.patrulha[patrulha].topo = true;
+      }
+    }
+
+    // Só para ter uma margem na barra
     ciclo.maxPontos = Math.round(maxPontos * 1.1);
-    ciclo.patrulha[patrulhaTopo].topo = true;
   }
 
   private maxPontos(ciclo: Ciclo) {
