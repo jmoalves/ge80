@@ -6,7 +6,7 @@ page-torneio {
         color: white;
     }
     .barra-mes {
-        background: #E7C901; //#FFDE00;
+        background: #E7C901;
     }
     .scroll-content {
         background-image: url('../assets/img/floresta-da-tijuca.jpg');
@@ -15,5 +15,10 @@ page-torneio {
     }
     .small-text {
         font-size: 0.3em;
+    }
+    .topo {
+        background: rgb(241, 238, 238);
+        border-radius: 5px;
+        margin-top: 2px;
     }
 }

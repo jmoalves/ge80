@@ -18,6 +18,7 @@ export class PontuacaoPatrulha {
   nome?: string;
   avatar?: string;
   cor?: string;
+  topo?: boolean;
   pontos: {
     materialPatrulha: number;
     cantoPatrulhaVirtual: number;

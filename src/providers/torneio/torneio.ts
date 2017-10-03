@@ -79,17 +79,22 @@ export class TorneioProvider {
   private computaTotais(ciclo: Ciclo) {
     // this.maxPontos(ciclo);
 
-    let maxPontos = 0;
+    let maxPontos:number = 0;
+    let patrulhaTopo:string = '';
+
     for (let patrulha in ciclo.patrulha) {
       this.computaPontosPatrulha(ciclo.patrulha[patrulha]);
       this.complementaPatrulha(patrulha, ciclo.patrulha[patrulha]);
+      ciclo.patrulha[patrulha].topo = false;
 
       if (ciclo.patrulha[patrulha].totais.geral > maxPontos) {
         maxPontos = ciclo.patrulha[patrulha].totais.geral;
+        patrulhaTopo = patrulha;
       }
     }
 
     ciclo.maxPontos = Math.round(maxPontos * 1.1);
+    ciclo.patrulha[patrulhaTopo].topo = true;
   }
 
   private maxPontos(ciclo: Ciclo) {
