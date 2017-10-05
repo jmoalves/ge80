@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Slides } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
 import { Ciclo } from '../../models/torneio/ciclo';
@@ -10,8 +10,6 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'torneio.html'
 })
 export class TorneioPage {
-  @ViewChild('slideMgr') slides: Slides;
-
   torneioItems: { [key: string]: Ciclo };
   qtdItems: number;
 
@@ -23,13 +21,6 @@ export class TorneioPage {
   }
 
   ionViewDidLoad() {
-    this.slides.update();
-  }
-
-  get initialSlide() {
-    if (this.qtdItems) {
-      return this.qtdItems;
-    }
   }
 
   barClicked(evt, idCiclo, idPatrulha) {

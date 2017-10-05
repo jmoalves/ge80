@@ -34,7 +34,10 @@ page-ciclo-detalhe {
         color: white;
         background-color: map-get($colors, primary);
     }
-    .row:not(.total) {
+    .row:not(.total):not(.fake) {
         border-bottom: solid 1px lightgrey;
+    }
+    ion-card {
+        max-width: 768px;
     }
 }

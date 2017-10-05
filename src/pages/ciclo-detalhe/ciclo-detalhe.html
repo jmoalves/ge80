@@ -6,12 +6,14 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="false" direction="vertical" initialSlide="{{ initialSlide }}">
+    <ion-slides pager="true" effect="cube" loop="true" direction="horizontal" initialSlide="{{ initialSlide }}">
         <ion-slide *ngFor="let patrulha of item.patrulha | mapToIterable" no-padding>
             <ion-card no-padding>
-                <ion-item class="barra-mes">
-                    <h2 text-center>{{item.nome}}</h2>
-                </ion-item>
+                <ion-card-header no-padding>
+                    <ion-item class="barra-mes">
+                        <h2 text-center>{{item.nome}}</h2>
+                    </ion-item>
+                </ion-card-header>
 
                 <ion-card-content>
                     <ion-item no-padding>
@@ -116,6 +118,7 @@
                                 </ion-col>
                                 <ion-col text-right class="total-linha"></ion-col>
                             </ion-row>
+
                             <ion-row>
                                 <ion-col col-4 text-left>Conquistas</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted">
@@ -144,6 +147,22 @@
                                 </ion-col>
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalAtividadeExterna }}</ion-col>
                             </ion-row>
+
+                            <ion-row>
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col class="total-linha">&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col class="total-linha">&nbsp;</ion-col>
+                            </ion-row>
+
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
@@ -171,12 +190,44 @@
                                 <ion-col></ion-col>
                                 <ion-col text-right>{{patrulha.val.pontos.livrosPatrulha}}</ion-col>
                             </ion-row>
+
                             <ion-row class="total">
                                 <ion-col col-8></ion-col>
                                 <ion-col></ion-col>
                                 <ion-col col-2 text-right class="total total-geral">
                                     {{ patrulha.val.totais.totalGeralMensal }}
                                 </ion-col>
+                            </ion-row>
+
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-8 text-left>&nbsp;</ion-col>
+                                <ion-col></ion-col>
+                                <ion-col text-right>&nbsp;</ion-col>
                             </ion-row>
                         </ion-grid>
                     </div>
