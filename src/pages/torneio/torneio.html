@@ -14,9 +14,9 @@
                     <h2 text-center>{{item.val.nome}}</h2>
                 </ion-item>
 
-                <ion-card-content>
+                <ion-card-content no-padding>
                     <ion-row *ngFor="let patrulha of item.val.patrulha | mapToIterable">
-                        <ion-item>
+                        <ion-item [ngClass]="{ topo : patrulha.val.topo }">
                             <ion-avatar item-start>
                                 <img [src]="patrulha.val.avatar">
                                 <p>{{patrulha.val.nome}}</p>

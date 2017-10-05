@@ -29,7 +29,7 @@
         "@ngx-translate/core": "6.0.1",
         "@ngx-translate/http-loader": "0.0.3",
         "chart.js": "^2.7.0",
-        "cordova-android": "^6.2.3",
+        "cordova-android": "6.2.3",
         "cordova-plugin-add-swift-support": "^1.7.0",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-ionic": "^1.1.9",
