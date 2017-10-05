@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="false" effect="cube" loop="true" zoom="false" direction="horizontal" initialSlide="{{ initialSlide }}">
+    <ion-slides pager="false" effect="slide" loop="true" zoom="false" direction="horizontal" initialSlide="{{ initialSlide }}">
         <ion-slide *ngFor="let patrulha of item.patrulha | mapToIterable" no-padding>
             <ion-card no-padding>
                 <ion-card-header no-padding>
