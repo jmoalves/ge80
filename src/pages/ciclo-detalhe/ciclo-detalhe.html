@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="true" effect="cube" loop="true" direction="horizontal" initialSlide="{{ initialSlide }}">
+    <ion-slides pager="false" effect="cube" loop="true" zoom="false" direction="horizontal" initialSlide="{{ initialSlide }}">
         <ion-slide *ngFor="let patrulha of item.patrulha | mapToIterable" no-padding>
             <ion-card no-padding>
                 <ion-card-header no-padding>
@@ -148,21 +148,6 @@
                                 <ion-col text-right class="total-linha">{{ patrulha.val.totais.totalAtividadeExterna }}</ion-col>
                             </ion-row>
 
-                            <ion-row>
-                                <ion-col col-4 text-left>&nbsp;</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
-                                    &nbsp;
-                                </ion-col>
-                                <ion-col class="total-linha">&nbsp;</ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col col-4 text-left>&nbsp;</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
-                                    &nbsp;
-                                </ion-col>
-                                <ion-col class="total-linha">&nbsp;</ion-col>
-                            </ion-row>
-
                             <ion-row class="total">
                                 <ion-col col-4 text-left>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
@@ -171,6 +156,22 @@
                                 <ion-col text-right class="total total-geral">
                                     {{ patrulha.val.totais.totalGeralExtras}}
                                 </ion-col>
+                            </ion-row>
+
+
+                            <ion-row class="fake">
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.val.pontos.dia | mapToIterableSorted" [ngClass]="{'penalidade': patrulha.val.totais.totalDiaExtras[dia.key] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col>&nbsp;</ion-col>
                             </ion-row>
                         </ion-grid>
 
