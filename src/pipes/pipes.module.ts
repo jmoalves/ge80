@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 
 import { MapToIterablePipe } from './map-to-iterable';
 import { MapToIterableSortedPipe } from './map-to-iterable-sorted';
+import { ReversePipe } from './reverse';
 
 @NgModule({
   declarations: [
     MapToIterablePipe,
-    MapToIterableSortedPipe
+    MapToIterableSortedPipe,
+    ReversePipe
   ],
   exports: [
     MapToIterablePipe,
-    MapToIterableSortedPipe
+    MapToIterableSortedPipe,
+    ReversePipe
   ]
 })
 export class PipesModule { }
