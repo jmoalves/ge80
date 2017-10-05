@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.github.jmoalves" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.github.jmoalves" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>GE80</name>
     <description>80º Grupo Escoteiro - Floresta da Tijuca</description>
     <author email="jmoalves.dev@pobox.com" href="https://github.com/jmoalves/ge80">G.E. 80</author>
