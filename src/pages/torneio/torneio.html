@@ -16,14 +16,12 @@
                     </ion-item>
                 </ion-card-header>
                 <ion-card-content no-padding>
-                    <ion-item *ngFor="let patrulha of item.patrulhaArray" [ngClass]="{ topo : patrulha.topo }">
+                    <ion-item detail-push *ngFor="let patrulha of item.patrulhaArray" [ngClass]="{ topo : patrulha.topo }" (click)="barClicked($event, item, patrulha.id)">
                         <ion-avatar item-start>
                             <img [src]="patrulha.avatar">
                             <p>{{patrulha.nome}}</p>
                         </ion-avatar>
-                        <p>
-                            <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item, patrulha.id)"></progress-bar>
-                        </p>
+                        <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}"></progress-bar>
                     </ion-item>
                 </ion-card-content>
             </ion-card>
