@@ -1,8 +1,0 @@
-//! customHeader: {"Access-Control-Allow-Headers": "*"}
-{
-    "status": "success",
-    "user": {
-        "name": "Teste",
-        "email": "test@example.com"
-    }
-}
