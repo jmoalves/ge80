@@ -9,9 +9,8 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'ciclo-detalhe.html',
 })
 export class CicloDetalhePage {
-  torneioItems: { [key: string]: Ciclo };
+  ciclo: Ciclo;
 
-  idCiclo: string;
   idPatrulha: string;
 
   subGrupo: string;
@@ -20,9 +19,8 @@ export class CicloDetalhePage {
     public navCtrl: NavController,
     public navParams: NavParams) {
 
-    this.idCiclo = navParams.data.idCiclo;
     this.idPatrulha = navParams.data.idPatrulha;
-    this.torneioItems = navParams.data.items;
+    this.ciclo = navParams.data.ciclo;
 
     this.subGrupo = 'reuniao';
   }
@@ -30,16 +28,9 @@ export class CicloDetalhePage {
   ionViewDidLoad() {
   }
 
-  get item() {
-    let item = this.torneioItems[this.idCiclo];
-    // console.log("Geral: " + JSON.stringify(this.torneioItems));
-    // console.log("ITEM[" + this.idCiclo + "]: " + JSON.stringify(item));
-    return item;
-  }
-
   get initialSlide() {
     let slide = 0;
-    for (let id in this.item.patrulha) {
+    for (let id in this.ciclo.patrulha) {
       if (id == this.idPatrulha) {
         return slide;
       }

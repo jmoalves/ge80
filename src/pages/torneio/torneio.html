@@ -7,26 +7,26 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid>
-        <ion-row *ngFor="let item of torneioItems | mapToIterable | reverse">
+    <ion-slides direction="vertical">
+        <ion-slide *ngFor="let item of torneioItems">
             <ion-card>
                 <ion-card-header no-padding>
                     <ion-item class="barra-mes">
-                        <h2 text-center>{{item.val.nome}}</h2>
+                        <h2 text-center>{{item.nome}}</h2>
                     </ion-item>
                 </ion-card-header>
                 <ion-card-content no-padding>
-                    <ion-item *ngFor="let patrulha of item.val.patrulha | mapToIterable" [ngClass]="{ topo : patrulha.val.topo }">
+                    <ion-item *ngFor="let patrulha of item.patrulhaArray" [ngClass]="{ topo : patrulha.topo }">
                         <ion-avatar item-start>
-                            <img [src]="patrulha.val.avatar">
-                            <p>{{patrulha.val.nome}}</p>
+                            <img [src]="patrulha.avatar">
+                            <p>{{patrulha.nome}}</p>
                         </ion-avatar>
                         <p>
-                            <progress-bar progress="{{patrulha.val.totais.geral}}" maximum="{{item.val.maxPontos}}" color="{{patrulha.val.cor}}" (barClicked)="barClicked($event, item.key, patrulha.key)"></progress-bar>
+                            <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}" (barClicked)="barClicked($event, item, patrulha.id)"></progress-bar>
                         </p>
                     </ion-item>
                 </ion-card-content>
             </ion-card>
-        </ion-row>
-    </ion-grid>
+        </ion-slide>
+    </ion-slides>
 </ion-content>

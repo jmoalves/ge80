@@ -5,71 +5,101 @@ import { Storage } from '@ionic/storage';
 
 import { Api } from '../../providers/api/api';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
-import { Ciclo, PontuacaoPatrulha } from '../../models/torneio/ciclo';
+import { Ciclo, PontuacaoPatrulha, PontuacaoDiaria } from '../../models/torneio/ciclo';
 
-const CICLOS_KEY = 'ciclos';
+const CICLOS_KEY_OLD = 'ciclos';
+const CICLOS_VALUE_KEY = 'ciclos-value';
+const CICLOS_INDEX_KEY = 'ciclos-index';
 
 @Injectable()
 export class TorneioProvider {
-  data: { [key: string]: Ciclo };
+  data: Ciclo[];
+  index: { [key:string]: number; };
+
   promise: Promise<any>;
 
   constructor(private storage: Storage, private patrulhaProvider: PatrulhaProvider, private api: Api) {
+    this.storage.remove(CICLOS_KEY_OLD);
   }
 
-  ciclos(): Promise<{ [key: string]: Ciclo }> {
-    if (!this.promise && this.data) {
+  ciclos(): Promise<Ciclo[]> {
+    if (this.data) {
       return Promise.resolve(this.data);
     }
 
-    return new Promise<{ [key: string]: Ciclo }>((resolve, reject) => {
+    return new Promise<Ciclo[]>((resolve, reject) => {
       this.promise.then(res => {
-        resolve(this.data)
+        resolve(this.data);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
-        this.storage.get(CICLOS_KEY).then((val) => {
-          this.data = val;
-          console.log("LOADED: " + JSON.stringify(this.data));
-          resolve(this.data);
-        });
       })
     })
   }
 
-
   ciclo(id: string): Promise<Ciclo> {
-    if (!this.promise && this.data) {
-      return Promise.resolve(this.data[id]);
+    if (this.data && this.index) {
+      return Promise.resolve(this.data[this.index[id]]);
     }
 
     return new Promise<Ciclo>((resolve, reject) => {
       this.promise.then(res => {
-        resolve(this.data[id]);
+        resolve(this.data[this.index[id]]);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
-        this.storage.get(CICLOS_KEY).then((val) => {
-          this.data = val;
-          console.log("LOADED: " + JSON.stringify(this.data));
-          resolve(this.data[id]);
-        });
       })
     })
   }
 
-  init() {
+  load() {
+    this.storage.get(CICLOS_VALUE_KEY).then((val) => {
+      if (!this.data && val) {
+        this.data = val;
+        console.log("LOADED: ciclos");
+        // console.log("LOADED: " + JSON.stringify(this.data));
+      }
+    });
+
+    this.storage.get(CICLOS_INDEX_KEY).then((val) => {
+      if (!this.index && val) {
+        this.index = val;
+        console.log("LOADED: index");
+        // console.log("LOADED: " + JSON.stringify(this.index));
+      }
+    });
+
     this.promise = this.api.get('api/ciclos.json').toPromise();
     this.promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
+      let newData:{ [key:string]: Ciclo } = res.json();
 
-      this.data = res.json();
-      for (let ciclo in this.data) {
-        // console.log("Ciclo[" + ciclo + "] => " + JSON.stringify(this.data[ciclo]));
-        console.log("Ciclo[" + ciclo + "] atualizadoEm => " + this.data[ciclo].atualizadoEm);
-        this.computaTotais(this.data[ciclo]);
+      let ciclos:Ciclo[] = [];
+      for (let id in newData) {
+        let ciclo:Ciclo = newData[id];
+        ciclo.id = id;
+
+        // console.log("Ciclo[" + ciclo.id + "] => " + JSON.stringify(ciclo));
+        // console.log("Ciclo[" + ciclo.id + "] atualizadoEm => " + ciclo.atualizadoEm);
+        this.computaTotais(ciclo);
+        ciclos.push(ciclo);
       }
 
-      this.storage.set(CICLOS_KEY, this.data);
+      ciclos.reverse();
+
+      let dict:{ [key:string]: number; } = {};
+      let i:number = 0;
+      for (let ciclo of ciclos) {
+        dict[ciclo.id] = i++;
+      }
+
+      this.storage.set(CICLOS_VALUE_KEY, ciclos);
+      this.storage.set(CICLOS_INDEX_KEY, dict);
+
+      this.data = ciclos;
+      this.index = dict;
+
       this.promise = undefined;
+
+      console.log("URL GOT: ciclos");
       // console.log("API Usando Ciclos: " + JSON.stringify(this.data));
     }).catch((err) => {
       console.log("ERROR: " + JSON.stringify(err));
@@ -80,53 +110,33 @@ export class TorneioProvider {
     // this.maxPontos(ciclo);
 
     let maxPontos:number = 0;
+    let patrulhas:PontuacaoPatrulha[] = [];
 
-    for (let patrulha in ciclo.patrulha) {
-      this.computaPontosPatrulha(ciclo.patrulha[patrulha]);
-      this.complementaPatrulha(patrulha, ciclo.patrulha[patrulha]);
-      ciclo.patrulha[patrulha].topo = false;
+    for (let id in ciclo.patrulha) {
+      let patrulha:PontuacaoPatrulha = ciclo.patrulha[id];
+      patrulha.id = id;
 
-      if (ciclo.patrulha[patrulha].totais.geral > maxPontos) {
-        maxPontos = ciclo.patrulha[patrulha].totais.geral;
+      this.computaPontosPatrulha(patrulha);
+      this.complementaPatrulha(id, patrulha);
+      patrulha.topo = false;
+
+      if (patrulha.totais.geral > maxPontos) {
+        maxPontos = patrulha.totais.geral;
       }
+
+      patrulhas.push(patrulha);
     }
+    ciclo.patrulhaArray = patrulhas;
 
     // Para tratar os empates
-    for (let patrulha in ciclo.patrulha) {
-      if (ciclo.patrulha[patrulha].totais.geral == maxPontos) {
-        ciclo.patrulha[patrulha].topo = true;
+    for (let patrulha of ciclo.patrulhaArray) {
+      if (patrulha.totais.geral == maxPontos) {
+        patrulha.topo = true;
       }
     }
 
     // Só para ter uma margem na barra
     ciclo.maxPontos = Math.round(maxPontos * 1.1);
-  }
-
-  private maxPontos(ciclo: Ciclo) {
-    ciclo.maxPontos = 0;
-
-    ciclo.maxPontos += 50; //cantoPatrulhaVirtual
-    ciclo.maxPontos += 50; //livrosPatrulha
-    ciclo.maxPontos += 50; //materialPatrulha
-
-    // Assume a consistência, ou seja, todas as patrulhas
-    // tem o mesmo número de dias
-    for (let x in ciclo.patrulha) {
-      for (let y in ciclo.patrulha[x].pontos.dia) {
-        ciclo.maxPontos += 10; //pontualidade
-        ciclo.maxPontos += 10; //presenca
-        ciclo.maxPontos += 10; //vestuario
-        ciclo.maxPontos += 10; //participacao
-        ciclo.maxPontos += 10; //espiritoEscoteiro
-        ciclo.maxPontos += 10; //jogoTecnico
-        ciclo.maxPontos += 10; //conquistas
-        ciclo.maxPontos += 10; //extras
-        ciclo.maxPontos += 0; //penalidade
-        ciclo.maxPontos += 10; //atividadeExterna
-      }
-      // Feio! Mas é para uma iteração só mesmo
-      return;
-    }
   }
 
   private computaPontosPatrulha(patrulha: PontuacaoPatrulha) {
@@ -152,42 +162,49 @@ export class TorneioProvider {
       totalGeralMensal: 0
     }
 
-    for (let dia in patrulha.pontos.dia) {
-      // Totais de pontos normais de reunião
-      patrulha.totais.totalPontualidade += patrulha.pontos.dia[dia].pontualidade;
-      patrulha.totais.totalPresenca += patrulha.pontos.dia[dia].presenca;
-      patrulha.totais.totalVestuario += patrulha.pontos.dia[dia].vestuario;
-      patrulha.totais.totalParticipacao += patrulha.pontos.dia[dia].participacao;
-      patrulha.totais.totalEspiritoEscoteiro += patrulha.pontos.dia[dia].espiritoEscoteiro;
-      patrulha.totais.totalJogoTecnico += patrulha.pontos.dia[dia].jogoTecnico;
+    let dias:PontuacaoDiaria[] = [];
+    for (let id in patrulha.pontos.dia) {
+      let dia:PontuacaoDiaria = patrulha.pontos.dia[id];
+      dia.id = id;
 
-      patrulha.totais.totalDiaReuniao[dia] =
-        patrulha.pontos.dia[dia].pontualidade +
-        patrulha.pontos.dia[dia].presenca +
-        patrulha.pontos.dia[dia].vestuario +
-        patrulha.pontos.dia[dia].participacao +
-        patrulha.pontos.dia[dia].espiritoEscoteiro +
-        patrulha.pontos.dia[dia].jogoTecnico;
-      patrulha.totais.totalGeralReuniao += patrulha.totais.totalDiaReuniao[dia];
+      // Totais de pontos normais de reunião
+      patrulha.totais.totalPontualidade += dia.pontualidade;
+      patrulha.totais.totalPresenca += dia.presenca;
+      patrulha.totais.totalVestuario += dia.vestuario;
+      patrulha.totais.totalParticipacao += dia.participacao;
+      patrulha.totais.totalEspiritoEscoteiro += dia.espiritoEscoteiro;
+      patrulha.totais.totalJogoTecnico += dia.jogoTecnico;
+
+      patrulha.totais.totalDiaReuniao[id] =
+        dia.pontualidade +
+        dia.presenca +
+        dia.vestuario +
+        dia.participacao +
+        dia.espiritoEscoteiro +
+        dia.jogoTecnico;
+      patrulha.totais.totalGeralReuniao += patrulha.totais.totalDiaReuniao[id];
 
       // Ajusta penalidade (ela é negativa!)
-      if (patrulha.pontos.dia[dia].penalidade > 0) {
-        patrulha.pontos.dia[dia].penalidade *= -1;
+      if (dia.penalidade > 0) {
+        dia.penalidade *= -1;
       }
 
       // Totais de categorias extras
-      patrulha.totais.totalConquistas += patrulha.pontos.dia[dia].conquistas;
-      patrulha.totais.totalExtras += patrulha.pontos.dia[dia].extras;
-      patrulha.totais.totalPenalidade += patrulha.pontos.dia[dia].penalidade;
-      patrulha.totais.totalAtividadeExterna += patrulha.pontos.dia[dia].atividadeExterna;
+      patrulha.totais.totalConquistas += dia.conquistas;
+      patrulha.totais.totalExtras += dia.extras;
+      patrulha.totais.totalPenalidade += dia.penalidade;
+      patrulha.totais.totalAtividadeExterna += dia.atividadeExterna;
 
-      patrulha.totais.totalDiaExtras[dia] =
-        patrulha.pontos.dia[dia].conquistas +
-        patrulha.pontos.dia[dia].extras +
-        patrulha.pontos.dia[dia].penalidade +
-        patrulha.pontos.dia[dia].atividadeExterna;
-      patrulha.totais.totalGeralExtras += patrulha.totais.totalDiaExtras[dia];
+      patrulha.totais.totalDiaExtras[id] =
+        dia.conquistas +
+        dia.extras +
+        dia.penalidade +
+        dia.atividadeExterna;
+      patrulha.totais.totalGeralExtras += patrulha.totais.totalDiaExtras[id];
+
+      dias.push(dia);
     }
+    patrulha.pontos.diasArray = dias;
 
     // Pontos mensais
     patrulha.totais.totalGeralMensal =

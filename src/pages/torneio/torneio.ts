@@ -10,21 +10,19 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'torneio.html'
 })
 export class TorneioPage {
-  torneioItems: { [key: string]: Ciclo };
-  qtdItems: number;
+  torneioItems: Ciclo[] = [];
 
   constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
     this.torneioProvider.ciclos().then(ciclos => {
       this.torneioItems = ciclos;
-      this.qtdItems = Object.keys(ciclos).length;
-    })
+    });
   }
 
   ionViewDidLoad() {
   }
 
-  barClicked(evt, idCiclo, idPatrulha) {
+  barClicked(evt, ciclo, idPatrulha) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
-    this.navCtrl.push('CicloDetalhePage', { items: this.torneioItems, idCiclo: idCiclo, idPatrulha: idPatrulha });
+    this.navCtrl.push('CicloDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
   }
 }
