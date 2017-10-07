@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Slides } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
@@ -11,6 +11,7 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'torneio.html'
 })
 export class TorneioPage {
+  @ViewChild('slides') slides:Slides;
   torneioItems: Ciclo[] = [];
 
   constructor(public navCtrl: NavController, private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
@@ -28,8 +29,14 @@ export class TorneioPage {
   }
 
   refresh(evt) {
-    console.log("REFRESH");
+    console.log("REFRESH - Begin",  evt);
     this.patrulaProvider.load();
-    this.torneioProvider.load();
+    this.torneioProvider.reload();
+
+    this.torneioProvider.ciclos().then((ciclos) => {
+      this.torneioItems = ciclos;
+      console.log("REFRESH - END");
+      this.slides.update();
+    });
   }
 }

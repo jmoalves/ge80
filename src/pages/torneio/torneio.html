@@ -1,18 +1,18 @@
 <ion-header>
-
     <ion-navbar primary>
-        <ion-title>Torneio de eficiência</ion-title>
+        <ion-toolbar>
+            <ion-title>Torneio de eficiência</ion-title>
+            <ion-buttons end>
+                <button ion-button large color="primary" (click)="refresh($event)">
+                  <ion-icon  name="refresh"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
     </ion-navbar>
-
 </ion-header>
 
 <ion-content>
-    <ion-refresher (ionRefresh)="refresh($event)">
-        <ion-refresher-content pullingText="Puxe para atualizar">
-        </ion-refresher-content>
-    </ion-refresher>
-
-    <ion-slides direction="vertical" centeredSlides="true">
+    <ion-slides direction="vertical" centeredSlides="true" #slides>
         <ion-slide *ngFor="let item of torneioItems">
             <ion-card>
                 <ion-card-header no-padding>

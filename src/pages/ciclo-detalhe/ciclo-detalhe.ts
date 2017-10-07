@@ -40,15 +40,14 @@ export class CicloDetalhePage {
   ionViewDidLoad() {
   }
 
-  refresh(refresher) {
-    console.log("REFRESH - Begin",  refresher);
+  refresh(evt) {
+    console.log("REFRESH - Begin",  evt);
     this.patrulaProvider.load();
     this.torneioProvider.reload();
 
     this.torneioProvider.ciclo(this.ciclo.id).then((ciclo) => {
       this.ciclo = ciclo;
       console.log("REFRESH - END");
-      refresher.complete();
       this.slides.update();
     });
   }
