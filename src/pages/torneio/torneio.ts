@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Slides } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
+import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo } from '../../models/torneio/ciclo';
 
 @IonicPage()
@@ -10,30 +11,32 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'torneio.html'
 })
 export class TorneioPage {
-  @ViewChild('slideMgr') slides: Slides;
+  @ViewChild('slides') slides:Slides;
+  torneioItems: Ciclo[] = [];
 
-  torneioItems: { [key: string]: Ciclo };
-  qtdItems: number;
-
-  constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
+  constructor(public navCtrl: NavController, private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
     this.torneioProvider.ciclos().then(ciclos => {
       this.torneioItems = ciclos;
-      this.qtdItems = Object.keys(ciclos).length;
-    })
+    });
   }
 
   ionViewDidLoad() {
-    this.slides.update();
   }
 
-  get initialSlide() {
-    if (this.qtdItems) {
-      return this.qtdItems;
-    }
-  }
-
-  barClicked(evt, idCiclo, idPatrulha) {
+  barClicked(evt, ciclo, idPatrulha) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
-    this.navCtrl.push('CicloDetalhePage', { items: this.torneioItems, idCiclo: idCiclo, idPatrulha: idPatrulha });
+    this.navCtrl.push('CicloDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
+  }
+
+  refresh(evt) {
+    console.log("REFRESH - Begin",  evt);
+    this.patrulaProvider.load();
+    this.torneioProvider.reload();
+
+    this.torneioProvider.ciclos().then((ciclos) => {
+      this.torneioItems = ciclos;
+      console.log("REFRESH - END");
+      this.slides.update();
+    });
   }
 }

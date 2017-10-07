@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 
-import { Ciclo } from '../../models/torneio/ciclo';
+import { Ciclo, PontuacaoPatrulha } from '../../models/torneio/ciclo';
+
+import { TorneioProvider } from '../../providers/torneio/torneio';
+import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 
 @IonicPage()
 @Component({
@@ -9,20 +12,27 @@ import { Ciclo } from '../../models/torneio/ciclo';
   templateUrl: 'ciclo-detalhe.html',
 })
 export class CicloDetalhePage {
-  torneioItems: { [key: string]: Ciclo };
+  @ViewChild('slides') slides:Slides;
 
-  idCiclo: string;
-  idPatrulha: string;
-
+  ciclo: Ciclo;
+  slideInicial: number;
   subGrupo: string;
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
 
-    this.idCiclo = navParams.data.idCiclo;
-    this.idPatrulha = navParams.data.idPatrulha;
-    this.torneioItems = navParams.data.items;
+    this.ciclo = navParams.data.ciclo;
+    // console.log("Ciclo[" + this.ciclo.id + "] tem " + this.ciclo.patrulhaArray.length + " patrulhas");
+    for (let i in this.ciclo.patrulhaArray) {
+      // console.log("Patrulha: " + i);
+      let patrulha:PontuacaoPatrulha = this.ciclo.patrulhaArray[i];
+      if (patrulha.id == navParams.data.idPatrulha) {
+        this.slideInicial = Number(i);
+        break;
+      }
+    }
 
     this.subGrupo = 'reuniao';
   }
@@ -30,22 +40,19 @@ export class CicloDetalhePage {
   ionViewDidLoad() {
   }
 
-  get item() {
-    let item = this.torneioItems[this.idCiclo];
-    // console.log("Geral: " + JSON.stringify(this.torneioItems));
-    // console.log("ITEM[" + this.idCiclo + "]: " + JSON.stringify(item));
-    return item;
+  refresh(evt) {
+    console.log("REFRESH - Begin",  evt);
+    this.patrulaProvider.load();
+    this.torneioProvider.reload();
+
+    this.torneioProvider.ciclo(this.ciclo.id).then((ciclo) => {
+      this.ciclo = ciclo;
+      console.log("REFRESH - END");
+      this.slides.update();
+    });
   }
 
-  get initialSlide() {
-    let slide = 0;
-    for (let id in this.item.patrulha) {
-      if (id == this.idPatrulha) {
-        return slide;
-      }
-      slide++;
-    }
-
-    return 0;
+  setGrupo(grupo:string) {
+    this.subGrupo = grupo;
   }
 }

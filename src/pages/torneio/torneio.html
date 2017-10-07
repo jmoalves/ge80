@@ -1,31 +1,38 @@
 <ion-header>
-
     <ion-navbar primary>
-        <ion-title>Torneio de eficiência</ion-title>
+        <ion-toolbar>
+            <ion-title>
+                <ion-avatar class="logo" float-left>
+                    <img class="logo" src="assets/icon.png">
+                </ion-avatar>
+                &nbsp;Torneio de eficiência
+            </ion-title>
+            <ion-buttons end>
+                <button ion-button large color="primary" (click)="refresh($event)">
+                  <ion-icon  name="refresh"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
     </ion-navbar>
-
 </ion-header>
 
 <ion-content>
-    <ion-slides #slideMgr pager="true" initialSlide="{{ initialSlide }}">
-        <ion-slide *ngFor="let item of torneioItems | mapToIterable">
+    <ion-slides direction="vertical" centeredSlides="true" #slides>
+        <ion-slide *ngFor="let item of torneioItems">
             <ion-card>
-                <ion-item class="barra-mes">
-                    <h2 text-center>{{item.val.nome}}</h2>
-                </ion-item>
-
+                <ion-card-header no-padding>
+                    <ion-item class="barra-mes">
+                        <h2 text-center>{{item.nome}}</h2>
+                    </ion-item>
+                </ion-card-header>
                 <ion-card-content no-padding>
-                    <ion-row *ngFor="let patrulha of item.val.patrulha | mapToIterable">
-                        <ion-item [ngClass]="{ topo : patrulha.val.topo }">
-                            <ion-avatar item-start>
-                                <img [src]="patrulha.val.avatar">
-                                <p>{{patrulha.val.nome}}</p>
-                            </ion-avatar>
-                            <p>
-                                <progress-bar progress="{{patrulha.val.totais.geral}}" maximum="{{item.val.maxPontos}}" color="{{patrulha.val.cor}}" (barClicked)="barClicked($event, item.key, patrulha.key)"></progress-bar>
-                            </p>
-                        </ion-item>
-                    </ion-row>
+                    <ion-item detail-push *ngFor="let patrulha of item.patrulhaArray" [ngClass]="{ topo : patrulha.topo }" (click)="barClicked($event, item, patrulha.id)">
+                        <ion-avatar item-start>
+                            <img [src]="patrulha.avatar">
+                            <p>{{patrulha.nome}}</p>
+                        </ion-avatar>
+                        <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}"></progress-bar>
+                    </ion-item>
                 </ion-card-content>
             </ion-card>
         </ion-slide>

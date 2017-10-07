@@ -53,8 +53,8 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {
-      this.patrulhaProvider.init();
-      this.torneioProvider.init();
+      this.patrulhaProvider.load();
+      this.torneioProvider.load();
   }
 
   ionViewDidLoad() {

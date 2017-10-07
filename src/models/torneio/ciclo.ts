@@ -5,16 +5,19 @@
  */
 
 export class Ciclo {
+  id?: string;
   nome: string;
   maxPontos?: number;
   atualizadoEm?: number;
 
   patrulha: {
-    [key: string]: PontuacaoPatrulha
+    [key: string]: PontuacaoPatrulha;
   }
+  patrulhaArray?: PontuacaoPatrulha[];
 }
 
 export class PontuacaoPatrulha {
+  id?: string;
   nome?: string;
   avatar?: string;
   cor?: string;
@@ -24,20 +27,8 @@ export class PontuacaoPatrulha {
     cantoPatrulhaVirtual: number;
     livrosPatrulha: number;
 
-    dia: {
-      [key: string]: {
-        pontualidade: number;
-        presenca: number;
-        vestuario: number;
-        participacao: number;
-        espiritoEscoteiro: number;
-        jogoTecnico: number;
-        conquistas: number;
-        extras: number;
-        penalidade: number;
-        atividadeExterna: number;
-      }
-    }
+    dia: { [key: string]: PontuacaoDiaria; }
+    diasArray: PontuacaoDiaria[];
   };
   totais?: {
     geral: number;
@@ -64,4 +55,18 @@ export class PontuacaoPatrulha {
 
     totalGeralMensal: number;
   }
+}
+
+export class PontuacaoDiaria {
+  id?: string;
+  pontualidade: number;
+  presenca: number;
+  vestuario: number;
+  participacao: number;
+  espiritoEscoteiro: number;
+  jogoTecnico: number;
+  conquistas: number;
+  extras: number;
+  penalidade: number;
+  atividadeExterna: number;
 }
