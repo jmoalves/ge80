@@ -24,9 +24,9 @@ export class CicloDetalhePage {
     private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
 
     this.ciclo = navParams.data.ciclo;
-    console.log("Ciclo[" + this.ciclo.id + "] tem " + this.ciclo.patrulhaArray.length + " patrulhas");
+    // console.log("Ciclo[" + this.ciclo.id + "] tem " + this.ciclo.patrulhaArray.length + " patrulhas");
     for (let i in this.ciclo.patrulhaArray) {
-      console.log("Patrulha: " + i);
+      // console.log("Patrulha: " + i);
       let patrulha:PontuacaoPatrulha = this.ciclo.patrulhaArray[i];
       if (patrulha.id == navParams.data.idPatrulha) {
         this.slideInicial = Number(i);
