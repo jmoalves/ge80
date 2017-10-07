@@ -38,7 +38,7 @@ export class PatrulhaProvider {
       this.storage.set(PATRULHAS_KEY, patrulhas);
       this.data = patrulhas;
 
-      console.log("URL GOT: patrulhas => " + JSON.stringify(this.data));
+      console.log("URL GOT: patrulhas");
 
       this.promise = undefined;
     }).catch((err) => {

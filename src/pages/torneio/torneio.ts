@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
+import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo } from '../../models/torneio/ciclo';
 
 @IonicPage()
@@ -12,7 +13,7 @@ import { Ciclo } from '../../models/torneio/ciclo';
 export class TorneioPage {
   torneioItems: Ciclo[] = [];
 
-  constructor(public navCtrl: NavController, public torneioProvider: TorneioProvider) {
+  constructor(public navCtrl: NavController, private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
     this.torneioProvider.ciclos().then(ciclos => {
       this.torneioItems = ciclos;
     });
@@ -24,5 +25,11 @@ export class TorneioPage {
   barClicked(evt, ciclo, idPatrulha) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
     this.navCtrl.push('CicloDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
+  }
+
+  refresh(evt) {
+    console.log("REFRESH");
+    this.patrulaProvider.load();
+    this.torneioProvider.load();
   }
 }

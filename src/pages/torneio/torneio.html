@@ -7,6 +7,11 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher (ionRefresh)="refresh($event)">
+        <ion-refresher-content pullingText="Puxe para atualizar">
+        </ion-refresher-content>
+    </ion-refresher>
+
     <ion-slides direction="vertical" centeredSlides="true">
         <ion-slide *ngFor="let item of torneioItems">
             <ion-card>

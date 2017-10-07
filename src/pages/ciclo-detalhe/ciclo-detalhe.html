@@ -1,12 +1,16 @@
 <ion-header>
-
     <ion-navbar>
         <ion-title>Torneio de eficiência</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="false" effect="slide" loop="true" zoom="false" direction="horizontal" initialSlide="{{ initialSlide }}">
+    <ion-refresher (ionRefresh)="refresh($event)">
+        <ion-refresher-content pullingText="Puxe para atualizar">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-slides #slides pager="false" effect="slide" loop="false" zoom="false" direction="horizontal" [initialSlide]="slideInicial">
         <ion-slide *ngFor="let patrulha of ciclo.patrulhaArray" no-padding>
             <ion-card no-padding>
                 <ion-card-header no-padding>
@@ -14,39 +18,33 @@
                         <h2 text-center>{{ciclo.nome}}</h2>
                     </ion-item>
                 </ion-card-header>
+                <ion-item padding-horizontal>
+                    <ion-avatar item-start>
+                        <img [src]="patrulha.avatar">
+                        <p>{{patrulha.nome}}</p>
+                    </ion-avatar>
+                    <progress-bar no-padding progress="{{ patrulha.totais.geral }}" maximum="{{ ciclo.maxPontos }}" color="{{ patrulha.cor }}"></progress-bar>
+                </ion-item>
 
-                <ion-card-content>
-                    <ion-item no-padding>
-                        <ion-avatar item-start>
-                            <img [src]="patrulha.avatar">
-                            <p>{{patrulha.nome}}</p>
-                        </ion-avatar>
-                        <progress-bar progress="{{ patrulha.totais.geral }}" maximum="{{ ciclo.maxPontos }}" color="{{ patrulha.cor }}"></progress-bar>
-                    </ion-item>
-
-                    <div>
-                        <ion-segment [(ngModel)]="subGrupo">
-                            <ion-segment-button primary value="reuniao">
-                                Reunião
-                            </ion-segment-button>
-                            <ion-segment-button primary value="extras">
-                                Extras
-                            </ion-segment-button>
-                            <ion-segment-button primary value="mensal">
-                                Mensal
-                            </ion-segment-button>
-                        </ion-segment>
+                <ion-card-content no-padding>
+                    <div class="grupos" no-padding no-margin>
+                        <ion-row class="grupos">
+                            <ion-col no-padding>
+                                <button ion-button small full no-margin clear="{{ subGrupo != 'reuniao' }}" (click)="setGrupo('reuniao')">Reunião</button>
+                            </ion-col>
+                            <ion-col no-padding>
+                                <button ion-button small full no-margin clear="{{ subGrupo != 'extras' }}" (click)="setGrupo('extras')">Extras</button>
+                            </ion-col>
+                            <ion-col no-padding>
+                                <button ion-button small full no-margin clear="{{ subGrupo != 'mensal' }}" (click)="setGrupo('mensal')">Mensal</button>
+                            </ion-col>
+                        </ion-row>
                     </div>
 
-                    <div [ngSwitch]="subGrupo" no-padding>
+                    <div [ngSwitch]="subGrupo">
                         <ion-grid *ngSwitchCase="'reuniao'">
                             <ion-row class="header">
-                                <ion-col col-4 text-left></ion-col>
-                                <ion-col text-center>DIAS</ion-col>
-                                <ion-col col-1 text-left></ion-col>
-                            </ion-row>
-                            <ion-row class="header">
-                                <ion-col col-4> </ion-col>
+                                <ion-col col-4 text-right>DIAS</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray">
                                     {{dia.id}}
                                 </ion-col>
@@ -95,7 +93,7 @@
                                 <ion-col text-right class="total-linha">{{ patrulha.totais.totalJogoTecnico }}</ion-col>
                             </ion-row>
                             <ion-row class="total">
-                                <ion-col col-4 text-left>Total</ion-col>
+                                <ion-col col-4 text-right>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray">
                                     {{ patrulha.totais.totalDiaReuniao[dia.id] }}
                                 </ion-col>
@@ -107,16 +105,11 @@
 
                         <ion-grid *ngSwitchCase="'extras'">
                             <ion-row class="header">
-                                <ion-col col-4 text-left></ion-col>
-                                <ion-col text-center>DIAS</ion-col>
-                                <ion-col col-1 text-left></ion-col>
-                            </ion-row>
-                            <ion-row class="header">
-                                <ion-col col-4 text-left></ion-col>
+                                <ion-col col-4 text-right>DIAS</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray">
                                     {{dia.id}}
                                 </ion-col>
-                                <ion-col text-right class="total-linha"></ion-col>
+                                <ion-col text-right class="total">&nbsp;&nbsp;</ion-col>
                             </ion-row>
 
                             <ion-row>
@@ -148,8 +141,23 @@
                                 <ion-col text-right class="total-linha">{{ patrulha.totais.totalAtividadeExterna }}</ion-col>
                             </ion-row>
 
+                            <ion-row class="fake">
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray" [ngClass]="{'penalidade': patrulha.totais.totalDiaExtras[dia.id] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col>&nbsp;</ion-col>
+                            </ion-row>
+                            <ion-row class="fake">
+                                <ion-col col-4 text-left>&nbsp;</ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray" [ngClass]="{'penalidade': patrulha.totais.totalDiaExtras[dia.id] < 0}">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col>&nbsp;</ion-col>
+                            </ion-row>
+
                             <ion-row class="total">
-                                <ion-col col-4 text-left>Total</ion-col>
+                                <ion-col col-4 text-right>Total</ion-col>
                                 <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray" [ngClass]="{'penalidade': patrulha.totais.totalDiaExtras[dia.id] < 0}">
                                     {{ patrulha.totais.totalDiaExtras[dia.id] }}
                                 </ion-col>
@@ -157,25 +165,17 @@
                                     {{ patrulha.totais.totalGeralExtras}}
                                 </ion-col>
                             </ion-row>
-
-
-                            <ion-row class="fake">
-                                <ion-col col-4 text-left>&nbsp;</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray" [ngClass]="{'penalidade': patrulha.totais.totalDiaExtras[dia.id] < 0}">
-                                    &nbsp;
-                                </ion-col>
-                                <ion-col>&nbsp;</ion-col>
-                            </ion-row>
-                            <ion-row class="fake">
-                                <ion-col col-4 text-left>&nbsp;</ion-col>
-                                <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray" [ngClass]="{'penalidade': patrulha.totais.totalDiaExtras[dia.id] < 0}">
-                                    &nbsp;
-                                </ion-col>
-                                <ion-col>&nbsp;</ion-col>
-                            </ion-row>
                         </ion-grid>
 
                         <ion-grid *ngSwitchCase="'mensal'">
+                            <ion-row class="header">
+                                <ion-col col-4 text-right></ion-col>
+                                <ion-col text-right *ngFor="let dia of patrulha.pontos.diasArray">
+                                    &nbsp;
+                                </ion-col>
+                                <ion-col text-right class="total">&nbsp;&nbsp;</ion-col>
+                            </ion-row>
+
                             <ion-row>
                                 <ion-col col-8 text-left>Material de Patrulha</ion-col>
                                 <ion-col col-2></ion-col>
@@ -192,13 +192,6 @@
                                 <ion-col text-right>{{patrulha.pontos.livrosPatrulha}}</ion-col>
                             </ion-row>
 
-                            <ion-row class="total">
-                                <ion-col col-8></ion-col>
-                                <ion-col></ion-col>
-                                <ion-col col-2 text-right class="total total-geral">
-                                    {{ patrulha.totais.totalGeralMensal }}
-                                </ion-col>
-                            </ion-row>
 
                             <ion-row class="fake">
                                 <ion-col col-8 text-left>&nbsp;</ion-col>
@@ -215,21 +208,15 @@
                                 <ion-col></ion-col>
                                 <ion-col text-right>&nbsp;</ion-col>
                             </ion-row>
-                            <ion-row class="fake">
-                                <ion-col col-8 text-left>&nbsp;</ion-col>
+
+                            <ion-row class="total">
+                                <ion-col col-8></ion-col>
                                 <ion-col></ion-col>
-                                <ion-col text-right>&nbsp;</ion-col>
+                                <ion-col col-2 text-right class="total total-geral">
+                                    {{ patrulha.totais.totalGeralMensal }}
+                                </ion-col>
                             </ion-row>
-                            <ion-row class="fake">
-                                <ion-col col-8 text-left>&nbsp;</ion-col>
-                                <ion-col></ion-col>
-                                <ion-col text-right>&nbsp;</ion-col>
-                            </ion-row>
-                            <ion-row class="fake">
-                                <ion-col col-8 text-left>&nbsp;</ion-col>
-                                <ion-col></ion-col>
-                                <ion-col text-right>&nbsp;</ion-col>
-                            </ion-row>
+
                         </ion-grid>
                     </div>
                 </ion-card-content>

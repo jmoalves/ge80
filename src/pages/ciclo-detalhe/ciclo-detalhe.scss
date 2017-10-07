@@ -2,6 +2,9 @@ page-ciclo-detalhe {
     * {
         font-size: .97em;
     }
+    div.grupos>.row {
+        background-color: whitesmoke;
+    }
     .toolbar-background {
         background-color: #000066;
     }
@@ -18,12 +21,14 @@ page-ciclo-detalhe {
     }
     .header {
         background-color: lightgrey;
+        font-weight: bold;
     }
     .penalidade {
         color: red;
     }
     .total {
         background-color: lightgrey;
+        font-weight: bold;
     }
     .total-linha {
         border-left: solid 1px lightgrey;
@@ -34,7 +39,10 @@ page-ciclo-detalhe {
         color: white;
         background-color: map-get($colors, primary);
     }
-    .row:not(.total):not(.fake) {
+    .row:not(.total):not(.fake):not(.grupos) {
         border-bottom: solid 1px lightgrey;
+    }
+    ion-card {
+        max-width: 400px;
     }
 }

@@ -15,6 +15,7 @@ const CICLOS_INDEX_KEY = 'ciclos-index';
 export class TorneioProvider {
   data: Ciclo[];
   index: { [key:string]: number; };
+  waitReload:boolean = false;
 
   promise: Promise<any>;
 
@@ -23,7 +24,7 @@ export class TorneioProvider {
   }
 
   ciclos(): Promise<Ciclo[]> {
-    if (this.data) {
+    if (!this.waitReload && this.data) {
       return Promise.resolve(this.data);
     }
 
@@ -37,7 +38,7 @@ export class TorneioProvider {
   }
 
   ciclo(id: string): Promise<Ciclo> {
-    if (this.data && this.index) {
+    if (!this.waitReload && this.data && this.index) {
       return Promise.resolve(this.data[this.index[id]]);
     }
 
@@ -48,6 +49,11 @@ export class TorneioProvider {
         console.log("ERROR: " + JSON.stringify(err));
       })
     })
+  }
+
+  reload() {
+    this.waitReload = true;
+    this.load();
   }
 
   load() {
@@ -97,6 +103,7 @@ export class TorneioProvider {
       this.data = ciclos;
       this.index = dict;
 
+      this.waitReload = false;
       this.promise = undefined;
 
       console.log("URL GOT: ciclos");
