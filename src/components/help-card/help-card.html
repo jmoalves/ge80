@@ -1,0 +1,14 @@
+<ion-card>
+    <ion-card-header no-padding>
+        <ion-item class="header">
+            <h2>{{ nome }}</h2>
+            <ion-badge item-end>{{ tipo }}</ion-badge>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content padding>
+        <ng-content></ng-content>
+        <ion-item *ngIf="pontos" no-padding>
+            <ion-badge item-start>{{ pontos }} pontos</ion-badge>
+        </ion-item>
+    </ion-card-content>
+</ion-card>
