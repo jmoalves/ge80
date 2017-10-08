@@ -23,9 +23,13 @@ export class TorneioPage {
   ionViewDidLoad() {
   }
 
-  barClicked(evt, ciclo, idPatrulha) {
+  detail(evt, ciclo, idPatrulha) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
     this.navCtrl.push('CicloDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
+  }
+
+  help(evt) {
+    this.navCtrl.push('HelpPage');
   }
 
   refresh(evt) {

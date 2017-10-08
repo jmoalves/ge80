@@ -55,4 +55,8 @@ export class CicloDetalhePage {
   setGrupo(grupo:string) {
     this.subGrupo = grupo;
   }
+
+  help(evt) {
+    this.navCtrl.push('HelpPage');
+  }
 }
