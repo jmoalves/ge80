@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ToastController, Toast } from 'ionic-angular';
 
 import { Ciclo, PontuacaoPatrulha } from '../../models/torneio/ciclo';
 
@@ -13,6 +13,7 @@ import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 })
 export class CicloDetalhePage {
   @ViewChild('slides') slides: Slides;
+  toast: Toast;
 
   ciclo: Ciclo;
   slideInicial: number;
@@ -92,11 +93,11 @@ export class CicloDetalhePage {
         break;
 
       case 'conquistas':
-        msg = "[Conquistas] Especialidades: Nível 1 -> +1, Nível 2 -> +2, Nível 3 -> + 3; Progressão: +10; Insígnias especiais: +15; Cordão verde-amarelo: +20; Cordão vermelho-branco: +35; Lis de Ouro: +60";
+        msg = "[Conquistas] \nEspecialidades: +1, +2, +3 (pelo nível)\nProgressão: +10\nInsígnias especiais: +15\nCordão verde-amarelo: +20\nCordão vermelho-branco: +35\nLis de Ouro: +60";
         break;
 
       case 'extras':
-        msg = "[Extras] Palestra: +5; Boletim: +10; Promessa: +5; Quatro reuniões seguidas: +4; Ou qualquer outra coisa, a critério dos chefes.";
+        msg = "[Extras]\nPalestra: +5\nBoletim: +10\nPromessa: +5\nQuatro reuniões seguidas: +4\nOu qualquer outra coisa, a critério dos chefes.";
         break;
 
       case 'penalidade':
@@ -124,10 +125,16 @@ export class CicloDetalhePage {
         break;
     }
 
-    let toast = this.toastCtrl.create({
+    if (this.toast) {
+      this.toast.dismissAll();
+    }
+
+    this.toast = this.toastCtrl.create({
       message: msg,
-      duration: 5000
+      duration: 3000,
+      dismissOnPageChange: true
     });
-    toast.present();
+
+    this.toast.present();
   }
 }

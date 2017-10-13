@@ -45,3 +45,8 @@ $item-wp-detail-push-show: true;
 // --------------------------------------------------
 @import "roboto";
 @import "noto-sans";
+// Global styles
+// --------------------------------------------------
+.toast-message {
+    white-space: pre-line;
+}
