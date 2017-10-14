@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
+import {  IonicModule } from 'ionic-angular';
 
 import { ProgressBarComponent } from './progress-bar/progress-bar';
+import { HelpCardComponent } from './help-card/help-card';
 
 @NgModule({
   declarations: [
-    ProgressBarComponent
+    ProgressBarComponent,
+    HelpCardComponent
+  ],
+  imports: [
+    IonicModule
   ],
   exports: [
-    ProgressBarComponent
+    ProgressBarComponent,
+    HelpCardComponent
   ]
 })
 export class ComponentsModule { }

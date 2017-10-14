@@ -73,7 +73,7 @@ export class TorneioProvider {
       }
     });
 
-    this.promise = this.api.get('api/ciclos.json').toPromise();
+    this.promise = this.api.get('api/ciclos.json', { nonce: (new Date()).getTime() }).toPromise();
     this.promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
       let newData:{ [key:string]: Ciclo } = res.json();
@@ -85,7 +85,7 @@ export class TorneioProvider {
 
         // console.log("Ciclo[" + ciclo.id + "] => " + JSON.stringify(ciclo));
         // console.log("Ciclo[" + ciclo.id + "] atualizadoEm => " + ciclo.atualizadoEm);
-        this.computaTotais(ciclo);
+        this.ajustaPatrulhas(ciclo);
         ciclos.push(ciclo);
       }
 
@@ -113,7 +113,7 @@ export class TorneioProvider {
     });
   }
 
-  private computaTotais(ciclo: Ciclo) {
+  private ajustaPatrulhas(ciclo: Ciclo) {
     // this.maxPontos(ciclo);
 
     let maxPontos:number = 0;
@@ -133,6 +133,13 @@ export class TorneioProvider {
 
       patrulhas.push(patrulha);
     }
+
+    // Ordena por pontuacao
+    patrulhas.sort((a, b) => {
+      // Em ordem descendente de pontos
+      return (b.totais.geral - a.totais.geral);
+    })
+
     ciclo.patrulhaArray = patrulhas;
 
     // Para tratar os empates
@@ -143,7 +150,8 @@ export class TorneioProvider {
     }
 
     // Só para ter uma margem na barra
-    ciclo.maxPontos = Math.round(maxPontos * 1.1);
+    // ciclo.maxPontos = Math.round(maxPontos * 1.1);
+    ciclo.maxPontos = maxPontos;
   }
 
   private computaPontosPatrulha(patrulha: PontuacaoPatrulha) {
