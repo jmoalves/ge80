@@ -2,9 +2,6 @@ page-ciclo-detalhe {
     * {
         font-size: .97em;
     }
-    div.grupos>.row {
-        background-color: whitesmoke;
-    }
     .toolbar-background {
         background-color: #000066;
     }
@@ -18,6 +15,16 @@ page-ciclo-detalhe {
         background-image: url('../assets/img/floresta-da-tijuca.jpg');
         background-repeat: no-repeat;
         background-size: cover;
+    }
+    div.grupos .row {
+        background-color: whitesmoke;
+    }
+    .row.linha {
+        border-bottom: solid 1px lightgrey;
+    }
+    .label-ios {
+        margin: 0;
+        padding: 0;
     }
     .header {
         background-color: lightgrey;
@@ -38,8 +45,5 @@ page-ciclo-detalhe {
         font-weight: bold;
         color: white;
         background-color: map-get($colors, primary);
-    }
-    .row:not(.total):not(.fake):not(.grupos) {
-        border-bottom: solid 1px lightgrey;
     }
 }
