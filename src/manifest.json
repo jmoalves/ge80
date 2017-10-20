@@ -1,13 +1,13 @@
 {
-    "name": "GE80",
-    "short_name": "GE80",
+    "name": "GE80 - Torneio de Eficiência",
+    "short_name": "GE80-web",
     "start_url": "index.html",
     "display": "standalone",
     "icons": [{
-        "src": "assets/imgs/logo.png",
+        "src": "assets/img/logo.png",
         "sizes": "512x512",
         "type": "image/png"
     }],
-    "background_color": "#4e8ef7",
-    "theme_color": "#4e8ef7"
+    "background_color": "#000066",
+    "theme_color": "#000066"
 }
