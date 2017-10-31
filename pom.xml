@@ -3,7 +3,7 @@
 
   <groupId>com.github.jmoalves.ge80</groupId>
   <artifactId>ge80-ionic</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.6.3</version>
 
   <packaging>jar</packaging>
 
