@@ -46,4 +46,7 @@ page-ciclo-detalhe {
         color: white;
         background-color: map-get($colors, primary);
     }
+    ion-label {
+        width: 100%;
+    }
 }
