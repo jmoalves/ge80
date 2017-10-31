@@ -1,0 +1,57 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.jmoalves.ge80</groupId>
+  <artifactId>ge80-ionic</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <packaging>jar</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>yarn install</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>yarn</executable>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ionic build</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>ionic</executable>
+              <arguments>
+                <argument>build</argument>
+                <argument>--prod</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <classesDirectory>www</classesDirectory>
+          <includes>**/*</includes>
+        </configuration>
+      </plugin>
+      <!--
+      <plugin><artifactId>maven-assembly-plugin</artifactId><version>3.1.0</version><executions><execution><phase>package</phase></execution></executions><configuration><descriptors><descriptor>maven-assembly.xml</descriptor></descriptors></configuration></plugin>
+      -->
+    </plugins>
+  </build>
+</project>
