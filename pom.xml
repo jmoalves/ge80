@@ -3,9 +3,13 @@
 
   <groupId>com.github.jmoalves.ge80</groupId>
   <artifactId>ge80-ionic</artifactId>
-  <version>0.6.3</version>
+  <version>0.6.4-SNAPSHOT</version>
 
   <packaging>jar</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <build>
     <plugins>

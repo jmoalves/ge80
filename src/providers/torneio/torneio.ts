@@ -73,7 +73,7 @@ export class TorneioProvider {
       }
     });
 
-    this.promise = this.api.get('api/ciclos.json', { nonce: (new Date()).getTime() }).toPromise();
+    this.promise = this.api.get('ciclos', { nonce: (new Date()).getTime() }).toPromise();
     this.promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
       let newData:{ [key:string]: Ciclo } = res.json();

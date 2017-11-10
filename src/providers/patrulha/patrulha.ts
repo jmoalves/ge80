@@ -26,7 +26,7 @@ export class PatrulhaProvider {
       }
     });
 
-    this.promise = this.api.get('patrulhas/patrulhas.json', { nonce: (new Date()).getTime() }).toPromise();
+    this.promise = this.api.get('patrulhas', { nonce: (new Date()).getTime() }).toPromise();
     this.promise.then(res => {
       // console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
 

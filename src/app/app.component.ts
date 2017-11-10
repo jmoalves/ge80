@@ -3,7 +3,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Nav, Platform } from 'ionic-angular';
 
-import { PatrulhaProvider, TorneioProvider, Settings } from '../providers/providers';
+import { PatrulhaProvider, TorneioProvider, SettingsProvider } from '../providers/providers';
 
 @Component({
   template: `
@@ -16,11 +16,13 @@ export class MyApp {
 
   constructor(
     private platform: Platform,
-    settings: Settings,
+    private settings: SettingsProvider,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {
+      this.settings.load();
+      this.settings.save();
       this.patrulhaProvider.load();
       this.torneioProvider.load();
   }
