@@ -9,10 +9,13 @@ import { Api } from '../api/api';
 import { Patrulha } from '../../models/patrulha'
 
 const PATRULHAS_KEY = 'patrulhas';
+const avatarUrl = "https://raw.githubusercontent.com/jmoalves/ge80-t3-torneioEficiencia/master";
 
 @Injectable()
 export class PatrulhaProvider {
-  data: { [key: string]: Patrulha };
+  data: Patrulha[];
+  index: { [key:string]: Patrulha };
+
   promise: Promise<any>;
 
   constructor(private storage: Storage, private api: Api) {
@@ -28,14 +31,15 @@ export class PatrulhaProvider {
 
     this.promise = this.api.get('patrulhas', { nonce: (new Date()).getTime() }).toPromise();
     this.promise.then(res => {
-      // console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
+      console.log("API GET Patrulhas: " + JSON.stringify(res.json()));
 
-      let patrulhas: { [key: string]: Patrulha } = res.json();
-      for (let key in patrulhas) {
-        patrulhas[key].avatar = this.api.url + '/patrulhas/' + key + '/avatar.jpg';
+      let patrulhas: Patrulha[] = res.json();
+      for (let patrulha of patrulhas) {
+        patrulha.avatar = avatarUrl + '/patrulhas/' + patrulha.id + '/avatar.jpg';
       }
 
       this.storage.set(PATRULHAS_KEY, patrulhas);
+      this.index = this.geraIndice(patrulhas);
       this.data = patrulhas;
 
       console.log("URL GOT: patrulhas");
@@ -46,12 +50,12 @@ export class PatrulhaProvider {
     })
   }
 
-  patrulhas(): Promise<{ [key: string]: Patrulha }> {
+  patrulhas(): Promise<Patrulha[]> {
     if (this.data) {
       return Promise.resolve(this.data);
     }
 
-    return new Promise<{ [key: string]: Patrulha }>((resolve, reject) => {
+    return new Promise<Patrulha[]>((resolve, reject) => {
       this.promise.then(res => {
         resolve(this.data);
       }).catch(err => {
@@ -61,16 +65,27 @@ export class PatrulhaProvider {
   }
 
   patrulha(id: string): Promise<Patrulha> {
-    if (this.data) {
-      return Promise.resolve(this.data[id]);
+    if (this.index) {
+      return Promise.resolve(this.index[id]);
     }
 
     return new Promise<Patrulha>((resolve, reject) => {
       this.promise.then(() => {
-        return resolve(this.data[id]);
+        return resolve(this.index[id]);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
       })
     })
+  }
+
+  geraIndice(patrulhas:Patrulha[]): { [ key: string]: Patrulha } {
+    let indice:{ [ key: string]: Patrulha } = {};
+
+    for (let key in patrulhas) {
+      let id:string = patrulhas[key].id;
+      indice[id] = patrulhas[key];
+    }
+
+    return indice;
   }
 }

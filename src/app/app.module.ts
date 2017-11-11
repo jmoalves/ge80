@@ -15,6 +15,7 @@ import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 import { PatrulhaProvider } from '../providers/patrulha/patrulha';
 import { TorneioProvider } from '../providers/torneio/torneio';
+import { JovensProvider } from '../providers/jovens/jovens';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -30,8 +31,9 @@ export function provideSettings(storage: Storage) {
    * these values will not overwrite the saved values (this can be done manually if desired).
    */
   return new SettingsProvider(storage, {
-    apiURL: 'https://ge80-184421.appspot.com'
-    // apiURL: 'http://localhost:8080'
+    // apiURL: 'https://ge80-184421.appspot.com'
+    apiURL: 'http://localhost:8080'
+    // apiURL: ''
   });
 }
 
@@ -66,7 +68,8 @@ export function provideSettings(storage: Storage) {
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PatrulhaProvider,
-    TorneioProvider
+    TorneioProvider,
+    JovensProvider
   ]
 })
 export class AppModule { }

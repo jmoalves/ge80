@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar primary>
+        <ion-toolbar>
+            <ion-title>Inspeção</ion-title>
+            <ion-buttons end>
+                <!--
+              <button ion-button large color="primary" (click)="help($event)">
+                <ion-icon  name="help"></ion-icon>
+              </button>
+            -->
+                <button ion-button large color="primary" (click)="refresh($event)">
+                <ion-icon  name="refresh"></ion-icon>
+              </button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <div *ngFor="let patrulha of inspecao">
+            <ion-list-header>
+                {{ patrulha.nome }}
+            </ion-list-header>
+            <ion-item *ngFor="let jovem of patrulha.jovens">
+                {{ jovem.nome }} - {{ jovem.cargo }}
+            </ion-item>
+        </div>
+    </ion-list>
+</ion-content>
