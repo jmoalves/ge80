@@ -41,7 +41,7 @@
             <ion-grid>
                 <ion-row *ngFor="let jovem of patrulha.jovens">
                     <ion-col col-2 col-sm-auto text-center>
-                        <ion-thumbnail class="foto">
+                        <ion-thumbnail class="foto" (click)="jovemPresenteToggle(jovem)">
                             <img src="{{jovem.avatar}}">
                         </ion-thumbnail>
                     </ion-col>
@@ -62,15 +62,15 @@
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <button ion-button small icon-only>
-                                          <ion-icon name="add"></ion-icon>
-                                        </button>
+                                                <button ion-button small icon-only (click)="jovemComDistintivo(jovem)">
+                                                <ion-icon name="remove"></ion-icon>
+                                              </button>
                                                 <div class="distintivos">
-                                                    <p>{{ jovem.distintivos }}</p>
+                                                    <p text-right>{{ jovem.distintivos }}</p>
                                                 </div>
-                                                <button ion-button small icon-only>
-                                          <ion-icon name="remove"></ion-icon>
-                                        </button>
+                                                <button ion-button small icon-only (click)="jovemSemDistintivo(jovem)">
+                                                <ion-icon name="add"></ion-icon>
+                                              </button>
                                             </ion-col>
                                             <ion-col col-auto margin-left>
                                                 <ion-label>

@@ -54,7 +54,11 @@ export class InspecaoPage {
         avatar: "http://sigue.escoteiros.org.br/paxtu/associado/230477.jpg",
         nome: jovem.nome,
         cargo: jovem.cargo,
-        distintivos: 0
+        presente: true,
+        distintivos: 0,
+        caneta: true,
+        lenco: true,
+        uniforme: true
       })
     }
 
@@ -75,5 +79,22 @@ export class InspecaoPage {
     }
 
     return qtd;
+  }
+
+  jovemPresenteToggle(jovem) {
+    console.log("Presente toggle: " + jovem.nome);
+    jovem.presente = !jovem.presente;
+  }
+
+  jovemComDistintivo(jovem) {
+    if (jovem.distintivos > 0) {
+      jovem.distintivos--;
+    }
+  }
+
+  jovemSemDistintivo(jovem) {
+    if (jovem.distintivos < 99) {
+      jovem.distintivos++;
+    }
   }
 }
