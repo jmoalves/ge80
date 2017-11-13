@@ -96,7 +96,17 @@ export class InspecaoPage {
     jovem.uniforme = true;
   }
 
-  jovemComDistintivo(jovem) {
+  toggleDistintivo(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
+    if (jovem.distintivos > 0) {
+      jovem.distintivos = 0;
+    }
+  }
+
+  decrementaDistintivo(jovem) {
     if (!jovem.presente) {
       return;
     }
@@ -106,7 +116,7 @@ export class InspecaoPage {
     }
   }
 
-  jovemSemDistintivo(jovem) {
+  incrementaDistintivo(jovem) {
     if (!jovem.presente) {
       return;
     }
@@ -116,15 +126,27 @@ export class InspecaoPage {
     }
   }
 
-  jovemToggleCaneta(jovem) {
+  toggleCaneta(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
     jovem.caneta = !jovem.caneta;
   }
 
-  jovemToggleLenco(jovem) {
+  toggleLenco(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
     jovem.lenco = !jovem.lenco;
   }
 
-  jovemToggleUniforme(jovem) {
+  toggleUniforme(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
     jovem.uniforme = !jovem.uniforme;
   }
 

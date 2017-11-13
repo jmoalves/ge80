@@ -57,36 +57,36 @@
                                     <ion-grid no-padding no-margin>
                                         <ion-row class="inspecao">
                                             <ion-col col-auto>
-                                                <ion-label>
+                                                <ion-label (click)="toggleDistintivo(jovem)">
                                                     <img [hidden]="jovem.distintivos > 0" class="check-icon" src="assets/img/flaticon/badge-ok.svg">
                                                     <img [hidden]="jovem.distintivos == 0" class="check-icon" src="assets/img/flaticon/badge-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <button ion-button small icon-only (click)="jovemComDistintivo(jovem)">
+                                                <button ion-button small icon-only (click)="decrementaDistintivo(jovem)">
                                                 <ion-icon name="remove"></ion-icon>
                                               </button>
                                                 <div class="distintivos">
                                                     <p text-right>{{ jovem.distintivos }}</p>
                                                 </div>
-                                                <button ion-button small icon-only (click)="jovemSemDistintivo(jovem)">
+                                                <button ion-button small icon-only (click)="incrementaDistintivo(jovem)">
                                                 <ion-icon name="add"></ion-icon>
                                               </button>
                                             </ion-col>
                                             <ion-col col-auto margin-left>
-                                                <ion-label (click)="jovemToggleCaneta(jovem)">
+                                                <ion-label (click)="toggleCaneta(jovem)">
                                                     <img [hidden]="!jovem.caneta" class="check-icon" src="assets/img/flaticon/pen-ok.svg">
                                                     <img [hidden]="jovem.caneta" class="check-icon" src="assets/img/flaticon/pen-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <ion-label (click)="jovemToggleLenco(jovem)">
+                                                <ion-label (click)="toggleLenco(jovem)">
                                                     <img [hidden]="!jovem.lenco" class="check-icon" src="assets/img/flaticon/tie-ok.svg">
                                                     <img [hidden]="jovem.lenco" class="check-icon" src="assets/img/flaticon/tie-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <ion-label (click)="jovemToggleUniforme(jovem)">
+                                                <ion-label (click)="toggleUniforme(jovem)">
                                                     <img [hidden]="!jovem.uniforme" class="check-icon" src="assets/img/flaticon/shirt-ok.svg">
                                                     <img [hidden]="jovem.uniforme" class="check-icon" src="assets/img/flaticon/shirt-falta.svg">
                                                 </ion-label>
