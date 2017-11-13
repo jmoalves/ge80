@@ -83,16 +83,33 @@ export class InspecaoPage {
 
   jovemPresenteToggle(jovem) {
     console.log("Presente toggle: " + jovem.nome);
-    jovem.presente = !jovem.presente;
+    if (!jovem.presente) {
+      jovem.presente = true;
+      return;
+    }
+
+    jovem.presente = false;
+    jovem.distintivos = 0;
+    jovem.caneta = true;
+    jovem.lenco = true;
+    jovem.uniforme = true;
   }
 
   jovemComDistintivo(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
     if (jovem.distintivos > 0) {
       jovem.distintivos--;
     }
   }
 
   jovemSemDistintivo(jovem) {
+    if (!jovem.presente) {
+      return;
+    }
+
     if (jovem.distintivos < 99) {
       jovem.distintivos++;
     }

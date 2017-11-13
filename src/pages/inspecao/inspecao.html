@@ -39,7 +39,7 @@
         </ion-card-header>
         <ion-card-content no-padding no-margin>
             <ion-grid>
-                <ion-row *ngFor="let jovem of patrulha.jovens">
+                <ion-row *ngFor="let jovem of patrulha.jovens" [ngClass]="{ jovemPresente : jovem.presente, jovemAusente : !jovem.presente }">
                     <ion-col col-2 col-sm-auto text-center>
                         <ion-thumbnail class="foto" (click)="jovemPresenteToggle(jovem)">
                             <img src="{{jovem.avatar}}">
