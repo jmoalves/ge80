@@ -44,6 +44,7 @@ export class InspecaoPage {
       patrulhas[p.id] = {
         id: p.id,
         nome: p.nome,
+        bastao: true,
         jovens: []
       }
     }
@@ -113,5 +114,17 @@ export class InspecaoPage {
     if (jovem.distintivos < 99) {
       jovem.distintivos++;
     }
+  }
+
+  jovemToggleCaneta(jovem) {
+    jovem.caneta = !jovem.caneta;
+  }
+
+  jovemToggleLenco(jovem) {
+    jovem.lenco = !jovem.lenco;
+  }
+
+  jovemToggleUniforme(jovem) {
+    jovem.uniforme = !jovem.uniforme;
   }
 }

@@ -58,7 +58,8 @@
                                         <ion-row class="inspecao">
                                             <ion-col col-auto>
                                                 <ion-label>
-                                                    <img class="check-icon" src="assets/img/flaticon/badge.svg">
+                                                    <img [hidden]="jovem.distintivos > 0" class="check-icon" src="assets/img/flaticon/badge-ok.svg">
+                                                    <img [hidden]="jovem.distintivos == 0" class="check-icon" src="assets/img/flaticon/badge-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
@@ -73,18 +74,21 @@
                                               </button>
                                             </ion-col>
                                             <ion-col col-auto margin-left>
-                                                <ion-label>
-                                                    <img class="check-icon" src="assets/img/flaticon/pen.svg">
+                                                <ion-label (click)="jovemToggleCaneta(jovem)">
+                                                    <img [hidden]="!jovem.caneta" class="check-icon" src="assets/img/flaticon/pen-ok.svg">
+                                                    <img [hidden]="jovem.caneta" class="check-icon" src="assets/img/flaticon/pen-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <ion-label>
-                                                    <img class="check-icon" src="assets/img/flaticon/shirt-and-tie.svg">
+                                                <ion-label (click)="jovemToggleLenco(jovem)">
+                                                    <img [hidden]="!jovem.lenco" class="check-icon" src="assets/img/flaticon/tie-ok.svg">
+                                                    <img [hidden]="jovem.lenco" class="check-icon" src="assets/img/flaticon/tie-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                             <ion-col col-auto>
-                                                <ion-label>
-                                                    <img class="check-icon" src="assets/img/flaticon/shirt.svg">
+                                                <ion-label (click)="jovemToggleUniforme(jovem)">
+                                                    <img [hidden]="!jovem.uniforme" class="check-icon" src="assets/img/flaticon/shirt-ok.svg">
+                                                    <img [hidden]="jovem.uniforme" class="check-icon" src="assets/img/flaticon/shirt-falta.svg">
                                                 </ion-label>
                                             </ion-col>
                                         </ion-row>
