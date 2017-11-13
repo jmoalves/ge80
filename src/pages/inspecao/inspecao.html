@@ -24,7 +24,7 @@
                 <ion-row no-padding no-margin>
                     <ion-col col-auto>
                         <ion-item>
-                            <ion-badge item-start>{{ quantos(patrulha) }}</ion-badge>
+                            <ion-badge item-start [ngClass]="{ perdePonto : penalidadePatrulha(patrulha) }">{{ quantos(patrulha) }}</ion-badge>
                             <ion-label>{{ patrulha.nome }}</ion-label>
                         </ion-item>
                     </ion-col>

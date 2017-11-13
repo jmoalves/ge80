@@ -127,4 +127,33 @@ export class InspecaoPage {
   jovemToggleUniforme(jovem) {
     jovem.uniforme = !jovem.uniforme;
   }
+
+  penalidadePatrulha(patrulha): boolean {
+    for (let jovem of patrulha.jovens) {
+      if (this.penalidadeJovem(jovem)) {
+        return true;
+      }
+    }
+
+    if (!patrulha.bastao) {
+      return true;
+    }
+
+    return false;
+  }
+
+  penalidadeJovem(jovem):boolean {
+    if (!jovem.presente) {
+      return true;
+    }
+
+    let pontos:number = 0;
+
+    pontos += jovem.distintivos;
+    pontos += (jovem.caneta ? 0 : 1);
+    pontos += (jovem.lenco ? 0 : 1);
+    pontos += (jovem.uniforme ? 0 : 1);
+
+    return pontos > 0;
+  }
 }
