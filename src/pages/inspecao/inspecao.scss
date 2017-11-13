@@ -30,9 +30,11 @@ page-inspecao {
     .distintivos {
         display: inline-block;
         width: 1.3em;
-        margin-top: 10px;
     }
     .check-icon {
         width: 1.5em;
+    }
+    .inspecao ion-label {
+        margin-top: 4px !important;
     }
 }
