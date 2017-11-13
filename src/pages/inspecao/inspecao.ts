@@ -40,18 +40,21 @@ export class InspecaoPage {
   ajustarInspecao() {
     let patrulhas = [];
 
+    for (let p of this.patrulhas) {
+      patrulhas[p.id] = {
+        id: p.id,
+        nome: p.nome,
+        jovens: []
+      }
+    }
+
     for (let jovem of this.jovens) {
       let patrulha = patrulhas[jovem.patrulha];
-      if (!patrulha) {
-        patrulha = {
-          id: jovem.patrulha,
-          nome: this.patrulhas[jovem.patrulha].nome,
-          jovens: []
-        }
-      }
-
       patrulha.jovens.push({
-        nome: jovem.nome
+        avatar: "http://sigue.escoteiros.org.br/paxtu/associado/230477.jpg",
+        nome: jovem.nome,
+        cargo: jovem.cargo,
+        distintivos: 0
       })
     }
 
@@ -61,5 +64,16 @@ export class InspecaoPage {
     }
 
     this.inspecao = inspecao;
+  }
+
+  quantos(patrulha) {
+    let qtd:number = 0;
+    for (let jovem of patrulha.jovens) {
+      if (jovem.presente) {
+        qtd++;
+      }
+    }
+
+    return qtd;
   }
 }

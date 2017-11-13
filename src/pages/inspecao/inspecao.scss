@@ -1,16 +1,38 @@
 page-inspecao {
+    .scroll-content {
+        background-image: url('../assets/img/floresta-da-tijuca.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
     .toolbar-background {
         background-color: #000066;
     }
     .toolbar-title {
         color: white;
     }
-    .barra-mes {
+    .inspecao-header {
         background: #E7C901; //#FFDE00;
     }
-    .scroll-content {
-        background-image: url('../assets/img/floresta-da-tijuca.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
+    .inspecao-header ion-item {
+        background: #E7C901; //#FFDE00;
+    }
+    #check-bastao {
+        margin: 0;
+        margin-right: 1em;
+    }
+    .foto {
+        min-width: 2em;
+        max-width: 4em;
+    }
+    .jovem {
+        width: 10em;
+    }
+    .distintivos {
+        display: inline-block;
+        width: 2em;
+        margin-top: 10px;
+    }
+    .check-icon {
+        width: 1.5em;
     }
 }

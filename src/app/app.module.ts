@@ -31,8 +31,8 @@ export function provideSettings(storage: Storage) {
    * these values will not overwrite the saved values (this can be done manually if desired).
    */
   return new SettingsProvider(storage, {
-    apiURL: 'https://ge80-184421.appspot.com'
-    // apiURL: 'http://localhost:8080'
+    // apiURL: 'https://ge80-184421.appspot.com'
+    apiURL: 'http://192.168.15.39:8080'
     // apiURL: ''
   });
 }
