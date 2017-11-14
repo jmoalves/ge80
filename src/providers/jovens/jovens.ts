@@ -1,25 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { Jovem } from '../../models/jovem';
-/*
-  Generated class for the JovensProvider provider.
+import { Storage } from '@ionic/storage';
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+import { Api } from '../api/api';
+
+import { Jovem } from '../../models/jovem';
+
+const JOVENS_KEY = 'jovens';
+
 @Injectable()
 export class JovensProvider {
+  data: Jovem[];
 
-  constructor(public http: Http) {
+  promise: Promise<any>;
+
+  constructor(private storage: Storage, private api: Api) {
+  }
+
+  load() {
+    this.storage.get(JOVENS_KEY).then((val) => {
+      if (!this.data && val) {
+        this.data = val;
+        console.log("LOADED: " + JSON.stringify(this.data));
+      }
+    });
+
+    this.promise = this.api.get('jovens', { nonce: (new Date()).getTime() }).toPromise();
+    this.promise.then(res => {
+      console.log("API GET Jovens: " + JSON.stringify(res.json()));
+
+      let jovens: Jovem[] = res.json();
+      this.storage.set(JOVENS_KEY, jovens);
+      this.data = jovens;
+
+      console.log("URL GOT: Jovens");
+
+      this.promise = undefined;
+    }).catch((err) => {
+      console.log("ERROR: " + JSON.stringify(err));
+    })
   }
 
   jovens(): Promise<Jovem[]> {
-    return Promise.resolve([{
-      patrulha: 'tirano',
-      nome: 'Otto Oliveira',
-      cargo: 'Monitor'
-    }]);
+    if (this.data) {
+      return Promise.resolve(this.data);
+    }
+
+    return new Promise<Jovem[]>((resolve, reject) => {
+      this.promise.then(res => {
+        resolve(this.data);
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+      })
+    })
   }
 }

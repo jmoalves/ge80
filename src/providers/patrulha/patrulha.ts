@@ -9,7 +9,6 @@ import { Api } from '../api/api';
 import { Patrulha } from '../../models/patrulha'
 
 const PATRULHAS_KEY = 'patrulhas';
-const avatarUrl = "https://raw.githubusercontent.com/jmoalves/ge80-t3-torneioEficiencia/master";
 
 @Injectable()
 export class PatrulhaProvider {
@@ -35,7 +34,7 @@ export class PatrulhaProvider {
 
       let patrulhas: Patrulha[] = res.json();
       for (let patrulha of patrulhas) {
-        patrulha.avatar = avatarUrl + '/patrulhas/' + patrulha.id + '/avatar.jpg';
+        patrulha.avatar = this.api.url + '/patrulhas/' + patrulha.id + '/avatar.jpg';
       }
 
       this.storage.set(PATRULHAS_KEY, patrulhas);
