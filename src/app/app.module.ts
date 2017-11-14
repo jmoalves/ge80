@@ -17,6 +17,8 @@ import { PatrulhaProvider } from '../providers/patrulha/patrulha';
 import { TorneioProvider } from '../providers/torneio/torneio';
 import { JovensProvider } from '../providers/jovens/jovens';
 
+import { DateService } from '../services/date.service';
+
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function HttpLoaderFactory(http: Http) {
@@ -69,7 +71,8 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PatrulhaProvider,
     TorneioProvider,
-    JovensProvider
+    JovensProvider,
+    DateService
   ]
 })
 export class AppModule { }

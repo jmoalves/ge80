@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { JovensProvider }  from '../../providers/jovens/jovens';
 import { PatrulhaProvider }  from '../../providers/patrulha/patrulha';
 
+import { DateService } from '../../services/date.service';
+
 import { Jovem }  from '../../models/jovem';
 import { Patrulha }  from '../../models/patrulha';
 
@@ -13,6 +15,7 @@ import { Patrulha }  from '../../models/patrulha';
   templateUrl: 'inspecao.html',
 })
 export class InspecaoPage {
+  dtInspecao;
   inspecao = [];
 
   private patrulhas: Patrulha[] = [];
@@ -21,8 +24,11 @@ export class InspecaoPage {
   constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        jovensPrv: JovensProvider,
-        patrulhasPrv: PatrulhaProvider) {
+        private jovensPrv: JovensProvider,
+        private patrulhasPrv: PatrulhaProvider,
+        private dateService: DateService) {
+    this.dtInspecao = dateService.isoDate(new Date());
+
     Promise.all([
       jovensPrv.jovens(),
       patrulhasPrv.patrulhas()])
