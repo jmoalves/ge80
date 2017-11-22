@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="app-header">
     <ion-navbar primary>
         <ion-toolbar>
             <ion-title>Torneio de eficiência</ion-title>
@@ -16,7 +16,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="app-background">
     <ion-slides #slides pager="false" effect="slide" loop="false" zoom="false" direction="horizontal" [initialSlide]="slideInicial">
         <ion-slide *ngFor="let patrulha of ciclo.patrulhaArray" no-padding>
             <ion-grid fixed>
