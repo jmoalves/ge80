@@ -18,6 +18,8 @@ import { TorneioProvider } from '../providers/torneio/torneio';
 import { JovensProvider } from '../providers/jovens/jovens';
 
 import { DateService } from '../services/date.service';
+import { FirebaseProvider } from '../providers/firebase/firebase';
+import { AppHeaderComponent } from '../components/app-header/app-header';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -72,7 +74,8 @@ export function provideSettings(storage: Storage) {
     PatrulhaProvider,
     TorneioProvider,
     JovensProvider,
-    DateService
+    DateService,
+    FirebaseProvider
   ]
 })
 export class AppModule { }

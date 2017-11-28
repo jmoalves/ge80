@@ -1,20 +1,8 @@
-<ion-header class="app-header">
-    <ion-navbar primary>
-        <ion-toolbar>
-            <ion-title>Torneio de eficiência</ion-title>
-            <ion-buttons end>
-                <!--
-                <button ion-button large color="primary" (click)="help($event)">
-                  <ion-icon  name="help"></ion-icon>
-                </button>
-              -->
-                <button ion-button large color="primary" (click)="refresh($event)">
-                  <ion-icon  name="refresh"></ion-icon>
-                </button>
-            </ion-buttons>
-        </ion-toolbar>
-    </ion-navbar>
+<ion-header>
+    <app-header>
+    </app-header>
 </ion-header>
+
 
 <ion-content class="app-background">
     <ion-slides #slides pager="false" effect="slide" loop="false" zoom="false" direction="horizontal" [initialSlide]="slideInicial">

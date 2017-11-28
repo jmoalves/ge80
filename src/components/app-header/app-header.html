@@ -1,0 +1,38 @@
+<ion-navbar class="app-header" primary>
+    <ion-toolbar>
+        <ion-grid no-padding>
+            <ion-row>
+                <ion-col col-auto>
+                    <ion-item>
+                        <ion-title>GE80</ion-title>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+
+                </ion-col>
+                <ion-col col-auto>
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <img src="{{ photoURL }}">
+                        </ion-avatar>
+                        <ion-label>{{ name }}</ion-label>
+                    </ion-item>
+
+                </ion-col>
+                <ion-col col-auto>
+                    <ion-buttons>
+                        <!--
+                  <button ion-button large color="primary" (click)="help($event)">
+                    <ion-icon  name="help"></ion-icon>
+                  </button>
+                -->
+                        <button ion-button large color="primary" (click)="refresh($event)">
+                    <ion-icon  name="refresh"></ion-icon>
+                  </button>
+                    </ion-buttons>
+
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-navbar>

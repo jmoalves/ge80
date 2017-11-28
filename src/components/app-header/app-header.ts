@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 
-@IonicPage()
+/**
+ * Generated class for the AppHeaderComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
 @Component({
-  selector: 'page-principal',
-  templateUrl: 'principal.html',
+  selector: 'app-header',
+  templateUrl: 'app-header.html'
 })
-export class PrincipalPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private firebasePrv: FirebaseProvider) {
+export class AppHeaderComponent {
+  constructor(private firebasePrv: FirebaseProvider) {
   }
-
-  ionViewDidLoad() {
-  }
-
   get user() {
     return JSON.stringify(this.firebasePrv.user, null, 3);
   }
@@ -34,4 +33,5 @@ export class PrincipalPage {
       return "";
     }
   }
+
 }

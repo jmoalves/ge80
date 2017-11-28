@@ -4,13 +4,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Nav, Platform } from 'ionic-angular';
 
 import { PatrulhaProvider, JovensProvider, TorneioProvider, SettingsProvider } from '../providers/providers';
+import { FirebaseProvider } from '../providers/firebase/firebase';
 
 @Component({
   template: `
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = 'TorneioPage';
+  rootPage = 'PrincipalPage';
 
   @ViewChild(Nav) nav: Nav;
 
@@ -19,6 +20,7 @@ export class MyApp {
     private settings: SettingsProvider,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
+    private firebasePrv: FirebaseProvider,
     private jovensPrv: JovensProvider,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {
@@ -35,6 +37,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.firebasePrv.auth("firebase-auth-container");
+      this.firebasePrv.onAuthStateChanged().then(user => {
+      });
     });
   }
 }
