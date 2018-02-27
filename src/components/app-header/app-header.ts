@@ -15,7 +15,11 @@ export class AppHeaderComponent {
   constructor(private firebasePrv: FirebaseProvider) {
   }
   get user() {
-    return JSON.stringify(this.firebasePrv.user, null, 3);
+    if (this.firebasePrv.user) {
+      return JSON.stringify(this.firebasePrv.user, null, 3);
+    } else {
+      return null;
+    }
   }
 
   get photoURL() {

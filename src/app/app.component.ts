@@ -24,6 +24,8 @@ export class MyApp {
     private jovensPrv: JovensProvider,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {
+      this.firebasePrv.auth("firebase-auth-container");
+
       this.settings.load();
       this.settings.save();
       this.patrulhaProvider.load();
@@ -37,7 +39,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.firebasePrv.auth("firebase-auth-container");
       this.firebasePrv.onAuthStateChanged().then(user => {
       });
     });
