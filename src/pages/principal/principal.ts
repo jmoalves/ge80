@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FirebaseProvider } from '../../providers/firebase/firebase';
+/**
+ * Generated class for the PrincipalPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage()
 @Component({
@@ -9,29 +14,12 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
   templateUrl: 'principal.html',
 })
 export class PrincipalPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private firebasePrv: FirebaseProvider) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
+    console.log('ionViewDidLoad PrincipalPage');
   }
 
-  get user() {
-    return JSON.stringify(this.firebasePrv.user, null, 3);
-  }
-
-  get photoURL() {
-    if (this.firebasePrv.user) {
-      return this.firebasePrv.user.photoURL;
-    } else {
-      return "";
-    }
-  }
-
-  get name() {
-    if (this.firebasePrv.user) {
-      return this.firebasePrv.user.displayName;
-    } else {
-      return "";
-    }
-  }
 }

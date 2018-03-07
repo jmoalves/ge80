@@ -4,6 +4,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { TorneioProvider } from '../../providers/torneio/torneio';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo } from '../../models/torneio/ciclo';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,17 @@ import { Ciclo } from '../../models/torneio/ciclo';
 export class TorneioPage {
   torneioItems: Ciclo[] = [];
 
-  constructor(public navCtrl: NavController, private torneioProvider: TorneioProvider, private patrulaProvider: PatrulhaProvider) {
+  constructor(
+      private navCtrl: NavController,
+      private firebasePrv: FirebaseProvider,
+      private torneioProvider: TorneioProvider,
+      private patrulaProvider: PatrulhaProvider) {
+
+    if (!this.firebasePrv.isAuthenticated()) {
+      this.navCtrl.setRoot('LoginPage');
+      return;
+    }
+
     this.torneioProvider.ciclos().then(ciclos => {
       this.torneioItems = ciclos;
     });

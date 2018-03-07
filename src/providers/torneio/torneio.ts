@@ -19,7 +19,10 @@ export class TorneioProvider {
 
   promise: Promise<any>;
 
-  constructor(private storage: Storage, private patrulhaProvider: PatrulhaProvider, private api: Api) {
+  constructor(
+      private storage: Storage,
+      private patrulhaProvider: PatrulhaProvider,
+      private api: Api) {
     this.storage.remove(CICLOS_KEY_OLD);
   }
 

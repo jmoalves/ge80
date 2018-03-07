@@ -11,7 +11,7 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = 'PrincipalPage';
+  rootPage = 'LoginPage';
 
   @ViewChild(Nav) nav: Nav;
 
@@ -24,13 +24,11 @@ export class MyApp {
     private jovensPrv: JovensProvider,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {
-      this.firebasePrv.auth("firebase-auth-container");
-
-      this.settings.load();
-      this.settings.save();
-      this.patrulhaProvider.load();
-      this.jovensPrv.load();
-      this.torneioProvider.load();
+    this.settings.load();
+    this.settings.save();
+    this.patrulhaProvider.load();
+    this.jovensPrv.load();
+    this.torneioProvider.load();
   }
 
   ionViewDidLoad() {
@@ -39,8 +37,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.firebasePrv.onAuthStateChanged().then(user => {
-      });
     });
   }
 }

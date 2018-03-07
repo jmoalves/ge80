@@ -14,6 +14,15 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
 export class AppHeaderComponent {
   constructor(private firebasePrv: FirebaseProvider) {
   }
+
+  get loggedIn() {
+    return this.firebasePrv.isAuthenticated();
+  }
+
+  get loggedOut() {
+    return !this.loggedIn;
+  }
+
   get user() {
     if (this.firebasePrv.user) {
       return JSON.stringify(this.firebasePrv.user, null, 3);
@@ -38,4 +47,7 @@ export class AppHeaderComponent {
     }
   }
 
+  logout(event) {
+    this.firebasePrv.logout();
+  }
 }
