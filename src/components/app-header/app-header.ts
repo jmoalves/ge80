@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { NavController } from 'ionic-angular';
 
 /**
  * Generated class for the AppHeaderComponent component.
@@ -12,39 +13,41 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
   templateUrl: 'app-header.html'
 })
 export class AppHeaderComponent {
-  constructor(private firebasePrv: FirebaseProvider) {
+  @Input('withoutLogin') withoutLogin;
+
+  constructor(private firebasePrv: FirebaseProvider, private navCtrl: NavController) {
   }
 
-  get loggedIn() {
+  get loggedIn():boolean {
     return this.firebasePrv.isAuthenticated();
   }
 
-  get loggedOut() {
+  get loggedOut():boolean {
     return !this.loggedIn;
   }
 
   get user() {
-    if (this.firebasePrv.user) {
-      return JSON.stringify(this.firebasePrv.user, null, 3);
-    } else {
-      return null;
-    }
+    return this.firebasePrv.user;
   }
 
-  get photoURL() {
-    if (this.firebasePrv.user) {
-      return this.firebasePrv.user.photoURL;
-    } else {
-      return "";
+  get showLogin():boolean {
+    if (this.withoutLogin || this.withoutLogin == '') {
+      return false;
     }
+
+    return this.loggedOut;
   }
 
-  get name() {
-    if (this.firebasePrv.user) {
-      return this.firebasePrv.user.displayName;
-    } else {
-      return "";
+  get showLogout():boolean {
+    return this.loggedIn;
+  }
+
+  login(event) {
+    if (!this.showLogin) {
+      return;
     }
+
+    this.navCtrl.setRoot('LoginPage');
   }
 
   logout(event) {
