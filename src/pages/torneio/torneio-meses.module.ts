@@ -4,19 +4,19 @@ import { IonicPageModule } from 'ionic-angular';
 
 import { ComponentsModule } from '../../components/components.module';
 
-import { TorneioPage } from './torneio';
+import { TorneioMesesPage } from './torneio-meses';
 
 @NgModule({
   declarations: [
-    TorneioPage
+    TorneioMesesPage
   ],
   imports: [
     ComponentsModule,
-    IonicPageModule.forChild(TorneioPage),
+    IonicPageModule.forChild(TorneioMesesPage),
     TranslateModule.forChild()
   ],
   exports: [
-    TorneioPage
+    TorneioMesesPage
   ]
 })
-export class TorneioPageModule { }
+export class TorneioMesesPageModule { }

@@ -8,10 +8,10 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @IonicPage()
 @Component({
-  selector: 'page-torneio',
-  templateUrl: 'torneio.html'
+  selector: 'page-torneio-meses',
+  templateUrl: 'torneio-meses.html'
 })
-export class TorneioPage {
+export class TorneioMesesPage {
   torneioItems: Ciclo[] = [];
 
   constructor(
@@ -35,11 +35,7 @@ export class TorneioPage {
 
   detail(evt, ciclo, idPatrulha) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
-    this.navCtrl.push('CicloDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
-  }
-
-  help(evt) {
-    this.navCtrl.push('HelpPage');
+    this.navCtrl.push('TorneioDetalhePage', { ciclo: ciclo, idPatrulha: idPatrulha });
   }
 
   refresh(evt) {

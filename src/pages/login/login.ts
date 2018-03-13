@@ -17,7 +17,7 @@ export class LoginPage {
     this.events.subscribe(FirebaseProvider.EVT_LOGIN, (user) => {
       // console.log("USR: " + this.firebasePrv.user);
       if (this.firebasePrv.user) {
-        this.navCtrl.setRoot('TorneioPage');
+        this.navCtrl.setRoot('TorneioMesesPage');
       }
     });
 

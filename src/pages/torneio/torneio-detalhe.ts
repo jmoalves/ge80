@@ -8,10 +8,10 @@ import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 
 @IonicPage()
 @Component({
-  selector: 'page-ciclo-detalhe',
-  templateUrl: 'ciclo-detalhe.html',
+  selector: 'page-torneio-detalhe',
+  templateUrl: 'torneio-detalhe.html',
 })
-export class CicloDetalhePage {
+export class TorneioDetalhePage {
   @ViewChild('slides') slides: Slides;
   toast: Toast;
 
