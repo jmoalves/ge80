@@ -4,5 +4,18 @@
 </ion-header>
 
 <ion-content class="app-background" padding>
-
+    <ion-grid no-padding>
+        <ion-row>
+            <ion-col *ngFor="let page of pages" col-sm-6 col-md-3 col-lg-2>
+                <ion-card class="tile-nav" [navPush]="'TorneioMesesPage'" [navParams]="{ ano: '2017' }" no-padding>
+                    <ion-card-header text-center>
+                        <h2>Torneio de Eficiência</h2>
+                    </ion-card-header>
+                    <ion-card-content text-center>
+                        <img src="assets/img/torneio/logo.jpg">
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

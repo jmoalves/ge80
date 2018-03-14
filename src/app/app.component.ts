@@ -11,7 +11,7 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = 'LoginPage';
+  rootPage = 'PrincipalPage';
 
   @ViewChild(Nav) nav: Nav;
 

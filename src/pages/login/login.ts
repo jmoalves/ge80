@@ -16,13 +16,13 @@ export class LoginPage {
         private firebasePrv: FirebaseProvider) {
     this.events.subscribe(FirebaseProvider.EVT_LOGIN, (user) => {
       // console.log("USR: " + this.firebasePrv.user);
-      if (this.firebasePrv.user) {
-        this.navCtrl.setRoot('TorneioMesesPage');
-      }
+      // if (this.firebasePrv.user) {
+      //   this.navCtrl.setRoot('TorneioMesesPage', { ano: "2017"});
+      // }
     });
 
     this.events.subscribe(FirebaseProvider.EVT_LOGOUT, () => {
-      this.navCtrl.setRoot('LoginPage');
+      // this.navCtrl.setRoot('LoginPage');
     });
   }
 

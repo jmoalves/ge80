@@ -6,6 +6,7 @@
 
 export class Ciclo {
   id?: string;
+  ano?: string;
   nome: string;
   maxPontos?: number;
   atualizadoEm?: number;

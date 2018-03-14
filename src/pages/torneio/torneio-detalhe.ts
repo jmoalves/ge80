@@ -9,7 +9,7 @@ import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 @IonicPage()
 @Component({
   selector: 'page-torneio-detalhe',
-  templateUrl: 'torneio-detalhe.html',
+  templateUrl: 'torneio-detalhe.html'
 })
 export class TorneioDetalhePage {
   @ViewChild('slides') slides: Slides;

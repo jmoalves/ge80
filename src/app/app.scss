@@ -18,3 +18,31 @@
     background-size: cover;
     background-position: center;
 }
+
+@media (max-width: #{map-get($grid-breakpoints, sm)}) {
+    .hidden-sm-down,
+    [hidden-sm-down] {
+        display: none !important;
+    }
+}
+
+@media (max-width: #{map-get($grid-breakpoints, md)}) {
+    .hidden-md-down,
+    [hidden-md-down] {
+        display: none !important;
+    }
+}
+
+@media (max-width: #{map-get($grid-breakpoints, lg)}) {
+    .hidden-lg-down,
+    [hidden-lg-down] {
+        display: none !important;
+    }
+}
+
+@media (max-width: #{map-get($grid-breakpoints, xl)}) {
+    .hidden-xl-down,
+    [hidden-xl-down] {
+        display: none !important;
+    }
+}

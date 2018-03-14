@@ -13,11 +13,11 @@ const CICLOS_INDEX_KEY = 'ciclos-index';
 
 @Injectable()
 export class TorneioProvider {
-  data: Ciclo[];
-  index: { [key:string]: number; };
-  waitReload:boolean = false;
+  private _anos = null;
+  private _index: { [key:string]: any; };
+  private _waitReload:boolean = false;
 
-  promise: Promise<any>;
+  private _promise: Promise<any>;
 
   constructor(
       private storage: Storage,
@@ -26,91 +26,123 @@ export class TorneioProvider {
     this.storage.remove(CICLOS_KEY_OLD);
   }
 
-  ciclos(): Promise<Ciclo[]> {
-    if (!this.waitReload && this.data) {
-      return Promise.resolve(this.data);
+  anos(): Promise<string[]> {
+    if (!this._waitReload && this._anos) {
+      return Promise.resolve(Object.keys(this._anos));
+    }
+
+    return new Promise<string[]>((resolve, reject) => {
+      this._promise.then(res => {
+        resolve(Object.keys(this._anos));
+      }).catch(err => {
+        console.log("ERROR: " + JSON.stringify(err));
+        reject(err);
+      })
+    })
+  }
+
+  ciclos(ano:string): Promise<Ciclo[]> {
+    console.log("CICLOS: " + ano);
+    if (!this._waitReload && this._anos) {
+      return Promise.resolve(this._anos[ano].ciclos);
     }
 
     return new Promise<Ciclo[]>((resolve, reject) => {
-      this.promise.then(res => {
-        resolve(this.data);
+      this._promise.then(res => {
+        resolve(this._anos[ano].ciclos);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
+        reject(err);
       })
     })
   }
 
   ciclo(id: string): Promise<Ciclo> {
-    if (!this.waitReload && this.data && this.index) {
-      return Promise.resolve(this.data[this.index[id]]);
+    if (!this._waitReload && this._anos && this._index) {
+      return Promise.resolve(this._anos[this._index[id].ano].ciclos[this._index[id].idx]);
     }
 
     return new Promise<Ciclo>((resolve, reject) => {
-      this.promise.then(res => {
-        resolve(this.data[this.index[id]]);
+      this._promise.then(res => {
+        resolve(this._anos[this._index[id].ano].ciclos[this._index[id].idx]);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
+        reject(err);
       })
     })
   }
 
   reload() {
-    this.waitReload = true;
+    this._waitReload = true;
     this.load();
   }
 
   load() {
-    this.storage.get(CICLOS_VALUE_KEY).then((val) => {
-      if (!this.data && val) {
-        this.data = val;
-        console.log("LOADED: ciclos");
-        // console.log("LOADED: " + JSON.stringify(this.data));
-      }
-    });
+    // FIXME: Reativar
+    // this.storage.get(CICLOS_VALUE_KEY).then((val) => {
+    //   if (!this.data && val) {
+    //     this.data = val;
+    //     console.log("LOADED: ciclos");
+    //     // console.log("LOADED: " + JSON.stringify(this.data));
+    //   }
+    // });
 
-    this.storage.get(CICLOS_INDEX_KEY).then((val) => {
-      if (!this.index && val) {
-        this.index = val;
-        console.log("LOADED: index");
-        // console.log("LOADED: " + JSON.stringify(this.index));
-      }
-    });
+    // FIXME: Reativar
+    // this.storage.get(CICLOS_INDEX_KEY).then((val) => {
+    //   if (!this.index && val) {
+    //     this.index = val;
+    //     console.log("LOADED: index");
+    //     // console.log("LOADED: " + JSON.stringify(this.index));
+    //   }
+    // });
 
-    this.promise = this.api.get('ciclos', { nonce: (new Date()).getTime() }).toPromise();
-    this.promise.then(res => {
+    this._promise = this.api.get('ciclos', { nonce: (new Date()).getTime() }).toPromise();
+    this._promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
       let newData:{ [key:string]: Ciclo } = res.json();
 
-      let ciclos:Ciclo[] = [];
+      let anos = {};
+      // let ciclos:Ciclo[] = [];
       for (let id in newData) {
         let ciclo:Ciclo = newData[id];
         ciclo.id = id;
+        ciclo.ano = id.substr(0, 4);
 
         // console.log("Ciclo[" + ciclo.id + "] => " + JSON.stringify(ciclo));
         // console.log("Ciclo[" + ciclo.id + "] atualizadoEm => " + ciclo.atualizadoEm);
         this.ajustaPatrulhas(ciclo);
-        ciclos.push(ciclo);
+
+        if (!anos[ciclo.ano]) {
+          anos[ciclo.ano] = {
+            ciclos: []
+          }
+        }
+        anos[ciclo.ano].ciclos.push(ciclo);
       }
 
-      ciclos.reverse();
-
-      let dict:{ [key:string]: number; } = {};
-      let i:number = 0;
-      for (let ciclo of ciclos) {
-        dict[ciclo.id] = i++;
+      let dict:{ [key:string]: any; } = {};
+      for (let ano in anos) {
+        anos[ano].ciclos.reverse();
+        let i:number = 0;
+        for (let ciclo of anos[ano].ciclos) {
+          dict[ciclo.id] = {
+            "ano": ano,
+            idx: i++
+          }
+        }
       }
 
-      this.storage.set(CICLOS_VALUE_KEY, ciclos);
-      this.storage.set(CICLOS_INDEX_KEY, dict);
+      // this.storage.set(CICLOS_VALUE_KEY, ciclos);
+      // this.storage.set(CICLOS_INDEX_KEY, dict);
 
-      this.data = ciclos;
-      this.index = dict;
+      this._anos = anos;
+      this._index = dict;
 
-      this.waitReload = false;
-      this.promise = undefined;
+      this._waitReload = false;
+      this._promise = undefined;
 
       console.log("URL GOT: ciclos");
-      // console.log("API Usando Ciclos: " + JSON.stringify(this.data));
+      // console.log("API Usando Ciclos: " + JSON.stringify(this.anos));
     }).catch((err) => {
       console.log("ERROR: " + JSON.stringify(err));
     });

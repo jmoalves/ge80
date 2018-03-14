@@ -4,29 +4,31 @@
             <ion-row align-items-center>
                 <ion-col col-auto>
                     <ion-item>
-                        <ion-title>GE80</ion-title>
+                        <img class="app-icon" src="assets/icon.png" item-start>
+                        <ion-title hidden-md-down *ngIf="title">GE80 - {{ title }}</ion-title>
+                        <ion-title hidden-md-down *ngIf="!title">GE80</ion-title>
                     </ion-item>
                 </ion-col>
                 <ion-col>
                 </ion-col>
                 <ion-col col-auto>
-                    <ion-item *ngIf="loggedIn">
-                        <ion-avatar item-start>
+                    <ion-item>
+                        <ion-avatar *ngIf="loggedIn" item-start>
                             <img src="{{ user.photoURL }}">
                         </ion-avatar>
-                        <label>{{ user.email }}</label>
+                        <label *ngIf="loggedIn" class="hidden-sm-down">{{ user.email }}</label>
+                        <ion-buttons item-content>
+                            <button ion-button color="primary">
+                            <ion-icon name="refresh"></ion-icon>
+                          </button>
+                            <button *ngIf="showLogin" ion-button color="primary" (click)="login($event)">
+                            <ion-icon name="log-in"></ion-icon>
+                          </button>
+                            <button *ngIf="showLogout" ion-button color="primary" (click)="logout($event)">
+                            <ion-icon name="log-out"></ion-icon>
+                          </button>
+                        </ion-buttons>
                     </ion-item>
-                </ion-col>
-                <ion-col col-auto>
-                    <button ion-button color="primary"> <!--(click)="reload($event)"> -->
-                        <ion-icon  name="refresh"></ion-icon>
-                      </button>
-                    <button *ngIf="showLogin" ion-button color="primary" (click)="login($event)">
-                        <ion-icon  name="log-in"></ion-icon>
-                      </button>
-                    <button *ngIf="showLogout" ion-button color="primary" (click)="logout($event)">
-                        <ion-icon  name="log-out"></ion-icon>
-                      </button>
                 </ion-col>
             </ion-row>
         </ion-grid>

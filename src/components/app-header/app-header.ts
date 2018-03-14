@@ -14,6 +14,7 @@ import { NavController } from 'ionic-angular';
 })
 export class AppHeaderComponent {
   @Input('withoutLogin') withoutLogin;
+  @Input('title') title;
 
   constructor(private firebasePrv: FirebaseProvider, private navCtrl: NavController) {
   }
