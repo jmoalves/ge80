@@ -1,8 +1,8 @@
 export default {
-    apiKey: "AIzaSyCGCN3NfPh3v-rG2JOv04Rib6U5iuEUVmY",
-    authDomain: "ge80-184421.firebaseapp.com",
-    databaseURL: "https://ge80-184421.firebaseio.com",
-    projectId: "ge80-184421",
-    storageBucket: "ge80-184421.appspot.com",
-    messagingSenderId: "967004281979"
-}
+  apiKey: "AIzaSyCea31BAs4IRUyMpGzRAKOJ1EZVfA8kXR8",
+  authDomain: "ge80-ec955.firebaseapp.com",
+  databaseURL: "https://ge80-ec955.firebaseio.com",
+  projectId: "ge80-ec955",
+  storageBucket: "ge80-ec955.appspot.com",
+  messagingSenderId: "22648604504"
+};
