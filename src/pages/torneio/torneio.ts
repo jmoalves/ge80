@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import { TorneioProvider } from '../../providers/torneio/torneio';
-import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
-import { Ciclo } from '../../models/torneio/ciclo';
-import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @IonicPage({
   segment: 'torneio'
@@ -19,9 +16,7 @@ export class TorneioPage {
 
   constructor(
       private navCtrl: NavController,
-      private firebasePrv: FirebaseProvider,
-      private torneioProvider: TorneioProvider,
-      private patrulaProvider: PatrulhaProvider) {
+      private torneioProvider: TorneioProvider) {
     console.log('TorneioPage');
 
     this.torneioProvider.anos().then(anos => {

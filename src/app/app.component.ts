@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Nav, Platform } from 'ionic-angular';
 
 import { PatrulhaProvider, JovensProvider, TorneioProvider, SettingsProvider } from '../providers/providers';
-import { FirebaseProvider } from '../providers/firebase/firebase';
 
 @Component({
   template: `
@@ -20,7 +19,6 @@ export class MyApp {
     private settings: SettingsProvider,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private firebasePrv: FirebaseProvider,
     private jovensPrv: JovensProvider,
     private patrulhaProvider: PatrulhaProvider,
     private torneioProvider: TorneioProvider) {

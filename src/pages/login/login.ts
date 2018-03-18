@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, Events } from 'ionic-angular';
 
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 
@@ -11,7 +11,6 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
 export class LoginPage {
   constructor(
         private navCtrl: NavController,
-        private navParams: NavParams,
         private events: Events,
         private firebasePrv: FirebaseProvider) {
     this.events.subscribe(FirebaseProvider.EVT_LOGIN, (user) => {

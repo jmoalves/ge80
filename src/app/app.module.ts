@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -15,7 +15,6 @@ import { JovensProvider } from '../providers/jovens/jovens';
 
 import { DateService } from '../services/date.service';
 import { FirebaseProvider } from '../providers/firebase/firebase';
-import { AppHeaderComponent } from '../components/app-header/app-header';
 
 export function provideSettings(storage: Storage) {
   /**

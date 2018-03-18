@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 
 import { JovensProvider }  from '../../providers/jovens/jovens';
 import { PatrulhaProvider }  from '../../providers/patrulha/patrulha';
@@ -22,11 +22,9 @@ export class InspecaoPage {
   private jovens: Jovem[] = [];
 
   constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        private jovensPrv: JovensProvider,
-        private patrulhasPrv: PatrulhaProvider,
-        private dateService: DateService) {
+        jovensPrv: JovensProvider,
+        patrulhasPrv: PatrulhaProvider,
+        dateService: DateService) {
     this.dtInspecao = dateService.isoDate(new Date());
 
     Promise.all([
