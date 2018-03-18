@@ -20,7 +20,11 @@
 }
 
 .app-plain-background {
-    background-color: lightgray;
+    background-color: whitesmoke;
+}
+
+.fundo-amarelo-80 {
+    background: #E7C901;
 }
 
 @media (max-width: #{map-get($grid-breakpoints, sm)}) {
