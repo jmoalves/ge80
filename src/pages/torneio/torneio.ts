@@ -6,47 +6,35 @@ import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo } from '../../models/torneio/ciclo';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 
-@IonicPage()
+@IonicPage({
+  segment: 'torneio'
+})
 @Component({
   selector: 'page-torneio',
   templateUrl: 'torneio.html'
 })
 export class TorneioPage {
-  ano = "2017";
-  torneioItems: Ciclo[] = [];
+  anos: string[] = null;
+  data: any = null;
 
   constructor(
       private navCtrl: NavController,
       private firebasePrv: FirebaseProvider,
       private torneioProvider: TorneioProvider,
       private patrulaProvider: PatrulhaProvider) {
+    console.log('TorneioPage');
 
-    if (!this.firebasePrv.isAuthenticated()) {
-      this.navCtrl.setRoot('LoginPage');
-      return;
-    }
-
-    this.torneioProvider.ciclos(this.ano).then(ciclos => {
-      this.torneioItems = ciclos;
+    this.torneioProvider.anos().then(anos => {
+      this.data = anos;
+      this.anos = Object.keys(anos);
     });
   }
 
   ionViewDidLoad() {
   }
 
-  detail(evt, ciclo, idPatrulha) {
+  mes(evt, ano) {
     // console.log("Para detalhe => " + JSON.stringify(evt) + " Ciclo: " + idCiclo + " Patrulha: " + idPatrulha);
-    this.navCtrl.push('TorneioMesesPage', { ciclo: ciclo, idPatrulha: idPatrulha });
-  }
-
-  refresh(evt) {
-    console.log("REFRESH - Begin",  evt);
-    this.patrulaProvider.load();
-    this.torneioProvider.reload();
-
-    this.torneioProvider.ciclos(this.ano).then((ciclos) => {
-      this.torneioItems = ciclos;
-      console.log("REFRESH - END");
-    });
+    this.navCtrl.push('TorneioMesesPage', { ano: ano });
   }
 }

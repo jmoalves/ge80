@@ -1,5 +1,5 @@
 <ion-header>
-    <app-header>
+    <app-header title="Torneio">
     </app-header>
 </ion-header>
 
@@ -7,27 +7,21 @@
 <ion-content class="app-background">
     <ion-grid>
         <ion-row justify-content-between align-items-center>
-            <ion-col align-self-center col-12 col-lg-4 *ngFor="let item of torneioItems">
-                <ion-card>
+            <ion-col align-self-center col-12 col-lg-4 *ngFor="let ano of anos">
+                <ion-card (click)="mes($event, ano)">
                     <ion-card-header no-padding>
                         <ion-item class="barra-mes">
-                            <h2 text-center>{{item.nome}}</h2>
+                            <h2 text-center>{{ano}}</h2>
                         </ion-item>
                     </ion-card-header>
                     <ion-card-content no-padding>
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col [attr.col-12]="patrulha.topo ? '' : null" *ngFor="let patrulha of item.patrulhaArray">
-                                    <ion-item detail-push [ngClass]="{ topo : patrulha.topo }" (click)="detail($event, item, patrulha.id)">
-                                        <ion-avatar item-start>
-                                            <img [src]="patrulha.avatar">
-                                            <p>{{patrulha.nome}}</p>
-                                        </ion-avatar>
-                                        <progress-bar progress="{{patrulha.totais.geral}}" maximum="{{item.maxPontos}}" color="{{patrulha.cor}}"></progress-bar>
-                                    </ion-item>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
+                        <ion-item *ngFor="let patrulha of data[ano].patrulhas" [ngClass]="{ topo : patrulha.topo }">
+                            <ion-avatar item-start>
+                                <img [src]="patrulha.avatar">
+                                <p>{{patrulha.nome}}</p>
+                            </ion-avatar>
+                            <progress-bar progress="{{patrulha.totalGeral}}" maximum="{{data[ano].maxPontos}}" color="{{patrulha.cor}}"></progress-bar>
+                        </ion-item>
                     </ion-card-content>
                 </ion-card>
             </ion-col>

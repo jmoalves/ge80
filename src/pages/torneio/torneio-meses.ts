@@ -40,9 +40,9 @@ export class TorneioMesesPage {
     }).catch((error) => {
       this.showAlert('Não há dados para ' + this.ano);
       this.torneioProvider.anos().then((anos) => {
-        console.log("Anos: " + anos);
+        // console.log("Anos: " + anos);
         if (anos && anos.length > 0) {
-          this.navCtrl.push('TorneioMesesPage', { ano: anos[0] });
+          this.navCtrl.push('TorneioMesesPage', { ano: Object.keys(anos)[0] });
         }
       })
     });

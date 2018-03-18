@@ -28,12 +28,12 @@ export class TorneioProvider {
 
   anos(): Promise<string[]> {
     if (!this._waitReload && this._anos) {
-      return Promise.resolve(Object.keys(this._anos));
+      return Promise.resolve(this._anos);
     }
 
     return new Promise<string[]>((resolve, reject) => {
       this._promise.then(res => {
-        resolve(Object.keys(this._anos));
+        resolve(this._anos);
       }).catch(err => {
         console.log("ERROR: " + JSON.stringify(err));
         reject(err);
@@ -123,12 +123,53 @@ export class TorneioProvider {
       let dict:{ [key:string]: any; } = {};
       for (let ano in anos) {
         anos[ano].ciclos.reverse();
+        anos[ano].maxPontos = 0;
+
+        let patrulhas = {};
         let i:number = 0;
         for (let ciclo of anos[ano].ciclos) {
+          for (let patrulha of ciclo.patrulhaArray) {
+            console.log("Patrulha! " + JSON.stringify(patrulha));
+            if (!patrulhas[patrulha.id]) {
+              patrulhas[patrulha.id] = {
+                id : patrulha.id,
+                topo : false,
+                totalGeral : 0
+              };
+            }
+
+            patrulhas[patrulha.id].totalGeral += patrulha.totais.geral;
+            this.complementaPatrulha(patrulha.id, patrulhas[patrulha.id]);
+          }
+
           dict[ciclo.id] = {
             "ano": ano,
             idx: i++
           }
+
+          anos[ano].maxPontos += ciclo.maxPontos;
+        }
+
+        anos[ano].patrulhas = [];
+        for (let id in patrulhas) {
+          anos[ano].patrulhas.push(patrulhas[id]);
+        }
+        anos[ano].patrulhas.sort((a, b) => {
+          // Em ordem descendente de pontos
+          return (b.totalGeral - a.totalGeral);
+        })
+
+        let maior = undefined;
+        for (let patrulha of anos[ano].patrulhas) {
+          if (!maior) {
+            maior = patrulha.totalGeral;
+          }
+
+          if (patrulha.totalGeral < maior) {
+            break;
+          }
+
+          patrulha.topo = true;
         }
       }
 
@@ -142,7 +183,7 @@ export class TorneioProvider {
       this._promise = undefined;
 
       console.log("URL GOT: ciclos");
-      // console.log("API Usando Ciclos: " + JSON.stringify(this.anos));
+      console.log("API Usando Ciclos: " + JSON.stringify(this._anos));
     }).catch((err) => {
       console.log("ERROR: " + JSON.stringify(err));
     });
@@ -280,11 +321,11 @@ export class TorneioProvider {
       patrulha.totais.totalGeralMensal;
   }
 
-  private complementaPatrulha(id: string, pontuacao: PontuacaoPatrulha) {
+  private complementaPatrulha(id: string, item: any) {
     this.patrulhaProvider.patrulha(id).then(patrulha => {
-      pontuacao.nome = patrulha.nome;
-      pontuacao.avatar = patrulha.avatar;
-      pontuacao.cor = patrulha.cor;
+      item.nome = patrulha.nome;
+      item.avatar = patrulha.avatar;
+      item.cor = patrulha.cor;
     });
   }
 }
