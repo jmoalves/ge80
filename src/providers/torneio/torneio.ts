@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
-import { Storage } from '@ionic/storage';
-
 import { Api } from '../../providers/api/api';
 import { PatrulhaProvider } from '../../providers/patrulha/patrulha';
 import { Ciclo, PontuacaoPatrulha, PontuacaoDiaria } from '../../models/torneio/ciclo';
-
-const CICLOS_KEY_OLD = 'ciclos';
-const CICLOS_VALUE_KEY = 'ciclos-value';
-const CICLOS_INDEX_KEY = 'ciclos-index';
 
 @Injectable()
 export class TorneioProvider {
@@ -20,10 +14,8 @@ export class TorneioProvider {
   private _promise: Promise<any>;
 
   constructor(
-      private storage: Storage,
       private patrulhaProvider: PatrulhaProvider,
       private api: Api) {
-    this.storage.remove(CICLOS_KEY_OLD);
   }
 
   anos(): Promise<string[]> {
@@ -78,24 +70,6 @@ export class TorneioProvider {
   }
 
   load() {
-    // FIXME: Reativar
-    // this.storage.get(CICLOS_VALUE_KEY).then((val) => {
-    //   if (!this.data && val) {
-    //     this.data = val;
-    //     console.log("LOADED: ciclos");
-    //     // console.log("LOADED: " + JSON.stringify(this.data));
-    //   }
-    // });
-
-    // FIXME: Reativar
-    // this.storage.get(CICLOS_INDEX_KEY).then((val) => {
-    //   if (!this.index && val) {
-    //     this.index = val;
-    //     console.log("LOADED: index");
-    //     // console.log("LOADED: " + JSON.stringify(this.index));
-    //   }
-    // });
-
     this._promise = this.api.get('ciclos', { nonce: (new Date()).getTime() }).toPromise();
     this._promise.then(res => {
       // console.log("API GET Ciclos: " + JSON.stringify(res.json()));
@@ -173,9 +147,6 @@ export class TorneioProvider {
         }
       }
 
-      // this.storage.set(CICLOS_VALUE_KEY, ciclos);
-      // this.storage.set(CICLOS_INDEX_KEY, dict);
-
       this._anos = anos;
       this._index = dict;
 
@@ -190,8 +161,6 @@ export class TorneioProvider {
   }
 
   private ajustaPatrulhas(ciclo: Ciclo) {
-    // this.maxPontos(ciclo);
-
     let maxPontos:number = 0;
     let patrulhas:PontuacaoPatrulha[] = [];
 
