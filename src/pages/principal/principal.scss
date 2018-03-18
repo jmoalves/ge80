@@ -1,6 +1,7 @@
 page-principal {
-    // .tile-nav {
-    //     width: 20em;
-    //     height: 20em;
-    // }
+    .tile-nav {
+        ion-card-header {
+            background-color: lightskyblue;
+        }
+    }
 }

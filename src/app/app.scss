@@ -19,6 +19,10 @@
     background-position: center;
 }
 
+.app-plain-background {
+    background-color: lightgray;
+}
+
 @media (max-width: #{map-get($grid-breakpoints, sm)}) {
     .hidden-sm-down,
     [hidden-sm-down] {
