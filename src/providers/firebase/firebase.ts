@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 // Firebase
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
-import config from './firebase-config'
+import * as config from './firebase-config.json';
 
 @Injectable()
 export class FirebaseProvider {
